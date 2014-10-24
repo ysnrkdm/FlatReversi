@@ -26,4 +26,8 @@ class GameViewModel {
     func showPasses() {
         view.showPasses()
     }
+
+    func showGameOver(title:String, message: String, showNext: Bool, nextLabel: String) {
+        view.showGameOver(title, message: message, showNext: showNext, nextLabel: nextLabel)
+    }
 }

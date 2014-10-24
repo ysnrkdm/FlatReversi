@@ -16,6 +16,8 @@ class GameManager {
     private(set) var boardMediator: BoardMediator?
     private var gameViewModel: GameViewModel?
 
+    var challengeLevel: Int = -1
+
     private(set) var turn: Pieces = Pieces.None
 
     init() {
@@ -37,6 +39,16 @@ class GameManager {
         whitePlayer?.initialize(gameSettings.whitePlayerComputer)
 
         turn = Pieces.Black
+
+        let blackPlayerAndHuman = blackPlayer != nil && !blackPlayer!.isComputerPlayer()
+        let whitePlayerAndHuman = whitePlayer != nil && !whitePlayer!.isComputerPlayer()
+        if((blackPlayerAndHuman || whitePlayerAndHuman) && !(blackPlayerAndHuman && whitePlayerAndHuman)) {
+            if(blackPlayerAndHuman) {
+                challengeLevel = gameSettings.whitePlayerComputer
+            } else {
+                challengeLevel = gameSettings.blackPlayerComputer
+            }
+        }
     }
 
     private func getPlayerByLevel(level: Int, color: Pieces) -> Player {
@@ -80,15 +92,71 @@ class GameManager {
         }
 
         let changes = self.boardMediator?.put(color, x: x, y: y)
-        self.turn = nextTurn(self.turn)
+        let showPuttables = isHumanTurn(nextTurn(self.turn))
         NSLog("Put \(x), \(y)")
         if let unwrappedChanges = changes {
-            self.gameViewModel?.update(unwrappedChanges, put: [(x, y)], showPuttables: isCurrentTurnHuman())
+            self.gameViewModel?.update(unwrappedChanges, put: [(x, y)], showPuttables: showPuttables)
         }
-
+        self.turn = nextTurn(self.turn)
         if(isGameOver()) {
             // Game Over, show result
             NSLog("Game Over")
+            // Which side is won?
+            let nBlack = boardMediator?.getNumBlack()
+            let nWhite = boardMediator?.getNumWhite()
+            var result = Pieces.None
+            if(nBlack == nWhite) {
+                result = Pieces.None
+            } else if (nBlack > nWhite) {
+                result = Pieces.Black
+            } else {
+                result = Pieces.White
+            }
+
+            var message = "Black \(nBlack) vs. White \(nWhite)"
+            var title = ""
+            var showNext = false
+            var nextLabel = ""
+            // Is it challenge mode?
+            let blackPlayerAndHuman = blackPlayer != nil && !blackPlayer!.isComputerPlayer()
+            let whitePlayerAndHuman = whitePlayer != nil && !whitePlayer!.isComputerPlayer()
+            if((blackPlayerAndHuman || whitePlayerAndHuman) && !(blackPlayerAndHuman && whitePlayerAndHuman)) {
+                nextLabel = "Next level: \(challengeLevel)"
+                // If challenge mode, human won
+                switch(result) {
+                case Pieces.None:
+                    title = "Draw."
+                case Pieces.Black:
+                    if(blackPlayerAndHuman) {
+                        title = "You won."
+                        showNext = true
+                    } else {
+                        title = "You lose."
+                    }
+                case Pieces.White:
+                    if(blackPlayerAndHuman) {
+                        title = "You lose."
+                    } else {
+                        title = "You won."
+                        showNext = true
+                    }
+                default:
+                    assertionFailure("Should not reach this code!")
+                }
+            } else {
+                switch(result) {
+                case Pieces.Black:
+                    title = "Draw"
+                case Pieces.White:
+                    title = "Draw"
+                case Pieces.None:
+                    title = "Draw"
+                default:
+                    assertionFailure("Should not reach this code!")
+                }
+            }
+
+            self.gameViewModel?.showGameOver(title, message: message, showNext: showNext, nextLabel: nextLabel)
         } else if (!isCurrentTurnDoablePut()) {
             NSLog("Current player cannot do anything, skipping")
             // Current player cannot do anything. Skip
@@ -171,6 +239,10 @@ class GameManager {
     }
 
     func isCurrentTurnHuman() -> Bool {
+        return isHumanTurn(self.turn)
+    }
+
+    func isHumanTurn(turn: Pieces) -> Bool {
         let blackPlayerAndHuman = turn == Pieces.Black && blackPlayer != nil && !blackPlayer!.isComputerPlayer()
         let whitePlayerAndHuman = turn == Pieces.White && whitePlayer != nil && !whitePlayer!.isComputerPlayer()
         return (blackPlayerAndHuman) || (whitePlayerAndHuman)

@@ -121,4 +121,12 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
     func updateNavBarTitle(str: String) {
         navbarTitle.title = str
     }
+
+    func popupAlert(title: String, message: String, actions: [UIAlertAction]) {
+        var alertController = UIAlertController(title: title, message: message, preferredStyle: .ActionSheet)
+        for action in actions {
+            alertController.addAction(action)
+        }
+        presentViewController(alertController, animated: true, completion: nil)
+    }
 }
