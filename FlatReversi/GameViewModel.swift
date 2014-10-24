@@ -22,4 +22,8 @@ class GameViewModel {
         // to GameScene
         view.updateView(gameManager.boardMediator!, changes: changes, put: put, showPuttables: showPuttables)
     }
+
+    func showPasses() {
+        view.showPasses()
+    }
 }

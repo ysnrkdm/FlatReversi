@@ -57,6 +57,7 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
             NSLog("navbar.bounds.origin.y = \(navbar.bounds.origin.y)")
             NSLog("navbar.bounds.height = \(navbar.bounds.height)")
             scene.topYOffset = UIApplication.sharedApplication().statusBarFrame.origin.y + UIApplication.sharedApplication().statusBarFrame.size.height + navbar.bounds.origin.y + navbar.bounds.height
+            scene.statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
             
             skView.presentScene(scene)
             thisScene = scene

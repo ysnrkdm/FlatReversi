@@ -46,6 +46,32 @@ class BoardMediator {
 
     // MARK: Query functions
 
+    func getNumBlack() -> Int {
+        var ret = 0
+        for sy in 0..<self.board.height {
+            for sx in 0..<self.board.width {
+                if(board.get(sx, y: sy) == Pieces.Black) {
+                    ret++
+                }
+            }
+        }
+
+        return ret
+    }
+
+    func getNumWhite() -> Int {
+        var ret = 0
+        for sy in 0..<self.board.height {
+            for sx in 0..<self.board.width {
+                if(board.get(sx, y: sy) == Pieces.White) {
+                    ret++
+                }
+            }
+        }
+
+        return ret
+    }
+
     func canPut(color: Pieces, x: Int, y: Int) -> Bool {
         return (get(x, y: y) != .White && get(x, y: y) != .Black) && getReversible(color, x: x, y: y).count > 0;
     }
