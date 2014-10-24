@@ -41,10 +41,11 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             // Configure the view.
 //            let skView = self.view as SKView
-            
+
+            scene.tintColor = self.view.tintColor
             skView.showsFPS = true
             skView.showsNodeCount = true
-            
+
             /* Sprite Kit applies additional optimizations to improve rendering performance */
             skView.ignoresSiblingOrder = true
             

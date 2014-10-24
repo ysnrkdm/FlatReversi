@@ -16,7 +16,8 @@ class GameScene: SKScene {
     var gameManager = GameManager()
     var gameViewModel: GameViewModel?
 
-    var boardSprites : [[SKShapeNode?]] = []
+    var boardSprites: [[SKShapeNode?]] = []
+    var lastPut: SKShapeNode? = nil
 
     var showGuides = true
 
@@ -26,7 +27,11 @@ class GameScene: SKScene {
 
     var topYOffset: CGFloat = 0
 
+    var tintColor: UIColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
+
     let lock = NSLock()
+
+    var drawCount = 0
 
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -59,7 +64,7 @@ class GameScene: SKScene {
         NSLog("\n" + gameManager.toString())
     }
 
-    func clearPieces() {
+    private func clearPieces() {
         for row in boardSprites {
             for cell in row {
                 cell?.removeFromParent()
@@ -70,6 +75,9 @@ class GameScene: SKScene {
         for var y = 0; y < gameManager.boardMediator?.height(); ++y {
             boardSprites.append([nil, nil, nil, nil, nil, nil, nil, nil])
         }
+
+        lastPut?.removeFromParent()
+        lastPut = nil
     }
 
     func startGame() {
@@ -104,19 +112,30 @@ class GameScene: SKScene {
         }
     }
 
-    func coordFromTouch(x: CGFloat, y: CGFloat, piece_width: CGFloat) -> (Int, Int) {
+    private func coordFromTouch(x: CGFloat, y: CGFloat, piece_width: CGFloat) -> (Int, Int) {
         var pos_x = Int(floor(virtualXFromScreenX(x) / piece_width))
         var pos_y = Int(floor(virtualYFromScreenY(y) / piece_width))
         NSLog("%f, %f -> %f, %f", x.native, y.native, virtualXFromScreenX(x).native, virtualYFromScreenY(y).native)
 
         return (pos_x, pos_y)
     }
+    
     func updateView(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool) {
         addChildrenFromBoard(bd, changes: changes, put: put, showPuttables: showPuttables)
     }
 
     func addChildrenFromBoard(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool) {
         synchronized(lock) {
+            let sleepMS = 0.5
+            for c in 0..<Int(2/0.5) {
+                if(self.drawCount == 0) {
+                    NSLog("Finished waiting drawing")
+                    break
+                }
+                NSThread.sleepForTimeInterval(sleepMS)
+                NSLog("Waiting for finish drawing...")
+            }
+            self.drawCount = 0
             for y in 0..<bd.height() {
                 for x in 0..<bd.width() {
                     let turn = bd.get(x, y: y)
@@ -181,24 +200,36 @@ class GameScene: SKScene {
                             assertionFailure("Should not reach this code!")
                         }
 
+                        self.drawCount+=1
+                        let reduceDrawCount = SKAction.runBlock({() in self.drawCount-=1})
                         if(putAnimation) {
                             let fadeOut = SKAction.fadeAlphaTo(1.0, duration: 0.05)
-                            let colorChange = SKAction.runBlock({() in spriteUnwrapped.strokeColor = SKColor(red: 0.7, green: 0.4, blue: 0.4, alpha: 1.0)})
+                            let colorChange = SKAction.runBlock({() in spriteUnwrapped.strokeColor = self.tintColor})
                             let fadeIn = SKAction.fadeAlphaTo(1.0, duration: 0.05)
                             let fadeOut2 = SKAction.fadeAlphaTo(0.0, duration: 0.1)
                             let colorChange2 = SKAction.runBlock({() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.strokeColor = SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)})
                             let fadeIn2 = SKAction.fadeAlphaTo(1.0, duration: 0.1)
-                            let sequenceActions = SKAction.sequence([fadeOut, colorChange, fadeIn, fadeOut2, colorChange2, fadeIn2])
+
+
+                            let sequenceActions = SKAction.sequence([
+                                fadeOut, colorChange, fadeIn,
+                                fadeOut2, colorChange2, fadeIn2,
+                                reduceDrawCount,
+                            ])
+
                             spriteUnwrapped.runAction(sequenceActions, completion: {() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.alpha = 1.0})
 
                         } else if(flipAnimation) {
                             let fadeOut = SKAction.fadeAlphaTo(0.0, duration: 0.2)
                             let colorChange = SKAction.runBlock({() in spriteUnwrapped.fillColor = colorTo})
                             let fadeIn = SKAction.fadeAlphaTo(1.0, duration: 0.2)
-                            let sequenceActions = SKAction.sequence([fadeOut, colorChange, fadeIn])
+
+                            let sequenceActions = SKAction.sequence([fadeOut, colorChange, fadeIn, reduceDrawCount])
+
                             spriteUnwrapped.runAction(sequenceActions, completion: {() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.alpha = 1.0})
                         } else {
                             spriteUnwrapped.fillColor = colorTo
+                            self.drawCount-=1
                         }
                         spriteUnwrapped.strokeColor = SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
                         spriteUnwrapped.lineWidth = 2
@@ -211,33 +242,44 @@ class GameScene: SKScene {
 
                         // Add
                         self.boardSprites[y][x] = spriteUnwrapped
-                    }
-                }
+                    } // if let spriteUnwrapped = sprite
+                } // for x
+            } // for y
+
+            // Hilight put position
+            if(put.count > 0) {
+                let (x, y) = put[0]
+                let boardView = self.childNodeWithName("Board") as SKSpriteNode
+                var piece_width = boardView.size.width / 8
+                self.lastPut?.removeFromParent()
+                self.lastPut = SKShapeNode(rect: self.screenRectFromVritualRect(CGRectMake(CGFloat(x) * piece_width, CGFloat(y+1) * piece_width, piece_width, piece_width)))
+                self.lastPut?.strokeColor = self.tintColor
+                boardView.addChild(self.lastPut!)
             }
-        }
+        } // synchronized
     }
 
-    func screenXFromVirtualX(x: CGFloat) -> CGFloat {
+    private func screenXFromVirtualX(x: CGFloat) -> CGFloat {
         return x - 320
     }
 
-    func screenYFromVirtualY(y: CGFloat) -> CGFloat {
+    private func screenYFromVirtualY(y: CGFloat) -> CGFloat {
         return 1136 - y - topYOffset
     }
 
-    func virtualXFromScreenX(x: CGFloat) -> CGFloat {
+    private func virtualXFromScreenX(x: CGFloat) -> CGFloat {
         return x + 320
     }
 
-    func virtualYFromScreenY(y: CGFloat) -> CGFloat {
+    private func virtualYFromScreenY(y: CGFloat) -> CGFloat {
         return 1136 - y - topYOffset
     }
 
-    func screenPointFromVirtualPoint(point: CGPoint) -> CGPoint {
+    private func screenPointFromVirtualPoint(point: CGPoint) -> CGPoint {
         return CGPointMake(screenXFromVirtualX(point.x), screenYFromVirtualY(point.y))
     }
 
-    func screenRectFromVritualRect(rect: CGRect) -> CGRect {
+    private func screenRectFromVritualRect(rect: CGRect) -> CGRect {
         return CGRectMake(screenXFromVirtualX(rect.origin.x), screenYFromVirtualY(rect.origin.y), rect.width, rect.height)
     }
 
