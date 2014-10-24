@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  FlatReversi
+//  MyFirstSpriteKit
 //
-//  Created by Kodama Yoshinori on 10/24/14.
+//  Created by Kodama Yoshinori on 10/11/14.
 //  Copyright (c) 2014 Yoshinori Kodama. All rights reserved.
 //
 
