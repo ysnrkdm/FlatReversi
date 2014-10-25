@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B22E1BA19FAAC0C0006E39C /* LevelSelectionViewControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E1B919FAAC0C0006E39C /* LevelSelectionViewControl.swift */; };
+		8B22E1BC19FBAE400006E39C /* LevelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E1BB19FBAE400006E39C /* LevelController.swift */; };
 		8B74E1C519F9ED9700B5E87E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1C419F9ED9700B5E87E /* AppDelegate.swift */; };
 		8B74E1C719F9ED9700B5E87E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B74E1C619F9ED9700B5E87E /* GameScene.sks */; };
 		8B74E1C919F9ED9700B5E87E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1C819F9ED9700B5E87E /* GameScene.swift */; };
@@ -43,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B22E1B919FAAC0C0006E39C /* LevelSelectionViewControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelSelectionViewControl.swift; sourceTree = "<group>"; };
+		8B22E1BB19FBAE400006E39C /* LevelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelController.swift; sourceTree = "<group>"; };
 		8B74E1BF19F9ED9600B5E87E /* FlatReversi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlatReversi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B74E1C319F9ED9600B5E87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B74E1C419F9ED9700B5E87E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -130,6 +134,8 @@
 				8B74E1C619F9ED9700B5E87E /* GameScene.sks */,
 				8B74E1C819F9ED9700B5E87E /* GameScene.swift */,
 				8B74E1CA19F9ED9700B5E87E /* GameViewController.swift */,
+				8B22E1B919FAAC0C0006E39C /* LevelSelectionViewControl.swift */,
+				8B22E1BB19FBAE400006E39C /* LevelController.swift */,
 				8B74E1CC19F9ED9700B5E87E /* Main.storyboard */,
 				8B74E1CF19F9ED9700B5E87E /* Images.xcassets */,
 				8B74E1D119F9ED9700B5E87E /* LaunchScreen.xib */,
@@ -280,7 +286,9 @@
 				8B74E1FE19F9EE6900B5E87E /* GameViewModel.swift in Sources */,
 				8B74E1C519F9ED9700B5E87E /* AppDelegate.swift in Sources */,
 				8B74E1FF19F9EE6900B5E87E /* HumanPlayer.swift in Sources */,
+				8B22E1BC19FBAE400006E39C /* LevelController.swift in Sources */,
 				8B74E20319F9EE6900B5E87E /* PlayerMediator.swift in Sources */,
+				8B22E1BA19FAAC0C0006E39C /* LevelSelectionViewControl.swift in Sources */,
 				8B74E20519F9EE6900B5E87E /* SettingsViewContoller.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

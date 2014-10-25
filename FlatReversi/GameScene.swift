@@ -76,8 +76,8 @@ class GameScene: SKScene {
 
         showNumPieces(0, white: 0)
 
-        gameSettings.blackPlayerComputer = 1
-        gameSettings.whitePlayerComputer = 1
+//        gameSettings.blackPlayerComputer = 1
+//        gameSettings.whitePlayerComputerLevel = 1
         startGame()
         NSLog("\n" + gameManager.toString())
     }
@@ -151,6 +151,7 @@ class GameScene: SKScene {
     }
 
     func startGame() {
+        gameSettings.loadFromUserDefaults()
         if let unwrappedGVM = gameViewModel {
             gameManager.initialize(unwrappedGVM, gameSettings: gameSettings)
         } else {

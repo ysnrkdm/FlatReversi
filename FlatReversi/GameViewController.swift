@@ -72,6 +72,12 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
         if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
             navbar.barTintColor = UIColor.whiteColor();
         }
+
+        let gs: GameSettings = GameSettings()
+        gs.loadFromUserDefaults()
+        if !gs.validate() {
+            gs.resetAndSave()
+        }
     }
 
     func positionForBar(bar: UIBarPositioning!) -> UIBarPosition {

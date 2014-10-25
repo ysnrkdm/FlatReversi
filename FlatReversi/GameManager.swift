@@ -25,8 +25,8 @@ class GameManager {
     }
 
     func initialize(gameViewModel: GameViewModel, gameSettings: GameSettings) {
-        blackPlayer = getPlayerByLevel(gameSettings.blackPlayerComputer, color: Pieces.Black)
-        whitePlayer = getPlayerByLevel(gameSettings.whitePlayerComputer, color: Pieces.White)
+        blackPlayer = getPlayerByLevel(gameSettings.blackPlayerComputer, level: gameSettings.blackPlayerComputerLevel, color: Pieces.Black)
+        whitePlayer = getPlayerByLevel(gameSettings.whitePlayerComputer, level: gameSettings.whitePlayerComputerLevel, color: Pieces.White)
 
         hUI = HumanUserInput(gameManager: self)
 
@@ -35,8 +35,8 @@ class GameManager {
 
         self.gameViewModel = gameViewModel
 
-        blackPlayer?.initialize(gameSettings.blackPlayerComputer)
-        whitePlayer?.initialize(gameSettings.whitePlayerComputer)
+        blackPlayer?.initialize(gameSettings.blackPlayerComputerLevel)
+        whitePlayer?.initialize(gameSettings.whitePlayerComputerLevel)
 
         turn = Pieces.Black
 
@@ -44,22 +44,24 @@ class GameManager {
         let whitePlayerAndHuman = whitePlayer != nil && !whitePlayer!.isComputerPlayer()
         if((blackPlayerAndHuman || whitePlayerAndHuman) && !(blackPlayerAndHuman && whitePlayerAndHuman)) {
             if(blackPlayerAndHuman) {
-                challengeLevel = gameSettings.whitePlayerComputer
+                challengeLevel = gameSettings.whitePlayerComputerLevel
             } else {
-                challengeLevel = gameSettings.blackPlayerComputer
+                challengeLevel = gameSettings.blackPlayerComputerLevel
             }
         }
     }
 
-    private func getPlayerByLevel(level: Int, color: Pieces) -> Player {
+    private func getPlayerByLevel(isComputer: Bool, level: Int, color: Pieces) -> Player {
         var playerMediator = PlayerMediator(gameManager: self)
-        switch (level) {
-        case 0:
+        if(isComputer) {
+            switch (level) {
+            default:
+                let computerWeakestPlayer = RandomComputerPlayer(playerMediator: playerMediator, color: color)
+                return computerWeakestPlayer
+            }
+        } else {
             let humanPlayer = HumanPlayer(playerMediator: playerMediator, color: color)
             return humanPlayer
-        default:
-            let computerWeakestPlayer = RandomComputerPlayer(playerMediator: playerMediator, color: color)
-            return computerWeakestPlayer
         }
     }
 
