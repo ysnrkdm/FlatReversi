@@ -33,6 +33,8 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
 
     @IBOutlet weak var skView: SKView!
 
+    var currentScene: SKScene? = nil
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,6 +44,7 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
             // Configure the view.
 //            let skView = self.view as SKView
 
+            currentScene = scene
             scene.tintColor = self.view.tintColor
             skView.showsFPS = true
             skView.showsNodeCount = true
@@ -82,8 +85,11 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
 
         NSLog("size %f - %f", self.view.frame.width.native, navbar.frame.size.width.native)
 
-        let skView = self.view as SKView
+        let sView = self.view as SKView
+        sView.paused = false
         skView.paused = false
+        currentScene?.paused = false
+
     }
 
     override func shouldAutorotate() -> Bool {
@@ -106,13 +112,17 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
     override func prefersStatusBarHidden() -> Bool {
         return false
     }
+    
     @IBAction func push(sender: AnyObject) {
-        let skView = self.view as SKView
+        let sView = self.view as SKView
+        currentScene?.paused = true
+        sView.paused = true
         skView.paused = true
         NSLog("pressed Settings")
 
         performSegueWithIdentifier("settings",sender: nil)
     }
+
     @IBAction func playNewGame(sender: AnyObject) {
         NSLog("play new game!")
         thisScene?.startGame()

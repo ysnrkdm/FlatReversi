@@ -76,7 +76,7 @@ class GameScene: SKScene {
 
         showNumPieces(0, white: 0)
 
-//        gameSettings.blackPlayerComputer = 1
+        gameSettings.blackPlayerComputer = 1
         gameSettings.whitePlayerComputer = 1
         startGame()
         NSLog("\n" + gameManager.toString())
@@ -422,8 +422,8 @@ class GameScene: SKScene {
     }
 
     override func update(currentTime: CFTimeInterval) {
-        if(lastUpdatedTime == 0) {
-            lastUpdatedTime = currentTime
+        if(self.paused) {
+            return
         }
 
         /* Called before each frame is rendered */
