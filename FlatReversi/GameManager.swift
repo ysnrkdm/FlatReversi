@@ -201,6 +201,7 @@ class GameManager {
             NSLog("Current player cannot do anything, skipping")
             // Current player cannot do anything. Skip
             self.turn = nextTurn(self.turn)
+            self.boardMediator?.updateGuides(self.turn)
             self.gameViewModel?.update([], put: [], showPuttables: isCurrentTurnHuman(), showAnimation: gs.showAnimation)
             self.gameViewModel?.showPasses()
             startGame()

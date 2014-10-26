@@ -111,6 +111,14 @@ class GameViewController: UIViewController, UINavigationBarDelegate, ADBannerVie
 
     }
 
+    override func viewWillDisappear(animated: Bool) {
+        let sView = self.view as SKView
+        currentScene?.paused = true
+        sView.paused = true
+        skView.paused = true
+
+    }
+
     override func shouldAutorotate() -> Bool {
         return false
     }

@@ -467,16 +467,12 @@ class GameScene: SKScene {
     }
     
     override func update(currentTime: CFTimeInterval) {
-//        synchronized(lock) {
+        if(!self.paused) {
             processUpdateBoardViewQueue()
 
-            if(self.paused) {
-                return
-            }
-            
             /* Called before each frame is rendered */
             let viewController = self.view?.window?.rootViewController as GameViewController
-            
+
             var title = ""
             if(self.gameManager.isCurrentTurnHuman()) {
                 title = "Your turn"
@@ -485,5 +481,5 @@ class GameScene: SKScene {
             }
             viewController.updateNavBarTitle(title)
         }
-//    }
+    }
 }
