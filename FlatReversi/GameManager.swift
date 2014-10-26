@@ -120,7 +120,7 @@ class GameManager {
         gs.loadFromUserDefaults()
 
         let changes = self.boardMediator?.put(color, x: x, y: y)
-        let showPuttables = isHumanTurn(nextTurn(self.turn))
+        let showPuttables = isHumanTurn(nextTurn(self.turn)) && gs.showPossibleMoves
         NSLog("Put \(x), \(y)")
         if let unwrappedChanges = changes {
             if let gvm = gameViewModel {

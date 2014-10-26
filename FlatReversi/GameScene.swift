@@ -178,7 +178,7 @@ class GameScene: SKScene {
             gameManager.initialize(gameViewModel!, gameSettings: gameSettings)
         }
         clearPieces()
-        updateView(gameManager.boardMediator!, changes: [], put: [], showPuttables: gameManager.isCurrentTurnHuman(), showAnimation: gameSettings.showAnimation)
+        updateView(gameManager.boardMediator!, changes: [], put: [], showPuttables: gameManager.isCurrentTurnHuman() && gameSettings.showPossibleMoves, showAnimation: gameSettings.showAnimation)
         time = 0
         lastUpdatedTime = 0
         timeCounterOn = false
