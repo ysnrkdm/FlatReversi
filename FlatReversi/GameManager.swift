@@ -40,15 +40,6 @@ class GameManager {
 
         turn = Pieces.Black
 
-//        let blackPlayerAndHuman = blackPlayer != nil && !blackPlayer!.isComputerPlayer()
-//        let whitePlayerAndHuman = whitePlayer != nil && !whitePlayer!.isComputerPlayer()
-//        if(isChallengeMode()) {
-//            if(blackPlayerAndHuman) {
-//                challengeLevelId = gameSettings.whitePlayerComputerLevelId
-//            } else {
-//                challengeLevelId = gameSettings.blackPlayerComputerLevelId
-//            }
-//        }
         switch (challengeModeComputer()) {
         case Pieces.Black:
             challengeLevelId = gameSettings.blackPlayerComputerLevelId
