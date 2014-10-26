@@ -50,10 +50,11 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 SwitchTableCell(tableView: self.tableView, id: "", labelText: "Show Possible Moves", switchOn: gc.showPossibleMoves, targetObject: self, targetSelector: "switchShowPossibleMoves:"),
                 SwitchTableCell(tableView: self.tableView, id: "", labelText: "Show Animation", switchOn: gc.showAnimation, targetObject: self, targetSelector: "switchAnimation:")
             ]),
-            ("Misc", [
-                TableCellDefinition(reusableCellId: "kCellRemoveAds", tableView: self.tableView, id: ""),
-                TableCellDefinition(reusableCellId: "kCellViewRanking", tableView: self.tableView, id: ""),
-            ]),
+            // FIXME: Implement in future
+//            ("Misc", [
+//                TableCellDefinition(reusableCellId: "kCellRemoveAds", tableView: self.tableView, id: ""),
+//                TableCellDefinition(reusableCellId: "kCellViewRanking", tableView: self.tableView, id: ""),
+//            ]),
         ]
 
         if gc.blackPlayerComputer {

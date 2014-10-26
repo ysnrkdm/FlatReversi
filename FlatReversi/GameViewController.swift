@@ -8,6 +8,7 @@
 
 import UIKit
 import SpriteKit
+import iAd
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
@@ -25,7 +26,7 @@ extension SKNode {
     }
 }
 
-class GameViewController: UIViewController, UINavigationBarDelegate {
+class GameViewController: UIViewController, UINavigationBarDelegate, ADBannerViewDelegate, GADBannerViewDelegate {
 
     @IBOutlet weak var navbarTitle: UINavigationItem!
     @IBOutlet weak var navbar: UINavigationBar!
@@ -34,6 +35,8 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
     @IBOutlet weak var skView: SKView!
 
     var currentScene: SKScene? = nil
+
+    var bannerView: GADBannerView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +79,17 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
         gs.loadFromUserDefaults()
         if !gs.validate() {
             gs.resetAndSave()
+        }
+
+        // Ad
+        var origin = CGPointMake(0.0, self.view.frame.size.height - CGSizeFromGADAdSize(kGADAdSizeBanner).height);
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner, origin: origin)
+        if let uBannerView = bannerView {
+            uBannerView.adUnitID = "ca-app-pub-4004659206753296/7384819767"
+            uBannerView.delegate = self
+            uBannerView.rootViewController = self
+            self.view.addSubview(uBannerView)
+            uBannerView.loadRequest(GADRequest())
         }
     }
 
