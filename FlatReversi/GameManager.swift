@@ -152,16 +152,20 @@ class GameManager {
                 result = Pieces.White
             }
 
-            var message = "Black \(nBlack) vs. White \(nWhite)"
+            var message = "Black \(nBlack!) vs. White \(nWhite!)"
             var title = ""
             var showNext = false
-            var nextLabel = ""
+            var nextExists = false
+            var nextLabelText = ""
             // Is it challenge mode?
             let blackPlayerAndHuman = blackPlayer != nil && !blackPlayer!.isComputerPlayer()
             let whitePlayerAndHuman = whitePlayer != nil && !whitePlayer!.isComputerPlayer()
-            if((blackPlayerAndHuman || whitePlayerAndHuman) && !(blackPlayerAndHuman && whitePlayerAndHuman)) {
+            if(isChallengeMode()) {
                 let lc: LevelController = LevelController()
-                nextLabel = "Next level: \(lc.getNextLevel(challengeLevelId))"
+                if let nextLevel = lc.getNextLevel(challengeLevelId) {
+                    nextLabelText = "Next level: \(nextLevel.level)"
+                    nextExists = true
+                }
                 // If challenge mode, human won
                 switch(result) {
                 case Pieces.None:
@@ -170,7 +174,7 @@ class GameManager {
                     if(blackPlayerAndHuman) {
                         title = "You won."
                         openNextLevel()
-                        showNext = true
+                        showNext = true && nextExists
                     } else {
                         title = "You lose."
                     }
@@ -180,7 +184,7 @@ class GameManager {
                     } else {
                         title = "You won."
                         openNextLevel()
-                        showNext = true
+                        showNext = true && nextExists
                     }
                 default:
                     assertionFailure("Should not reach this code!")
@@ -190,15 +194,15 @@ class GameManager {
                 case Pieces.Black:
                     title = "Draw"
                 case Pieces.White:
-                    title = "Draw"
+                    title = "White won."
                 case Pieces.None:
-                    title = "Draw"
+                    title = "Black won."
                 default:
                     assertionFailure("Should not reach this code!")
                 }
             }
 
-            self.gameViewModel?.showGameOver(title, message: message, showNext: showNext, nextLabel: nextLabel)
+            self.gameViewModel?.showGameOver(title, message: message, showNext: showNext, nextLabel: nextLabelText)
         } else if (!isCurrentTurnDoablePut()) {
             NSLog("Current player cannot do anything, skipping")
             // Current player cannot do anything. Skip
