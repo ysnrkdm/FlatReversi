@@ -119,7 +119,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
 
         var labelText = "Black player level"
         let lc: LevelController = LevelController()
-        if let lv = lc.getLevelByLevelId(gc.blackPlayerComputerLevel) {
+        if let lv = lc.getLevelByLevelId(gc.blackPlayerComputerLevelId) {
             labelText = lv.toString()
         }
 
@@ -138,7 +138,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
 
         var labelText = "White player level"
         let lc: LevelController = LevelController()
-        if let lv = lc.getLevelByLevelId(gc.whitePlayerComputerLevel) {
+        if let lv = lc.getLevelByLevelId(gc.whitePlayerComputerLevelId) {
             labelText = lv.toString()
         }
 
@@ -159,7 +159,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             if sectionIndex >= 0 {
                 if let cell = cells![sectionIndex].1[cellIndex] as? DetailSelectorTableCell {
                     let lc: LevelController = LevelController()
-                    if let lv = lc.getLevelByLevelId(gc.blackPlayerComputerLevel) {
+                    if let lv = lc.getLevelByLevelId(gc.blackPlayerComputerLevelId) {
                         cell.labelText = lv.toString()
                         cells![sectionIndex].1[cellIndex] = cell
                         let ipath = NSIndexPath(forRow: cellIndex, inSection: sectionIndex)
@@ -178,7 +178,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             if sectionIndex >= 0 {
                 if let cell = cells![sectionIndex].1[cellIndex] as? DetailSelectorTableCell {
                     let lc: LevelController = LevelController()
-                    if let lv = lc.getLevelByLevelId(gc.whitePlayerComputerLevel) {
+                    if let lv = lc.getLevelByLevelId(gc.whitePlayerComputerLevelId) {
                         cell.labelText = lv.toString()
                         cells![sectionIndex].1[cellIndex] = cell
                         let ipath = NSIndexPath(forRow: cellIndex, inSection: sectionIndex)
@@ -332,11 +332,11 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         } else {
             switch(levelSelectionFor) {
             case .Black:
-                gc.blackPlayerComputerLevel = level.levelId
+                gc.blackPlayerComputerLevelId = level.levelId
                 gc.saveToUserDefaults()
                 adjustBlackPlayerDifficultyAppearance()
             case .White:
-                gc.whitePlayerComputerLevel = level.levelId
+                gc.whitePlayerComputerLevelId = level.levelId
                 gc.saveToUserDefaults()
                 adjustWhitePlayerDifficultyAppearance()
             default:

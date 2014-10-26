@@ -10,13 +10,16 @@ import Foundation
 
 class GameSettings {
     var difficultyHighestBeaten: Int = 1
-    var achievements: Int = 0
+    var achievements: Int = 1000
+
+    var debugDfficulty: Int = 0
+    var debugAchievements: Int = 1000
 
     var blackPlayerComputer: Bool = false
-    var blackPlayerComputerLevel: Int = 1
+    var blackPlayerComputerLevelId: Int = 1
 
     var whitePlayerComputer: Bool = true
-    var whitePlayerComputerLevel: Int = 1
+    var whitePlayerComputerLevelId: Int = 1
 
     var showPossibleMoves: Bool = true
     var showAnimation: Bool = true
@@ -26,10 +29,10 @@ class GameSettings {
         ud.setInteger(difficultyHighestBeaten, forKey: "difficultyHighestBeaten")
 
         ud.setBool(blackPlayerComputer, forKey: "blackPlayerComputer")
-        ud.setInteger(blackPlayerComputerLevel, forKey: "blackPlayerComputerLevel")
+        ud.setInteger(blackPlayerComputerLevelId, forKey: "blackPlayerComputerLevelId")
 
         ud.setBool(whitePlayerComputer, forKey: "whitePlayerComputer")
-        ud.setInteger(whitePlayerComputerLevel, forKey: "whitePlayerComputerLevel")
+        ud.setInteger(whitePlayerComputerLevelId, forKey: "whitePlayerComputerLevelId")
 
         ud.setBool(showPossibleMoves, forKey: "showPossibleMoves")
         ud.setBool(showAnimation, forKey: "showAnimation")
@@ -40,10 +43,10 @@ class GameSettings {
         difficultyHighestBeaten = ud.integerForKey("difficultyHighestBeaten")
 
         blackPlayerComputer = ud.boolForKey("blackPlayerComputer")
-        blackPlayerComputerLevel = ud.integerForKey("blackPlayerComputerLevel")
+        blackPlayerComputerLevelId = ud.integerForKey("blackPlayerComputerLevelId")
 
         whitePlayerComputer = ud.boolForKey("whitePlayerComputer")
-        whitePlayerComputerLevel = ud.integerForKey("whitePlayerComputerLevel")
+        whitePlayerComputerLevelId = ud.integerForKey("whitePlayerComputerLevelId")
 
         showPossibleMoves = ud.boolForKey("showPossibleMoves")
         showAnimation = ud.boolForKey("showAnimation")
@@ -53,18 +56,27 @@ class GameSettings {
         loadFromUserDefaults()
 
         if difficultyHighestBeaten <= 0 {
+            NSLog("difficultyHighestBeaten must be interger more than 0")
             return false
         }
 
-        if blackPlayerComputerLevel <= 0 {
+        if blackPlayerComputerLevelId <= 0 {
+            NSLog("blackPlayerComputerLevelId must be interger more than 0")
             return false
         }
 
-        if whitePlayerComputerLevel <= 0 {
+        if whitePlayerComputerLevelId <= 0 {
+            NSLog("whitePlayerComputerLevelId must be interger more than 0")
             return false
         }
 
-        if blackPlayerComputerLevel > difficultyHighestBeaten || whitePlayerComputerLevel > difficultyHighestBeaten {
+        if blackPlayerComputerLevelId > achievements  {
+            NSLog("blackPlayerComputerLevelId must be eq or less than achievements")
+            return false
+        }
+
+        if whitePlayerComputerLevelId > achievements {
+            NSLog("whitePlayerComputerLevelId must be eq or less than achievements")
             return false
         }
 
@@ -72,14 +84,15 @@ class GameSettings {
     }
 
     func resetAndSave() {
+        NSLog("Resseting configuration")
         difficultyHighestBeaten = 1
         achievements = 0
 
         blackPlayerComputer = false
-        blackPlayerComputerLevel = 1
+        blackPlayerComputerLevelId = 1
 
         whitePlayerComputer = true
-        whitePlayerComputerLevel = 1
+        whitePlayerComputerLevelId = 1
 
         showPossibleMoves = true
         showAnimation = true

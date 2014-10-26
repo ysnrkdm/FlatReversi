@@ -8,6 +8,20 @@
 
 import SpriteKit
 
+class UpdateBoardViewContext {
+    var boardMediator : BoardMediator
+    var changes:[(Int, Int)]
+    var put: [(Int, Int)]
+    var showPuttables: Bool
+
+    init(boardMediator : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool) {
+        self.boardMediator = boardMediator
+        self.changes = changes
+        self.put = put
+        self.showPuttables = showPuttables
+    }
+}
+
 class GameScene: SKScene {
     var blackComputerLevel: Int = 0
     var whiteComputerLevel: Int = 1
@@ -25,7 +39,7 @@ class GameScene: SKScene {
     var numPiecesBlack: SKLabelNode? = nil
     var numPiecesWhite: SKLabelNode? = nil
 
-    // 
+    //
     var gameOverFrame: SKShapeNode? = nil
     var gameOverLabel: SKLabelNode? = nil
     var playAgainButtonFrame: SKShapeNode? = nil
@@ -48,9 +62,10 @@ class GameScene: SKScene {
 
     var drawCount = 0
 
+    var updateBoardViewQueue: Queue<UpdateBoardViewContext>? = nil
+
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-
         let boardView = self.childNodeWithName("Board") as SKSpriteNode
         var width : CGFloat = boardView.size.width
         var height : CGFloat = boardView.size.height
@@ -74,10 +89,12 @@ class GameScene: SKScene {
             boardView.addChild(sprite)
         }
 
+        updateBoardViewQueue = Queue<UpdateBoardViewContext>()
+
         showNumPieces(0, white: 0)
 
-//        gameSettings.blackPlayerComputer = 1
-//        gameSettings.whitePlayerComputerLevel = 1
+        //        gameSettings.blackPlayerComputer = 1
+        //        gameSettings.whitePlayerComputerLevel = 1
         startGame()
         NSLog("\n" + gameManager.toString())
     }
@@ -159,22 +176,22 @@ class GameScene: SKScene {
             gameManager.initialize(gameViewModel!, gameSettings: gameSettings)
         }
         clearPieces()
-        addChildrenFromBoard(gameManager.boardMediator!, changes: [], put: [], showPuttables: gameManager.isCurrentTurnHuman())
+        updateView(gameManager.boardMediator!, changes: [], put: [], showPuttables: gameManager.isCurrentTurnHuman())
         time = 0
         lastUpdatedTime = 0
         timeCounterOn = false
-        gameManager.startGame()
+        dispatch_async_global({self.gameManager.startGame()})
     }
 
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         /* Called when a touch begins */
-        
+
         for touch: AnyObject in touches {
-                let boardView = self.childNodeWithName("Board") as SKSpriteNode
-                var width : CGFloat = boardView.size.width
-                let location_boardView = touch.locationInNode(boardView)
-                var piece_width = width / 8
-                let (ex, ey) = coordFromTouch(location_boardView.x, y: location_boardView.y, piece_width: piece_width)
+            let boardView = self.childNodeWithName("Board") as SKSpriteNode
+            var width : CGFloat = boardView.size.width
+            let location_boardView = touch.locationInNode(boardView)
+            var piece_width = width / 8
+            let (ex, ey) = coordFromTouch(location_boardView.x, y: location_boardView.y, piece_width: piece_width)
             NSLog("Touched \(ex), \(ey)")
 
             if let hUI = gameManager.getHumanUserInput() {
@@ -190,25 +207,55 @@ class GameScene: SKScene {
 
         return (pos_x, pos_y)
     }
-    
+
     func updateView(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool) {
-        addChildrenFromBoard(bd, changes: changes, put: put, showPuttables: showPuttables)
+        if let q = updateBoardViewQueue {
+            let ubvc = UpdateBoardViewContext(boardMediator: bd, changes: changes, put: put, showPuttables: showPuttables)
+            q.enqueue(ubvc)
+        }
+//        addChildrenFromBoard(bd, changes: changes, put: put, showPuttables: showPuttables)
     }
 
-    func addChildrenFromBoard(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool) {
-        NSLog("!syncstart!")
-        synchronized(lock) {
-            let sleepMS = 0.5
-            for c in 0..<Int(2/0.5) {
-                if(self.drawCount <= 0) {
-                    NSLog("Finished waiting drawing")
-                    break
+    func isUpdateBoardViewQueueEmpty() -> Bool {
+        if let q = updateBoardViewQueue {
+            return q.isEmpty()
+        }
+        return true
+    }
+
+    func processUpdateBoardViewQueue() {
+        if let q = self.updateBoardViewQueue {
+            let deq = q.peek()
+            if deq != nil {
+                if self.processUpdateBoardViewContext(deq!) {
+                    q.dequeue()
                 }
-                NSThread.sleepForTimeInterval(sleepMS)
-                NSLog("Waiting for finish drawing...: \(self.drawCount)")
             }
-            self.drawCount = 0
-            NSThread.sleepForTimeInterval(50/1000)
+        }
+
+    }
+
+    func processUpdateBoardViewContext(context: UpdateBoardViewContext) -> Bool {
+        return addChildrenFromBoard(context.boardMediator, changes: context.changes, put: context.put, showPuttables: context.showPuttables)
+    }
+
+    func addChildrenFromBoard(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool) -> Bool {
+        NSLog("!syncstart!")
+        if(self.drawCount > 0) {
+            NSLog("Waiting for finish drawing...: \(self.drawCount)")
+            return false
+        }
+        synchronized(lock) {
+//            let sleepMS = 0.5
+//            for c in 0..<Int(2/0.5) {
+//                if(self.drawCount <= 0) {
+//                    NSLog("Finished waiting drawing")
+//                    break
+//                }
+//                NSThread.sleepForTimeInterval(sleepMS)
+//                NSLog("Waiting for finish drawing...: \(self.drawCount)")
+//            }
+//            self.drawCount = 0
             for y in 0..<bd.height() {
                 for x in 0..<bd.width() {
                     let turn = bd.get(x, y: y)
@@ -288,7 +335,7 @@ class GameScene: SKScene {
                             let sequenceActions = SKAction.sequence([
                                 fadeOut, colorChange, fadeIn,
                                 fadeOut2, colorChange2, fadeIn2,
-                            ])
+                                ])
 
                             spriteUnwrapped.runAction(sequenceActions, completion: {() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.alpha = 1.0; self.drawCount-=1; NSLog("put$")})
                         } else if(flipAnimation) {
@@ -316,13 +363,13 @@ class GameScene: SKScene {
                         self.boardSprites[y][x] = spriteUnwrapped
 
                     } // if let spriteUnwrapped = sprite
-                    NSLog("if***")
+                    //                    NSLog("if***")
                 } // for x
-                NSLog("x***")
+                //                NSLog("x***")
             } // for y
-            NSLog("y***")
+            //            NSLog("y***")
 
-            NSLog(">>!!!")
+//            NSLog(">>!!!")
             // Hilight put position
             if(put.count > 0) {
                 NSLog("!!!")
@@ -333,17 +380,18 @@ class GameScene: SKScene {
                 self.lastPut = SKShapeNode(rect: self.screenRectFromVritualRect(CGRectMake(CGFloat(x) * piece_width, CGFloat(y) * piece_width, piece_width, piece_width)))
                 self.lastPut?.strokeColor = self.tintColor
                 boardView.addChild(self.lastPut!)
-                NSLog("!!!")
+//                NSLog("!!!")
             }
-            NSLog("<<!!!")
+//            NSLog("<<!!!")
 
             // Play information
             // piece_width + width + statusBarHeight
             self.showNumPieces(bd.getNumBlack(), white: bd.getNumWhite())
 
-            NSLog("osimai!!!")
+//            NSLog("osimai!!!")
         } // synchronized
         NSLog("!syncend!")
+        return true
     }
 
     func showPasses() {
@@ -384,18 +432,31 @@ class GameScene: SKScene {
         let viewController = self.view?.window?.rootViewController as GameViewController
         var actions: [UIAlertAction] = []
 
-        actions.append(UIAlertAction(title: "Retry", style: .Default, handler: {
+        actions.append(UIAlertAction(title: "Again", style: .Default, handler: {
             action in NSLog("Retry!")
         }))
 
         if(showNext) {
             actions.append(UIAlertAction(title: nextLabel, style: .Default, handler: {
-                action in NSLog("Continue!")
+                action in
+                self.gameSettings.loadFromUserDefaults()
+                let lc: LevelController = LevelController()
+                if let nextChallengeLevel = lc.getNextLevel(self.gameManager.challengeLevelId) {
+                    switch (self.gameManager.challengeModeComputer()) {
+                    case Pieces.Black:
+                        self.gameSettings.blackPlayerComputerLevelId = nextChallengeLevel.levelId
+                        self.gameSettings.saveToUserDefaults()
+                    case Pieces.White:
+                        self.gameSettings.whitePlayerComputerLevelId = nextChallengeLevel.levelId
+                        self.gameSettings.saveToUserDefaults()
+                    default:
+                        NSLog("No challenge mode")
+                    }
+                }
             }))
         }
 
         viewController.popupAlert(title, message: message, actions: actions)
-        NSLog("!")
     }
 
     private func screenXFromVirtualX(x: CGFloat) -> CGFloat {
@@ -421,21 +482,25 @@ class GameScene: SKScene {
     private func screenRectFromVritualRect(rect: CGRect) -> CGRect {
         return CGRectMake(screenXFromVirtualX(rect.origin.x), screenYFromVirtualY(rect.origin.y), rect.width, -rect.height)
     }
-
+    
     override func update(currentTime: CFTimeInterval) {
-        if(self.paused) {
-            return
-        }
+//        synchronized(lock) {
+            processUpdateBoardViewQueue()
 
-        /* Called before each frame is rendered */
-        let viewController = self.view?.window?.rootViewController as GameViewController
-
-        var title = ""
-        if(gameManager.isCurrentTurnHuman()) {
-            title = "Your turn"
-        } else {
-            title = "Computer is thinking..."
+            if(self.paused) {
+                return
+            }
+            
+            /* Called before each frame is rendered */
+            let viewController = self.view?.window?.rootViewController as GameViewController
+            
+            var title = ""
+            if(self.gameManager.isCurrentTurnHuman()) {
+                title = "Your turn"
+            } else {
+                title = "Computer is thinking..."
+            }
+            viewController.updateNavBarTitle(title)
         }
-        viewController.updateNavBarTitle(title)
-    }
+//    }
 }

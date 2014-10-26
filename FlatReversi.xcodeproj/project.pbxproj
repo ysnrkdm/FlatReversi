@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		8B22E1BA19FAAC0C0006E39C /* LevelSelectionViewControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E1B919FAAC0C0006E39C /* LevelSelectionViewControl.swift */; };
 		8B22E1BC19FBAE400006E39C /* LevelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E1BB19FBAE400006E39C /* LevelController.swift */; };
+		8B22E1BE19FC073B0006E39C /* RandomPlayerWithEvaluation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E1BD19FC073B0006E39C /* RandomPlayerWithEvaluation.swift */; };
+		8B22E1C019FC75100006E39C /* Zones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E1BF19FC75100006E39C /* Zones.swift */; };
+		8B22E1C219FC80C50006E39C /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E1C119FC80C50006E39C /* Queue.swift */; };
 		8B74E1C519F9ED9700B5E87E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1C419F9ED9700B5E87E /* AppDelegate.swift */; };
 		8B74E1C719F9ED9700B5E87E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B74E1C619F9ED9700B5E87E /* GameScene.sks */; };
 		8B74E1C919F9ED9700B5E87E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1C819F9ED9700B5E87E /* GameScene.swift */; };
@@ -47,6 +50,9 @@
 /* Begin PBXFileReference section */
 		8B22E1B919FAAC0C0006E39C /* LevelSelectionViewControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelSelectionViewControl.swift; sourceTree = "<group>"; };
 		8B22E1BB19FBAE400006E39C /* LevelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelController.swift; sourceTree = "<group>"; };
+		8B22E1BD19FC073B0006E39C /* RandomPlayerWithEvaluation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomPlayerWithEvaluation.swift; sourceTree = "<group>"; };
+		8B22E1BF19FC75100006E39C /* Zones.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zones.swift; sourceTree = "<group>"; };
+		8B22E1C119FC80C50006E39C /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		8B74E1BF19F9ED9600B5E87E /* FlatReversi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlatReversi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B74E1C319F9ED9600B5E87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B74E1C419F9ED9700B5E87E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -116,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				8B74E1E819F9EE6900B5E87E /* Board.swift */,
+				8B22E1BF19FC75100006E39C /* Zones.swift */,
 				8B74E1E919F9EE6900B5E87E /* BoardMediator.swift */,
 				8B74E1EA19F9EE6900B5E87E /* BoardRepresentative.swift */,
 				8B74E1EB19F9EE6900B5E87E /* CustomStepperTableViewCell.swift */,
@@ -129,6 +136,7 @@
 				8B74E1F319F9EE6900B5E87E /* Player.swift */,
 				8B74E1F419F9EE6900B5E87E /* PlayerMediator.swift */,
 				8B74E1F519F9EE6900B5E87E /* RandomComputerPlayer.swift */,
+				8B22E1BD19FC073B0006E39C /* RandomPlayerWithEvaluation.swift */,
 				8B74E1F619F9EE6900B5E87E /* SettingsViewContoller.swift */,
 				8B74E1C419F9ED9700B5E87E /* AppDelegate.swift */,
 				8B74E1C619F9ED9700B5E87E /* GameScene.sks */,
@@ -140,6 +148,7 @@
 				8B74E1CF19F9ED9700B5E87E /* Images.xcassets */,
 				8B74E1D119F9ED9700B5E87E /* LaunchScreen.xib */,
 				8B74E1C219F9ED9600B5E87E /* Supporting Files */,
+				8B22E1C119FC80C50006E39C /* Queue.swift */,
 			);
 			path = FlatReversi;
 			sourceTree = "<group>";
@@ -274,6 +283,8 @@
 				8B74E1C919F9ED9700B5E87E /* GameScene.swift in Sources */,
 				8B74E1FC19F9EE6900B5E87E /* GameManager.swift in Sources */,
 				8B74E20419F9EE6900B5E87E /* RandomComputerPlayer.swift in Sources */,
+				8B22E1C219FC80C50006E39C /* Queue.swift in Sources */,
+				8B22E1C019FC75100006E39C /* Zones.swift in Sources */,
 				8B74E1FD19F9EE6900B5E87E /* GameSettings.swift in Sources */,
 				8B74E20019F9EE6900B5E87E /* HumanUserInput.swift in Sources */,
 				8B74E20219F9EE6900B5E87E /* Player.swift in Sources */,
@@ -289,6 +300,7 @@
 				8B22E1BC19FBAE400006E39C /* LevelController.swift in Sources */,
 				8B74E20319F9EE6900B5E87E /* PlayerMediator.swift in Sources */,
 				8B22E1BA19FAAC0C0006E39C /* LevelSelectionViewControl.swift in Sources */,
+				8B22E1BE19FC073B0006E39C /* RandomPlayerWithEvaluation.swift in Sources */,
 				8B74E20519F9EE6900B5E87E /* SettingsViewContoller.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

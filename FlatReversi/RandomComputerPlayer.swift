@@ -39,7 +39,6 @@ class RandomComputerPlayer: Player {
 
         }
 
-//        sleep(1)
         NSLog("Answer \(retx), \(rety)")
         playerMediator.put(self.color, x: retx, y: rety)
     }

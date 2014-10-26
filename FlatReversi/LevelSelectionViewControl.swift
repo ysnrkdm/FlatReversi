@@ -41,12 +41,12 @@ class LevelSelectionViewController: UIViewController, UITableViewDataSource, UIT
             ]
 
         for level in LevelController().getLevels(true) {
-            if level.levelId == 0 {
+            if lc.isNullAI(level) {
                 continue
-            } else if level.levelId < 1000 {
-                cells![0].1.append(LevelTableCell(tableView: self.tableView, level: level))
-            } else if level.levelId < 2000 {
+            } else if lc.isAchievementAI(level) {
                 cells![1].1.append(LevelTableCell(tableView: self.tableView, level: level))
+            } else {
+                cells![0].1.append(LevelTableCell(tableView: self.tableView, level: level))
             }
         }
     }
@@ -84,7 +84,7 @@ class LevelSelectionViewController: UIViewController, UITableViewDataSource, UIT
     @IBAction func back(sender: AnyObject) {
         NSLog("storing the data and exising from view")
 
-        delegate?.finishSelection(Level(level: 0, levelId: -1, levelTitle: "Human", levelDescr: "Human Player", implClass: "HumanPlayer"))
+        delegate?.finishSelection(Level(level: 0, levelId: -1, levelTitle: "Human", levelDescr: "Human Player"))
 
         self.dismissViewControllerAnimated(true, completion: nil)
     }

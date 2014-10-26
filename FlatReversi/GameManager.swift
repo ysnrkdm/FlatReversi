@@ -16,7 +16,7 @@ class GameManager {
     private(set) var boardMediator: BoardMediator?
     private var gameViewModel: GameViewModel?
 
-    var challengeLevel: Int = -1
+    var challengeLevelId: Int = -1
 
     private(set) var turn: Pieces = Pieces.None
 
@@ -25,8 +25,8 @@ class GameManager {
     }
 
     func initialize(gameViewModel: GameViewModel, gameSettings: GameSettings) {
-        blackPlayer = getPlayerByLevel(gameSettings.blackPlayerComputer, level: gameSettings.blackPlayerComputerLevel, color: Pieces.Black)
-        whitePlayer = getPlayerByLevel(gameSettings.whitePlayerComputer, level: gameSettings.whitePlayerComputerLevel, color: Pieces.White)
+        blackPlayer = getPlayerByLevel(gameSettings.blackPlayerComputer, levelId: gameSettings.blackPlayerComputerLevelId, color: Pieces.Black)
+        whitePlayer = getPlayerByLevel(gameSettings.whitePlayerComputer, levelId: gameSettings.whitePlayerComputerLevelId, color: Pieces.White)
 
         hUI = HumanUserInput(gameManager: self)
 
@@ -35,27 +35,59 @@ class GameManager {
 
         self.gameViewModel = gameViewModel
 
-        blackPlayer?.initialize(gameSettings.blackPlayerComputerLevel)
-        whitePlayer?.initialize(gameSettings.whitePlayerComputerLevel)
+        blackPlayer?.initialize(gameSettings.blackPlayerComputerLevelId)
+        whitePlayer?.initialize(gameSettings.whitePlayerComputerLevelId)
 
         turn = Pieces.Black
 
-        let blackPlayerAndHuman = blackPlayer != nil && !blackPlayer!.isComputerPlayer()
-        let whitePlayerAndHuman = whitePlayer != nil && !whitePlayer!.isComputerPlayer()
-        if((blackPlayerAndHuman || whitePlayerAndHuman) && !(blackPlayerAndHuman && whitePlayerAndHuman)) {
-            if(blackPlayerAndHuman) {
-                challengeLevel = gameSettings.whitePlayerComputerLevel
-            } else {
-                challengeLevel = gameSettings.blackPlayerComputerLevel
-            }
+//        let blackPlayerAndHuman = blackPlayer != nil && !blackPlayer!.isComputerPlayer()
+//        let whitePlayerAndHuman = whitePlayer != nil && !whitePlayer!.isComputerPlayer()
+//        if(isChallengeMode()) {
+//            if(blackPlayerAndHuman) {
+//                challengeLevelId = gameSettings.whitePlayerComputerLevelId
+//            } else {
+//                challengeLevelId = gameSettings.blackPlayerComputerLevelId
+//            }
+//        }
+        switch (challengeModeComputer()) {
+        case Pieces.Black:
+            challengeLevelId = gameSettings.blackPlayerComputerLevelId
+        case Pieces.White:
+            challengeLevelId = gameSettings.whitePlayerComputerLevelId
+        default:
+            NSLog("Not challenge mode")
         }
     }
 
-    private func getPlayerByLevel(isComputer: Bool, level: Int, color: Pieces) -> Player {
+    func isChallengeMode() -> Bool {
+        let blackPlayerAndHuman = blackPlayer != nil && !blackPlayer!.isComputerPlayer()
+        let whitePlayerAndHuman = whitePlayer != nil && !whitePlayer!.isComputerPlayer()
+
+        return (blackPlayerAndHuman || whitePlayerAndHuman) && !(blackPlayerAndHuman && whitePlayerAndHuman)
+    }
+
+    func challengeModeComputer() -> Pieces {
+        if isChallengeMode() {
+            let blackPlayerAndHuman = blackPlayer != nil && !blackPlayer!.isComputerPlayer()
+            let whitePlayerAndHuman = whitePlayer != nil && !whitePlayer!.isComputerPlayer()
+            if blackPlayerAndHuman {
+                return Pieces.White
+            } else {
+                return Pieces.Black
+            }
+        } else {
+            return Pieces.None
+        }
+    }
+
+    private func getPlayerByLevel(isComputer: Bool, levelId: Int, color: Pieces) -> Player {
         var playerMediator = PlayerMediator(gameManager: self)
         if(isComputer) {
-            switch (level) {
-            default:
+            let lc: LevelController = LevelController()
+
+            if let player = lc.getPlayerByLevelId(levelId, playerMediattor: playerMediator, color: color) {
+                return player
+            } else {
                 let computerWeakestPlayer = RandomComputerPlayer(playerMediator: playerMediator, color: color)
                 return computerWeakestPlayer
             }
@@ -97,7 +129,12 @@ class GameManager {
         let showPuttables = isHumanTurn(nextTurn(self.turn))
         NSLog("Put \(x), \(y)")
         if let unwrappedChanges = changes {
-            self.gameViewModel?.update(unwrappedChanges, put: [(x, y)], showPuttables: showPuttables)
+            if let gvm = gameViewModel {
+                while(!gvm.isUpdateBoardViewQueueEmpty()) {
+                    NSThread.sleepForTimeInterval(5/1000)
+                }
+                gvm.update(unwrappedChanges, put: [(x, y)], showPuttables: showPuttables)
+            }
         }
         self.turn = nextTurn(self.turn)
         if(isGameOver()) {
@@ -123,7 +160,8 @@ class GameManager {
             let blackPlayerAndHuman = blackPlayer != nil && !blackPlayer!.isComputerPlayer()
             let whitePlayerAndHuman = whitePlayer != nil && !whitePlayer!.isComputerPlayer()
             if((blackPlayerAndHuman || whitePlayerAndHuman) && !(blackPlayerAndHuman && whitePlayerAndHuman)) {
-                nextLabel = "Next level: \(challengeLevel)"
+                let lc: LevelController = LevelController()
+                nextLabel = "Next level: \(lc.getNextLevel(challengeLevelId))"
                 // If challenge mode, human won
                 switch(result) {
                 case Pieces.None:
@@ -131,6 +169,7 @@ class GameManager {
                 case Pieces.Black:
                     if(blackPlayerAndHuman) {
                         title = "You won."
+                        openNextLevel()
                         showNext = true
                     } else {
                         title = "You lose."
@@ -140,6 +179,7 @@ class GameManager {
                         title = "You lose."
                     } else {
                         title = "You won."
+                        openNextLevel()
                         showNext = true
                     }
                 default:
@@ -188,6 +228,17 @@ class GameManager {
             }
         }
         return false
+    }
+
+    private func openNextLevel() {
+        let lc: LevelController = LevelController()
+        let nextChallengeLevel = lc.getNextLevel(challengeLevelId)
+        if let uNCL = nextChallengeLevel {
+            let gs: GameSettings = GameSettings()
+            gs.loadFromUserDefaults()
+            gs.difficultyHighestBeaten = uNCL.levelId
+            gs.saveToUserDefaults()
+        }
     }
 
     private func isCurrentTurnDoablePut() -> Bool {

@@ -30,4 +30,8 @@ class GameViewModel {
     func showGameOver(title:String, message: String, showNext: Bool, nextLabel: String) {
         view.showGameOver(title, message: message, showNext: showNext, nextLabel: nextLabel)
     }
+
+    func isUpdateBoardViewQueueEmpty() -> Bool {
+        return view.isUpdateBoardViewQueueEmpty()
+    }
 }
