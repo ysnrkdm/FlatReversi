@@ -116,6 +116,9 @@ class GameManager {
             return false
         }
 
+        let gs: GameSettings = GameSettings()
+        gs.loadFromUserDefaults()
+
         let changes = self.boardMediator?.put(color, x: x, y: y)
         let showPuttables = isHumanTurn(nextTurn(self.turn))
         NSLog("Put \(x), \(y)")
@@ -124,7 +127,7 @@ class GameManager {
                 while(!gvm.isUpdateBoardViewQueueEmpty()) {
                     NSThread.sleepForTimeInterval(5/1000)
                 }
-                gvm.update(unwrappedChanges, put: [(x, y)], showPuttables: showPuttables)
+                gvm.update(unwrappedChanges, put: [(x, y)], showPuttables: showPuttables, showAnimation: gs.showAnimation)
             }
         }
         self.turn = nextTurn(self.turn)
@@ -198,7 +201,7 @@ class GameManager {
             NSLog("Current player cannot do anything, skipping")
             // Current player cannot do anything. Skip
             self.turn = nextTurn(self.turn)
-            self.gameViewModel?.update([], put: [], showPuttables: isCurrentTurnHuman())
+            self.gameViewModel?.update([], put: [], showPuttables: isCurrentTurnHuman(), showAnimation: gs.showAnimation)
             self.gameViewModel?.showPasses()
             startGame()
         } else {

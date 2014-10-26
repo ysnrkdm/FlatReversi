@@ -17,10 +17,10 @@ class GameViewModel {
         self.gameManager = gameManager
     }
 
-    func update(changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool) {
+    func update(changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool) {
         // from GameManager
         // to GameScene
-        view.updateView(gameManager.boardMediator!, changes: changes, put: put, showPuttables: showPuttables)
+        view.updateView(gameManager.boardMediator!, changes: changes, put: put, showPuttables: showPuttables, showAnimation: showAnimation)
     }
 
     func showPasses() {

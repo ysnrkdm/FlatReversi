@@ -13,12 +13,14 @@ class UpdateBoardViewContext {
     var changes:[(Int, Int)]
     var put: [(Int, Int)]
     var showPuttables: Bool
+    var showAnimation: Bool
 
-    init(boardMediator : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool) {
+    init(boardMediator : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool) {
         self.boardMediator = boardMediator
         self.changes = changes
         self.put = put
         self.showPuttables = showPuttables
+        self.showAnimation = showAnimation
     }
 }
 
@@ -176,7 +178,7 @@ class GameScene: SKScene {
             gameManager.initialize(gameViewModel!, gameSettings: gameSettings)
         }
         clearPieces()
-        updateView(gameManager.boardMediator!, changes: [], put: [], showPuttables: gameManager.isCurrentTurnHuman())
+        updateView(gameManager.boardMediator!, changes: [], put: [], showPuttables: gameManager.isCurrentTurnHuman(), showAnimation: gameSettings.showAnimation)
         time = 0
         lastUpdatedTime = 0
         timeCounterOn = false
@@ -208,9 +210,9 @@ class GameScene: SKScene {
         return (pos_x, pos_y)
     }
 
-    func updateView(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool) {
+    func updateView(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool) {
         if let q = updateBoardViewQueue {
-            let ubvc = UpdateBoardViewContext(boardMediator: bd, changes: changes, put: put, showPuttables: showPuttables)
+            let ubvc = UpdateBoardViewContext(boardMediator: bd, changes: changes, put: put, showPuttables: showPuttables, showAnimation: showAnimation)
             q.enqueue(ubvc)
         }
 //        addChildrenFromBoard(bd, changes: changes, put: put, showPuttables: showPuttables)
@@ -236,26 +238,16 @@ class GameScene: SKScene {
     }
 
     func processUpdateBoardViewContext(context: UpdateBoardViewContext) -> Bool {
-        return addChildrenFromBoard(context.boardMediator, changes: context.changes, put: context.put, showPuttables: context.showPuttables)
+        return addChildrenFromBoard(context.boardMediator, changes: context.changes, put: context.put, showPuttables: context.showPuttables, showAnimation: context.showAnimation)
     }
 
-    func addChildrenFromBoard(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool) -> Bool {
+    func addChildrenFromBoard(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool) -> Bool {
         NSLog("!syncstart!")
         if(self.drawCount > 0) {
             NSLog("Waiting for finish drawing...: \(self.drawCount)")
             return false
         }
         synchronized(lock) {
-//            let sleepMS = 0.5
-//            for c in 0..<Int(2/0.5) {
-//                if(self.drawCount <= 0) {
-//                    NSLog("Finished waiting drawing")
-//                    break
-//                }
-//                NSThread.sleepForTimeInterval(sleepMS)
-//                NSLog("Waiting for finish drawing...: \(self.drawCount)")
-//            }
-//            self.drawCount = 0
             for y in 0..<bd.height() {
                 for x in 0..<bd.width() {
                     let turn = bd.get(x, y: y)
@@ -323,7 +315,7 @@ class GameScene: SKScene {
                         }
 
                         self.drawCount+=1
-                        if(putAnimation) {
+                        if(putAnimation && showAnimation) {
                             let fadeOut = SKAction.fadeAlphaTo(1.0, duration: 0.05)
                             let colorChange = SKAction.runBlock({() in spriteUnwrapped.strokeColor = self.tintColor})
                             let fadeIn = SKAction.fadeAlphaTo(1.0, duration: 0.05)
@@ -338,7 +330,7 @@ class GameScene: SKScene {
                                 ])
 
                             spriteUnwrapped.runAction(sequenceActions, completion: {() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.alpha = 1.0; self.drawCount-=1; NSLog("put$")})
-                        } else if(flipAnimation) {
+                        } else if(flipAnimation && showAnimation) {
                             let fadeOut = SKAction.fadeAlphaTo(0.0, duration: 0.2)
                             let colorChange = SKAction.runBlock({() in spriteUnwrapped.fillColor = colorTo})
                             let fadeIn = SKAction.fadeAlphaTo(1.0, duration: 0.2)
@@ -363,16 +355,11 @@ class GameScene: SKScene {
                         self.boardSprites[y][x] = spriteUnwrapped
 
                     } // if let spriteUnwrapped = sprite
-                    //                    NSLog("if***")
                 } // for x
-                //                NSLog("x***")
             } // for y
-            //            NSLog("y***")
 
-//            NSLog(">>!!!")
             // Hilight put position
             if(put.count > 0) {
-                NSLog("!!!")
                 let (x, y) = put[0]
                 let boardView = self.childNodeWithName("Board") as SKSpriteNode
                 var piece_width = boardView.size.width / 8
@@ -380,15 +367,11 @@ class GameScene: SKScene {
                 self.lastPut = SKShapeNode(rect: self.screenRectFromVritualRect(CGRectMake(CGFloat(x) * piece_width, CGFloat(y) * piece_width, piece_width, piece_width)))
                 self.lastPut?.strokeColor = self.tintColor
                 boardView.addChild(self.lastPut!)
-//                NSLog("!!!")
             }
-//            NSLog("<<!!!")
 
             // Play information
             // piece_width + width + statusBarHeight
             self.showNumPieces(bd.getNumBlack(), white: bd.getNumWhite())
-
-//            NSLog("osimai!!!")
         } // synchronized
         NSLog("!syncend!")
         return true
