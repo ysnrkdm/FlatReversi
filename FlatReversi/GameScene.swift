@@ -109,6 +109,8 @@ class GameScene: SKScene {
             }
         }
 
+        drawCount = 0
+
         boardSprites = []
         for var y = 0; y < gameManager.boardMediator?.height(); ++y {
             boardSprites.append([nil, nil, nil, nil, nil, nil, nil, nil])

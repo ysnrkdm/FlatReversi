@@ -186,11 +186,11 @@ class GameManager {
             } else {
                 switch(result) {
                 case Pieces.Black:
-                    title = "Draw"
+                    title = "Black won."
                 case Pieces.White:
                     title = "White won."
                 case Pieces.None:
-                    title = "Black won."
+                    title = "Draw."
                 default:
                     assertionFailure("Should not reach this code!")
                 }

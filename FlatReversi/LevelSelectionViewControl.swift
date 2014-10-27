@@ -23,7 +23,7 @@ class LevelSelectionViewController: UIViewController, UITableViewDataSource, UIT
     var idCellBlackPlayer: String?
     var idCellWhitePlayer: String?
 
-    var cells: [(String, [LevelTableCell])]?
+    var cells: [(String, [TableCellDefinition])]?
 
     weak var delegate: LevelSelectionViewDelegate? = nil
 
@@ -49,6 +49,10 @@ class LevelSelectionViewController: UIViewController, UITableViewDataSource, UIT
                 cells![0].1.append(LevelTableCell(tableView: self.tableView, level: level))
             }
         }
+
+        var lastrow = LabelTableCell(tableView: self.tableView, label: "To be added...")
+        lastrow.getTableViewCell()
+        cells![0].1.append(lastrow)
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -115,9 +119,11 @@ class LevelSelectionViewController: UIViewController, UITableViewDataSource, UIT
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //
-        delegate?.finishSelection(cells![indexPath.section].1[indexPath.row].level)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        let row = cells![indexPath.section].1[indexPath.row]
+        if let ltcrow = row as? LevelTableCell {
+            delegate?.finishSelection(ltcrow.level)
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
 
     class TableCellDefinition {
@@ -131,6 +137,21 @@ class LevelSelectionViewController: UIViewController, UITableViewDataSource, UIT
         func getTableViewCell() -> UITableViewCell {
             return tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
         }
+    }
+
+    class LabelTableCell: TableCellDefinition {
+        var label: String
+        init(tableView: UITableView, label: String) {
+            self.label = label
+            super.init(reusableCellId: "kCellBasic", tableView: tableView)
+        }
+
+        override func getTableViewCell() -> UITableViewCell {
+            var cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
+            cell.textLabel.text = label
+            return cell
+        }
+        
     }
 
     class LevelTableCell: TableCellDefinition {
