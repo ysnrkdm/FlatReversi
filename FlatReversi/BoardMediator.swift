@@ -189,7 +189,6 @@ class BoardMediator {
         return self.board.toString()
     }
 
-    // FIXME: Needs to be refactored to be moved to Game Manager
     func nextTurn(color: Pieces) -> Pieces {
         var s : Pieces = .Black
         switch color {

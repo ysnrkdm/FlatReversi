@@ -38,6 +38,9 @@ class LevelController {
         Level(level: 2, levelId: 2, levelTitle: "Random + zone ordering", levelDescr: ""),
         Level(level: 3, levelId: 3, levelTitle: "Random + zone ordering+", levelDescr: ""),
         Level(level: 4, levelId: 4, levelTitle: "Random + zone ordering+2", levelDescr: ""),
+        Level(level: 5, levelId: 5, levelTitle: "Greedy", levelDescr: ""),
+        Level(level: 6, levelId: 6, levelTitle: "Random + zone ordering+3", levelDescr: ""),
+        Level(level: 7, levelId: 7, levelTitle: "Random + zone ordering+4", levelDescr: ""),
         Level(level: 0, levelId: 1001, levelTitle: "SpecialAI", levelDescr: ""),
     ]
 
@@ -96,24 +99,38 @@ class LevelController {
         return levelId == 0 || levelId == 1000
     }
 
-    func getPlayerByLevelId(levelId: Int, playerMediattor: PlayerMediator, color: Pieces) -> Player? {
+    func getPlayerByLevelId(levelId: Int, playerMediator: PlayerMediator, color: Pieces) -> Player? {
         switch(levelId) {
         case 1:
-            let rcp = RandomComputerPlayer(playerMediator: playerMediattor, color: color)
+            let rcp = RandomComputerPlayer(playerMediator: playerMediator, color: color)
             return rcp
         case 2:
-            let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediattor, color: color)
+            let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
             let z = ZonesFactory().createZoneTypical4(2, bVal: 1.1, cVal: 1.4, dVal: 1.7)
             rcp.configure(z)
             return rcp
         case 3:
-            let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediattor, color: color)
+            let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
             let z = ZonesFactory().createZoneTypical4(9, bVal: 1, cVal: 1.5, dVal: 2)
             rcp.configure(z)
             return rcp
         case 4:
-            let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediattor, color: color)
+            let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
             let z = ZonesFactory().createZoneTypical4(99, bVal: 1, cVal: 8, dVal: 16)
+            rcp.configure(z)
+            return rcp
+        case 5:
+            return GreedyPlayer(playerMediator: playerMediator, color: color)
+        case 6:
+            return GreedyPlayer(playerMediator: playerMediator, color: color)
+        case 7:
+            let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
+            let z = ZonesFactory().createZoneTypical7(99, bVal: 1, cVal: 3, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
+            rcp.configure(z)
+            return rcp
+        case 8:
+            let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
+            let z = ZonesFactory().createZoneTypical7(99, bVal: -12, cVal: 0, dVal: -1, eVal: -3, fVal: 0, gVal: -1)
             rcp.configure(z)
             return rcp
         default:

@@ -28,6 +28,10 @@
 		8B22E20519FD35F30006E39C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B22E20419FD35F30006E39C /* SystemConfiguration.framework */; };
 		8B22E20819FD39A30006E39C /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B22E20719FD39A30006E39C /* iAd.framework */; };
 		8B22E26E19FD3A0A0006E39C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B22E26D19FD3A090006E39C /* Security.framework */; };
+		8B22E27019FE7A110006E39C /* GreedyPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E26F19FE7A110006E39C /* GreedyPlayer.swift */; };
+		8B22E27319FE7A450006E39C /* ComputerPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E27219FE7A450006E39C /* ComputerPlayer.swift */; };
+		8B22E27519FFE0890006E39C /* Evaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E27419FFE0890006E39C /* Evaluator.swift */; };
+		8B22E27719FFE1080006E39C /* ClassicalEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E27619FFE1080006E39C /* ClassicalEvaluator.swift */; };
 		8B74E1C519F9ED9700B5E87E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1C419F9ED9700B5E87E /* AppDelegate.swift */; };
 		8B74E1C719F9ED9700B5E87E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B74E1C619F9ED9700B5E87E /* GameScene.sks */; };
 		8B74E1C919F9ED9700B5E87E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1C819F9ED9700B5E87E /* GameScene.swift */; };
@@ -38,7 +42,7 @@
 		8B74E1DF19F9ED9700B5E87E /* FlatReversiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1DE19F9ED9700B5E87E /* FlatReversiTests.swift */; };
 		8B74E1F719F9EE6900B5E87E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1E819F9EE6900B5E87E /* Board.swift */; };
 		8B74E1F819F9EE6900B5E87E /* BoardMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1E919F9EE6900B5E87E /* BoardMediator.swift */; };
-		8B74E1F919F9EE6900B5E87E /* BoardRepresentative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1EA19F9EE6900B5E87E /* BoardRepresentative.swift */; };
+		8B74E1F919F9EE6900B5E87E /* BoardRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1EA19F9EE6900B5E87E /* BoardRepresentation.swift */; };
 		8B74E1FA19F9EE6900B5E87E /* CustomStepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1EB19F9EE6900B5E87E /* CustomStepperTableViewCell.swift */; };
 		8B74E1FB19F9EE6900B5E87E /* CustomStepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B74E1EC19F9EE6900B5E87E /* CustomStepperTableViewCell.xib */; };
 		8B74E1FC19F9EE6900B5E87E /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1ED19F9EE6900B5E87E /* GameManager.swift */; };
@@ -113,6 +117,10 @@
 		8B22E20619FD37930006E39C /* Swift_Bridging_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Swift_Bridging_Header.h; sourceTree = "<group>"; };
 		8B22E20719FD39A30006E39C /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		8B22E26D19FD3A090006E39C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		8B22E26F19FE7A110006E39C /* GreedyPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreedyPlayer.swift; sourceTree = "<group>"; };
+		8B22E27219FE7A450006E39C /* ComputerPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComputerPlayer.swift; sourceTree = "<group>"; };
+		8B22E27419FFE0890006E39C /* Evaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Evaluator.swift; sourceTree = "<group>"; };
+		8B22E27619FFE1080006E39C /* ClassicalEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicalEvaluator.swift; sourceTree = "<group>"; };
 		8B74E1BF19F9ED9600B5E87E /* FlatReversi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlatReversi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B74E1C319F9ED9600B5E87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B74E1C419F9ED9700B5E87E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -127,7 +135,7 @@
 		8B74E1DE19F9ED9700B5E87E /* FlatReversiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatReversiTests.swift; sourceTree = "<group>"; };
 		8B74E1E819F9EE6900B5E87E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		8B74E1E919F9EE6900B5E87E /* BoardMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardMediator.swift; sourceTree = "<group>"; };
-		8B74E1EA19F9EE6900B5E87E /* BoardRepresentative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardRepresentative.swift; sourceTree = "<group>"; };
+		8B74E1EA19F9EE6900B5E87E /* BoardRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardRepresentation.swift; sourceTree = "<group>"; };
 		8B74E1EB19F9EE6900B5E87E /* CustomStepperTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomStepperTableViewCell.swift; sourceTree = "<group>"; };
 		8B74E1EC19F9EE6900B5E87E /* CustomStepperTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomStepperTableViewCell.xib; sourceTree = "<group>"; };
 		8B74E1ED19F9EE6900B5E87E /* GameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
@@ -262,6 +270,19 @@
 			path = Ad/iAd;
 			sourceTree = "<group>";
 		};
+		8B22E27119FE7A270006E39C /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				8B74E1F019F9EE6900B5E87E /* HumanPlayer.swift */,
+				8B74E1F319F9EE6900B5E87E /* Player.swift */,
+				8B74E1F519F9EE6900B5E87E /* RandomComputerPlayer.swift */,
+				8B22E1BD19FC073B0006E39C /* RandomPlayerWithEvaluation.swift */,
+				8B22E26F19FE7A110006E39C /* GreedyPlayer.swift */,
+				8B22E27219FE7A450006E39C /* ComputerPlayer.swift */,
+			);
+			name = Player;
+			sourceTree = "<group>";
+		};
 		8B74E1B619F9ED9600B5E87E = {
 			isa = PBXGroup;
 			children = (
@@ -299,19 +320,18 @@
 				8B74E1E819F9EE6900B5E87E /* Board.swift */,
 				8B22E1BF19FC75100006E39C /* Zones.swift */,
 				8B74E1E919F9EE6900B5E87E /* BoardMediator.swift */,
-				8B74E1EA19F9EE6900B5E87E /* BoardRepresentative.swift */,
+				8B22E27419FFE0890006E39C /* Evaluator.swift */,
+				8B22E27619FFE1080006E39C /* ClassicalEvaluator.swift */,
+				8B74E1EA19F9EE6900B5E87E /* BoardRepresentation.swift */,
 				8B74E1EB19F9EE6900B5E87E /* CustomStepperTableViewCell.swift */,
 				8B74E1EC19F9EE6900B5E87E /* CustomStepperTableViewCell.xib */,
 				8B74E1ED19F9EE6900B5E87E /* GameManager.swift */,
 				8B74E1EE19F9EE6900B5E87E /* GameSettings.swift */,
 				8B74E1EF19F9EE6900B5E87E /* GameViewModel.swift */,
-				8B74E1F019F9EE6900B5E87E /* HumanPlayer.swift */,
+				8B22E27119FE7A270006E39C /* Player */,
 				8B74E1F119F9EE6900B5E87E /* HumanUserInput.swift */,
 				8B74E1F219F9EE6900B5E87E /* Locking.swift */,
-				8B74E1F319F9EE6900B5E87E /* Player.swift */,
 				8B74E1F419F9EE6900B5E87E /* PlayerMediator.swift */,
-				8B74E1F519F9EE6900B5E87E /* RandomComputerPlayer.swift */,
-				8B22E1BD19FC073B0006E39C /* RandomPlayerWithEvaluation.swift */,
 				8B74E1F619F9EE6900B5E87E /* SettingsViewContoller.swift */,
 				8B74E1C419F9ED9700B5E87E /* AppDelegate.swift */,
 				8B74E1C619F9ED9700B5E87E /* GameScene.sks */,
@@ -460,14 +480,18 @@
 			files = (
 				8B74E1C919F9ED9700B5E87E /* GameScene.swift in Sources */,
 				8B74E1FC19F9EE6900B5E87E /* GameManager.swift in Sources */,
+				8B22E27019FE7A110006E39C /* GreedyPlayer.swift in Sources */,
+				8B22E27719FFE1080006E39C /* ClassicalEvaluator.swift in Sources */,
 				8B74E20419F9EE6900B5E87E /* RandomComputerPlayer.swift in Sources */,
 				8B22E1C219FC80C50006E39C /* Queue.swift in Sources */,
+				8B22E27519FFE0890006E39C /* Evaluator.swift in Sources */,
 				8B22E1C019FC75100006E39C /* Zones.swift in Sources */,
 				8B74E1FD19F9EE6900B5E87E /* GameSettings.swift in Sources */,
 				8B74E20019F9EE6900B5E87E /* HumanUserInput.swift in Sources */,
 				8B74E20219F9EE6900B5E87E /* Player.swift in Sources */,
-				8B74E1F919F9EE6900B5E87E /* BoardRepresentative.swift in Sources */,
+				8B74E1F919F9EE6900B5E87E /* BoardRepresentation.swift in Sources */,
 				8B74E1CB19F9ED9700B5E87E /* GameViewController.swift in Sources */,
+				8B22E27319FE7A450006E39C /* ComputerPlayer.swift in Sources */,
 				8B74E1F819F9EE6900B5E87E /* BoardMediator.swift in Sources */,
 				8B74E1FA19F9EE6900B5E87E /* CustomStepperTableViewCell.swift in Sources */,
 				8B74E1F719F9EE6900B5E87E /* Board.swift in Sources */,

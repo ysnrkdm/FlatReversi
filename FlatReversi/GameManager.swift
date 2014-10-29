@@ -76,7 +76,7 @@ class GameManager {
         if(isComputer) {
             let lc: LevelController = LevelController()
 
-            if let player = lc.getPlayerByLevelId(levelId, playerMediattor: playerMediator, color: color) {
+            if let player = lc.getPlayerByLevelId(levelId, playerMediator: playerMediator, color: color) {
                 return player
             } else {
                 let computerWeakestPlayer = RandomComputerPlayer(playerMediator: playerMediator, color: color)
@@ -252,10 +252,10 @@ class GameManager {
         return false
     }
 
-    func getBoardRepresentative() -> BoardRepresentative? {
+    func getBoardRepresentation() -> BoardRepresentation? {
         if let unwrappedBoardMediator = self.boardMediator {
-            let boardRepresentative = BoardRepresentative(boardMediator: unwrappedBoardMediator)
-            return boardRepresentative
+            let boardRepresentation = BoardRepresentation(boardMediator: unwrappedBoardMediator)
+            return boardRepresentation
         }
         return nil
     }

@@ -19,7 +19,7 @@ class PlayerMediator {
         return gameManager.put(color, x: x, y: y)
     }
 
-    func getBoardRepresentative() -> BoardRepresentative? {
-        return gameManager.getBoardRepresentative()
+    func getBoardRepresentation() -> BoardRepresentation? {
+        return gameManager.getBoardRepresentation()
     }
 }

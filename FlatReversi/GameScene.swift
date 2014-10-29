@@ -95,8 +95,6 @@ class GameScene: SKScene {
 
         showNumPieces(0, white: 0)
 
-        //        gameSettings.blackPlayerComputer = 1
-        //        gameSettings.whitePlayerComputerLevel = 1
         startGame()
         NSLog("\n" + gameManager.toString())
     }
@@ -217,7 +215,6 @@ class GameScene: SKScene {
             let ubvc = UpdateBoardViewContext(boardMediator: bd, changes: changes, put: put, showPuttables: showPuttables, showAnimation: showAnimation)
             q.enqueue(ubvc)
         }
-//        addChildrenFromBoard(bd, changes: changes, put: put, showPuttables: showPuttables)
     }
 
     func isUpdateBoardViewQueueEmpty() -> Bool {

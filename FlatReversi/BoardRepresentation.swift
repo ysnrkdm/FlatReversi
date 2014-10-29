@@ -1,5 +1,5 @@
 //
-//  BoardRepresentative.swift
+//  BoardRepresentation.swift
 //  MyFirstSpriteKit
 //
 //  Created by Kodama Yoshinori on 10/17/14.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BoardRepresentative {
+class BoardRepresentation {
     var boardMediator: BoardMediator
 
     init(boardMediator: BoardMediator) {
@@ -80,5 +80,9 @@ class BoardRepresentative {
 
     func toString() -> String {
         return self.boardMediator.toString()
+    }
+
+    func eval(evaluator: Evaluator) -> Double {
+        return evaluator.eval(self);
     }
 }

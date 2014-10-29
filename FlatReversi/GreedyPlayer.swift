@@ -1,21 +1,14 @@
 //
-//  RandomPlayerWithEvaluation.swift
+//  GreedyPlayer.swift
 //  FlatReversi
 //
-//  Created by Kodama Yoshinori on 10/26/14.
+//  Created by Kodama Yoshinori on 10/27/14.
 //  Copyright (c) 2014 Yoshinori Kodama. All rights reserved.
 //
 
 import Foundation
 
-class RandomPlayerWithEvaluation: ComputerPlayer {
-
-    var zones: Zones? = nil
-
-    func configure(zones: Zones) {
-        self.zones = zones
-    }
-
+class GreedyPlayer: ComputerPlayer {
     override func think() {
         NSLog("Start thinking")
         var retx = 0
@@ -23,12 +16,14 @@ class RandomPlayerWithEvaluation: ComputerPlayer {
 
         if let puttables = playerMediator.getBoardRepresentation()?.getPuttables(self.color) {
             NSLog("puttables are \(puttables.count)")
+            var maxNumReversibles = 0
             if puttables.count > 0 {
-                if let uzones = zones {
-                    NSLog("\n" + uzones.toString())
-                    let coords = uzones.getTopNByRandomInPuttables(1, puttables: puttables)
-                    if coords.count > 0 {
-                        (retx, rety) = coords[0]
+                for (px, py) in puttables {
+                    if let reversible = self.playerMediator.getBoardRepresentation()?.getReversible(self.color, x: px, y: py) {
+                        if maxNumReversibles < reversible.count {
+                            (retx, rety) = (px, py)
+                            maxNumReversibles = reversible.count
+                        }
                     }
                 }
             }

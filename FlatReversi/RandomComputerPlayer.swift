@@ -8,24 +8,14 @@
 
 import Foundation
 
-class RandomComputerPlayer: Player {
+class RandomComputerPlayer: ComputerPlayer {
 
-    var level: Int = 0
-
-    override func initialize(level: Int) {
-        self.level = level
-    }
-
-    override func play() {
-        dispatch_async_global({self.think()})
-    }
-
-    func think() {
+    override func think() {
         NSLog("Start thinking")
         var retx = 0
         var rety = 0
         if(level >= 1) {
-            if let puttables = playerMediator.getBoardRepresentative()?.getPuttables(self.color) {
+            if let puttables = playerMediator.getBoardRepresentation()?.getPuttables(self.color) {
                 NSLog("puttables are \(puttables.count)")
                 if(puttables.count > 0) {
                     let selected = Int(arc4random_uniform((puttables.count - 1) - 0 + 1)) + 0

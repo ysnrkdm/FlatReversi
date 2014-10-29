@@ -95,4 +95,20 @@ class ZonesFactory {
         }
         return z
     }
+
+    func createZoneTypical7(aVal: Double, bVal: Double, cVal: Double, dVal: Double, eVal: Double, fVal: Double, gVal: Double) -> Zones{
+        var zones: [[Double]] = [
+            [aVal, bVal, cVal, dVal, dVal, cVal, bVal, aVal, ],
+            [bVal, cVal, eVal, eVal, eVal, eVal, cVal, bVal, ],
+            [cVal, eVal, fVal, gVal, gVal, fVal, eVal, cVal, ],
+            [dVal, eVal, gVal, gVal, gVal, gVal, eVal, dVal, ],
+            [dVal, eVal, gVal, gVal, gVal, gVal, eVal, dVal, ],
+            [cVal, eVal, fVal, gVal, gVal, fVal, eVal, cVal, ],
+            [bVal, cVal, eVal, eVal, eVal, eVal, cVal, bVal, ],
+            [aVal, bVal, cVal, dVal, dVal, cVal, bVal, aVal, ],
+        ]
+
+        let z = Zones(zones: zones)
+        return z
+    }
 }
