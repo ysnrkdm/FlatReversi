@@ -10,9 +10,9 @@ import Foundation
 
 class GameViewModel {
     var gameManager: GameManager
-    var view: GameScene
+    var view: GameViewScene
 
-    init(gameManager: GameManager, view: GameScene) {
+    init(gameManager: GameManager, view: GameViewScene) {
         self.view = view
         self.gameManager = gameManager
     }

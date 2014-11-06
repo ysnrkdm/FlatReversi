@@ -24,7 +24,7 @@ class UpdateBoardViewContext {
     }
 }
 
-class GameScene: SKScene {
+class GameScene: SKScene, GameViewScene {
     var blackComputerLevel: Int = 0
     var whiteComputerLevel: Int = 1
 
@@ -219,7 +219,7 @@ class GameScene: SKScene {
 
     func isUpdateBoardViewQueueEmpty() -> Bool {
         if let q = updateBoardViewQueue {
-            return q.isEmpty()
+            return q.isEmpty
         }
         return true
     }

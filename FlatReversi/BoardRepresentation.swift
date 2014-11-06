@@ -78,11 +78,31 @@ class BoardRepresentation {
         return reversed
     }
 
+    func getNumBlack() -> Int {
+        return boardMediator.getNumBlack()
+    }
+
+    func getNumWhite() -> Int {
+        return boardMediator.getNumWhite()
+    }
+
+    func getNumVacant() -> Int {
+        return 64 - getNumBlack() - getNumWhite()
+    }
+
     func toString() -> String {
         return self.boardMediator.toString()
     }
 
     func eval(evaluator: Evaluator) -> Double {
         return evaluator.eval(self);
+    }
+
+    func clone() -> BoardRepresentation {
+        let b: [[Pieces]] = self.boardMediator.board.board
+        let newBR = BoardRepresentation(boardMediator: BoardMediator())
+        newBR.boardMediator.board.board = b
+
+        return newBR
     }
 }

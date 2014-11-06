@@ -32,6 +32,20 @@
 		8B22E27319FE7A450006E39C /* ComputerPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E27219FE7A450006E39C /* ComputerPlayer.swift */; };
 		8B22E27519FFE0890006E39C /* Evaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E27419FFE0890006E39C /* Evaluator.swift */; };
 		8B22E27719FFE1080006E39C /* ClassicalEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E27619FFE1080006E39C /* ClassicalEvaluator.swift */; };
+		8B22E2791A011C550006E39C /* ProofSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E2781A011C550006E39C /* ProofSolver.swift */; };
+		8B22E27B1A011CD20006E39C /* SimpleProofSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E27A1A011CD20006E39C /* SimpleProofSolver.swift */; };
+		8B22E27D1A0278730006E39C /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E27C1A0278730006E39C /* Stack.swift */; };
+		8B22E2811A0280C30006E39C /* BoardBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E2801A0280C30006E39C /* BoardBuilder.swift */; };
+		8B4E16791A03B8B900BE87E2 /* SimpleProofSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E27A1A011CD20006E39C /* SimpleProofSolver.swift */; };
+		8B4E167A1A03B8CF00BE87E2 /* ProofSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E2781A011C550006E39C /* ProofSolver.swift */; };
+		8B4E167B1A03B8DA00BE87E2 /* BoardRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1EA19F9EE6900B5E87E /* BoardRepresentation.swift */; };
+		8B4E167C1A03B8E300BE87E2 /* BoardMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1E919F9EE6900B5E87E /* BoardMediator.swift */; };
+		8B4E167E1A03BB4000BE87E2 /* GameViewScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4E167D1A03BB4000BE87E2 /* GameViewScene.swift */; };
+		8B4E167F1A03BBE300BE87E2 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1E819F9EE6900B5E87E /* Board.swift */; };
+		8B4E16801A03BC1700BE87E2 /* Evaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E27419FFE0890006E39C /* Evaluator.swift */; };
+		8B4E16811A03BC3100BE87E2 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E1C119FC80C50006E39C /* Queue.swift */; };
+		8B4E16821A03BC3100BE87E2 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E27C1A0278730006E39C /* Stack.swift */; };
+		8B4E16831A03BC6400BE87E2 /* BoardBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E2801A0280C30006E39C /* BoardBuilder.swift */; };
 		8B74E1C519F9ED9700B5E87E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1C419F9ED9700B5E87E /* AppDelegate.swift */; };
 		8B74E1C719F9ED9700B5E87E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B74E1C619F9ED9700B5E87E /* GameScene.sks */; };
 		8B74E1C919F9ED9700B5E87E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1C819F9ED9700B5E87E /* GameScene.swift */; };
@@ -121,6 +135,11 @@
 		8B22E27219FE7A450006E39C /* ComputerPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComputerPlayer.swift; sourceTree = "<group>"; };
 		8B22E27419FFE0890006E39C /* Evaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Evaluator.swift; sourceTree = "<group>"; };
 		8B22E27619FFE1080006E39C /* ClassicalEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicalEvaluator.swift; sourceTree = "<group>"; };
+		8B22E2781A011C550006E39C /* ProofSolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProofSolver.swift; sourceTree = "<group>"; };
+		8B22E27A1A011CD20006E39C /* SimpleProofSolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleProofSolver.swift; sourceTree = "<group>"; };
+		8B22E27C1A0278730006E39C /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		8B22E2801A0280C30006E39C /* BoardBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardBuilder.swift; sourceTree = "<group>"; };
+		8B4E167D1A03BB4000BE87E2 /* GameViewScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewScene.swift; sourceTree = "<group>"; };
 		8B74E1BF19F9ED9600B5E87E /* FlatReversi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlatReversi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B74E1C319F9ED9600B5E87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B74E1C419F9ED9700B5E87E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -318,11 +337,14 @@
 			children = (
 				8B22E1C319FD34220006E39C /* Ad */,
 				8B74E1E819F9EE6900B5E87E /* Board.swift */,
+				8B22E2801A0280C30006E39C /* BoardBuilder.swift */,
 				8B22E1BF19FC75100006E39C /* Zones.swift */,
 				8B74E1E919F9EE6900B5E87E /* BoardMediator.swift */,
 				8B22E27419FFE0890006E39C /* Evaluator.swift */,
 				8B22E27619FFE1080006E39C /* ClassicalEvaluator.swift */,
 				8B74E1EA19F9EE6900B5E87E /* BoardRepresentation.swift */,
+				8B22E2781A011C550006E39C /* ProofSolver.swift */,
+				8B22E27A1A011CD20006E39C /* SimpleProofSolver.swift */,
 				8B74E1EB19F9EE6900B5E87E /* CustomStepperTableViewCell.swift */,
 				8B74E1EC19F9EE6900B5E87E /* CustomStepperTableViewCell.xib */,
 				8B74E1ED19F9EE6900B5E87E /* GameManager.swift */,
@@ -334,17 +356,19 @@
 				8B74E1F419F9EE6900B5E87E /* PlayerMediator.swift */,
 				8B74E1F619F9EE6900B5E87E /* SettingsViewContoller.swift */,
 				8B74E1C419F9ED9700B5E87E /* AppDelegate.swift */,
-				8B74E1C619F9ED9700B5E87E /* GameScene.sks */,
 				8B74E1C819F9ED9700B5E87E /* GameScene.swift */,
+				8B4E167D1A03BB4000BE87E2 /* GameViewScene.swift */,
 				8B74E1CA19F9ED9700B5E87E /* GameViewController.swift */,
 				8B22E1B919FAAC0C0006E39C /* LevelSelectionViewControl.swift */,
 				8B22E1BB19FBAE400006E39C /* LevelController.swift */,
+				8B22E1C119FC80C50006E39C /* Queue.swift */,
+				8B22E27C1A0278730006E39C /* Stack.swift */,
+				8B22E20619FD37930006E39C /* Swift_Bridging_Header.h */,
+				8B74E1C619F9ED9700B5E87E /* GameScene.sks */,
 				8B74E1CC19F9ED9700B5E87E /* Main.storyboard */,
 				8B74E1CF19F9ED9700B5E87E /* Images.xcassets */,
 				8B74E1D119F9ED9700B5E87E /* LaunchScreen.xib */,
 				8B74E1C219F9ED9600B5E87E /* Supporting Files */,
-				8B22E1C119FC80C50006E39C /* Queue.swift */,
-				8B22E20619FD37930006E39C /* Swift_Bridging_Header.h */,
 			);
 			path = FlatReversi;
 			sourceTree = "<group>";
@@ -482,22 +506,27 @@
 				8B74E1FC19F9EE6900B5E87E /* GameManager.swift in Sources */,
 				8B22E27019FE7A110006E39C /* GreedyPlayer.swift in Sources */,
 				8B22E27719FFE1080006E39C /* ClassicalEvaluator.swift in Sources */,
+				8B22E2811A0280C30006E39C /* BoardBuilder.swift in Sources */,
 				8B74E20419F9EE6900B5E87E /* RandomComputerPlayer.swift in Sources */,
 				8B22E1C219FC80C50006E39C /* Queue.swift in Sources */,
 				8B22E27519FFE0890006E39C /* Evaluator.swift in Sources */,
 				8B22E1C019FC75100006E39C /* Zones.swift in Sources */,
 				8B74E1FD19F9EE6900B5E87E /* GameSettings.swift in Sources */,
 				8B74E20019F9EE6900B5E87E /* HumanUserInput.swift in Sources */,
+				8B22E2791A011C550006E39C /* ProofSolver.swift in Sources */,
 				8B74E20219F9EE6900B5E87E /* Player.swift in Sources */,
 				8B74E1F919F9EE6900B5E87E /* BoardRepresentation.swift in Sources */,
+				8B22E27B1A011CD20006E39C /* SimpleProofSolver.swift in Sources */,
 				8B74E1CB19F9ED9700B5E87E /* GameViewController.swift in Sources */,
 				8B22E27319FE7A450006E39C /* ComputerPlayer.swift in Sources */,
+				8B4E167E1A03BB4000BE87E2 /* GameViewScene.swift in Sources */,
 				8B74E1F819F9EE6900B5E87E /* BoardMediator.swift in Sources */,
 				8B74E1FA19F9EE6900B5E87E /* CustomStepperTableViewCell.swift in Sources */,
 				8B74E1F719F9EE6900B5E87E /* Board.swift in Sources */,
 				8B74E20119F9EE6900B5E87E /* Locking.swift in Sources */,
 				8B74E1FE19F9EE6900B5E87E /* GameViewModel.swift in Sources */,
 				8B74E1C519F9ED9700B5E87E /* AppDelegate.swift in Sources */,
+				8B22E27D1A0278730006E39C /* Stack.swift in Sources */,
 				8B74E1FF19F9EE6900B5E87E /* HumanPlayer.swift in Sources */,
 				8B22E1BC19FBAE400006E39C /* LevelController.swift in Sources */,
 				8B74E20319F9EE6900B5E87E /* PlayerMediator.swift in Sources */,
@@ -512,6 +541,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B74E1DF19F9ED9700B5E87E /* FlatReversiTests.swift in Sources */,
+				8B4E16821A03BC3100BE87E2 /* Stack.swift in Sources */,
+				8B4E16801A03BC1700BE87E2 /* Evaluator.swift in Sources */,
+				8B4E167A1A03B8CF00BE87E2 /* ProofSolver.swift in Sources */,
+				8B4E16831A03BC6400BE87E2 /* BoardBuilder.swift in Sources */,
+				8B4E16811A03BC3100BE87E2 /* Queue.swift in Sources */,
+				8B4E167F1A03BBE300BE87E2 /* Board.swift in Sources */,
+				8B4E167C1A03B8E300BE87E2 /* BoardMediator.swift in Sources */,
+				8B4E16791A03B8B900BE87E2 /* SimpleProofSolver.swift in Sources */,
+				8B4E167B1A03B8DA00BE87E2 /* BoardRepresentation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

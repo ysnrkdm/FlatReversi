@@ -9,6 +9,8 @@
 import UIKit
 import XCTest
 
+import FlatReversi
+
 class FlatReversiTests: XCTestCase {
     
     override func setUp() {
@@ -24,13 +26,25 @@ class FlatReversiTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         XCTAssert(true, "Pass")
+
+        let b = BoardBuilder.build(
+            "........" +
+            "........" +
+            "........" +
+            "...BW..." +
+            "...WB..." +
+            "........" +
+            "........" +
+            "........"
+        )
+        NSLog(b.toString())
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
+//    func testPerformanceExample() {
+//        // This is an example of a performance test case.
+//        self.measureBlock() {
+//            // Put the code you want to measure the time of here.
+//        }
+//    }
+
 }
