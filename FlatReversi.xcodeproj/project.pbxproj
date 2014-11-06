@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B15FEB01A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15FEAF1A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift */; };
 		8B22E1BA19FAAC0C0006E39C /* LevelSelectionViewControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E1B919FAAC0C0006E39C /* LevelSelectionViewControl.swift */; };
 		8B22E1BC19FBAE400006E39C /* LevelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E1BB19FBAE400006E39C /* LevelController.swift */; };
 		8B22E1BE19FC073B0006E39C /* RandomPlayerWithEvaluation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E1BD19FC073B0006E39C /* RandomPlayerWithEvaluation.swift */; };
@@ -82,6 +83,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B15FEAF1A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomPlayerWithPNS.swift; sourceTree = "<group>"; };
 		8B22E1B919FAAC0C0006E39C /* LevelSelectionViewControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelSelectionViewControl.swift; sourceTree = "<group>"; };
 		8B22E1BB19FBAE400006E39C /* LevelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelController.swift; sourceTree = "<group>"; };
 		8B22E1BD19FC073B0006E39C /* RandomPlayerWithEvaluation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomPlayerWithEvaluation.swift; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 				8B22E1BD19FC073B0006E39C /* RandomPlayerWithEvaluation.swift */,
 				8B22E26F19FE7A110006E39C /* GreedyPlayer.swift */,
 				8B22E27219FE7A450006E39C /* ComputerPlayer.swift */,
+				8B15FEAF1A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift */,
 			);
 			name = Player;
 			sourceTree = "<group>";
@@ -517,6 +520,7 @@
 				8B74E20219F9EE6900B5E87E /* Player.swift in Sources */,
 				8B74E1F919F9EE6900B5E87E /* BoardRepresentation.swift in Sources */,
 				8B22E27B1A011CD20006E39C /* SimpleProofSolver.swift in Sources */,
+				8B15FEB01A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift in Sources */,
 				8B74E1CB19F9ED9700B5E87E /* GameViewController.swift in Sources */,
 				8B22E27319FE7A450006E39C /* ComputerPlayer.swift in Sources */,
 				8B4E167E1A03BB4000BE87E2 /* GameViewScene.swift in Sources */,

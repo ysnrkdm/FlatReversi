@@ -114,7 +114,7 @@ class SimpleProofSolver: ProofSolver {
 
         pns(root)
 
-        println("Answer : \n" + root.toString())
+//        println("Answer : \n" + root.toString())
 
 
         if root.proof == 0 {
@@ -146,14 +146,14 @@ class SimpleProofSolver: ProofSolver {
         var current = root
 
         while root.proof != 0 && root.disproof != 0 && resourcesAvailable() {
-            println("in loop")
+//            println("in loop")
             let mostProving = selectMostProvingNode(current, attacker: root.whosTurn)
-            println("most proving : " + mostProving.toString())
+//            println("most proving : " + mostProving.toString())
             expandNode(mostProving, attacker: root.whosTurn)
-            println("expanded. update ancestors")
+//            println("expanded. update ancestors")
             current = updateAncestors(mostProving, root: root)
-            println("done. next loop...")
-            println(current.toString())
+//            println("done. next loop...")
+//            println(current.toString())
         }
     }
 
@@ -300,12 +300,12 @@ class SimpleProofSolver: ProofSolver {
             return .Undefined
         } else {
             if boardRepresentation.getNumBlack() > boardRepresentation.getNumWhite() {
-                println("Black Win")
-                println(boardRepresentation.toString())
+//                println("Black Win")
+//                println(boardRepresentation.toString())
                 return .BlackWin
             } else if boardRepresentation.getNumBlack() < boardRepresentation.getNumWhite() {
-                println("White Win")
-                println(boardRepresentation.toString())
+//                println("White Win")
+//                println(boardRepresentation.toString())
                 return .WhiteWin
             } else {
                 return .Draw

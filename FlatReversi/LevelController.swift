@@ -41,6 +41,8 @@ class LevelController {
         Level(level: 5, levelId: 5, levelTitle: "Greedy", levelDescr: ""),
         Level(level: 6, levelId: 6, levelTitle: "Random + zone ordering+3", levelDescr: ""),
         Level(level: 7, levelId: 7, levelTitle: "Random + zone ordering+4", levelDescr: ""),
+        Level(level: 8, levelId: 8, levelTitle: "Random + zone ordering+5", levelDescr: ""),
+        Level(level: 9, levelId: 9, levelTitle: "Random + PNS", levelDescr: ""),
         Level(level: 0, levelId: 1001, levelTitle: "SpecialAI", levelDescr: ""),
     ]
 
@@ -48,7 +50,7 @@ class LevelController {
         let gs: GameSettings = GameSettings()
         gs.loadFromUserDefaults()
 
-        if(considerDifficultyHighestBeaten) {
+        if considerDifficultyHighestBeaten && false {
             var ret: [Level] = []
             for level in levels {
                 if 0 < level.level && level.level <= gs.difficultyHighestBeaten {
@@ -130,8 +132,13 @@ class LevelController {
             return rcp
         case 8:
             let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
-            let z = ZonesFactory().createZoneTypical7(99, bVal: -12, cVal: 0, dVal: -1, eVal: -3, fVal: 0, gVal: -1)
+            let z = ZonesFactory().createZoneTypical7(99, bVal: 0.6, cVal: 3, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
             rcp.configure(z)
+            return rcp
+        case 9:
+            let rcp = RandomPlayerWithPNS(playerMediator: playerMediator, color: color)
+            let z = ZonesFactory().createZoneTypical7(99, bVal: 0.6, cVal: 3, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
+            rcp.configure(z, pnsLessThan: 6)
             return rcp
         default:
             return nil
