@@ -8,8 +8,6 @@
 
 import Foundation
 
-class Evaluator {
-    func eval(board: BoardRepresentation) -> Double {
-        return 0.0
-    }
+protocol Evaluator {
+    func eval(board: BoardRepresentation, forPlayer: Pieces) -> Double
 }

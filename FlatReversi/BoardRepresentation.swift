@@ -31,6 +31,11 @@ class BoardRepresentation {
         return self.boardMediator.get(x, y: y)
     }
 
+    func isEmpty(x: Int, y: Int) -> Bool {
+        let p = get(x, y: y)
+        return p != .Black && p != .White
+    }
+
     func canPut(color: Pieces, x: Int, y: Int) -> Bool {
         return (get(x, y: y) != .White && get(x, y: y) != .Black) && getReversible(color, x: x, y: y).count > 0;
     }
@@ -90,12 +95,20 @@ class BoardRepresentation {
         return 64 - getNumBlack() - getNumWhite()
     }
 
-    func toString() -> String {
-        return self.boardMediator.toString()
+    func isTerminal() -> Bool {
+        if getNumVacant() == 0 {
+            return true
+        }
+
+        if getPuttables(.Black).isEmpty && getPuttables(.White).isEmpty {
+            return true
+        }
+
+        return false
     }
 
-    func eval(evaluator: Evaluator) -> Double {
-        return evaluator.eval(self);
+    func toString() -> String {
+        return self.boardMediator.toString()
     }
 
     func clone() -> BoardRepresentation {

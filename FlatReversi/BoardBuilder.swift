@@ -21,8 +21,7 @@ class BoardBuilder {
             case "W":
                 board.set(.White, x: i / 8, y: i % 8)
             case ".":
-                //board.set(.Black, i / 8, i % 8)
-                break
+                board.set(.Empty, x: i / 8, y: i % 8)
             default:
                 assertionFailure("")
             }

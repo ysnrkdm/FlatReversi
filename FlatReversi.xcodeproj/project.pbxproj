@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8B15FEB01A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15FEAF1A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift */; };
+		8B15FECA1A0D12B900A8C998 /* SimpleSearchTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15FEC91A0D12B900A8C998 /* SimpleSearchTree.swift */; };
 		8B22E1BA19FAAC0C0006E39C /* LevelSelectionViewControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E1B919FAAC0C0006E39C /* LevelSelectionViewControl.swift */; };
 		8B22E1BC19FBAE400006E39C /* LevelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E1BB19FBAE400006E39C /* LevelController.swift */; };
 		8B22E1BE19FC073B0006E39C /* RandomPlayerWithEvaluation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E1BD19FC073B0006E39C /* RandomPlayerWithEvaluation.swift */; };
@@ -84,6 +85,7 @@
 
 /* Begin PBXFileReference section */
 		8B15FEAF1A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomPlayerWithPNS.swift; sourceTree = "<group>"; };
+		8B15FEC91A0D12B900A8C998 /* SimpleSearchTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleSearchTree.swift; sourceTree = "<group>"; };
 		8B22E1B919FAAC0C0006E39C /* LevelSelectionViewControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelSelectionViewControl.swift; sourceTree = "<group>"; };
 		8B22E1BB19FBAE400006E39C /* LevelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelController.swift; sourceTree = "<group>"; };
 		8B22E1BD19FC073B0006E39C /* RandomPlayerWithEvaluation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomPlayerWithEvaluation.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 			children = (
 				8B22E1C319FD34220006E39C /* Ad */,
 				8B74E1E819F9EE6900B5E87E /* Board.swift */,
+				8B15FEC91A0D12B900A8C998 /* SimpleSearchTree.swift */,
 				8B22E2801A0280C30006E39C /* BoardBuilder.swift */,
 				8B22E1BF19FC75100006E39C /* Zones.swift */,
 				8B74E1E919F9EE6900B5E87E /* BoardMediator.swift */,
@@ -507,6 +510,7 @@
 			files = (
 				8B74E1C919F9ED9700B5E87E /* GameScene.swift in Sources */,
 				8B74E1FC19F9EE6900B5E87E /* GameManager.swift in Sources */,
+				8B15FECA1A0D12B900A8C998 /* SimpleSearchTree.swift in Sources */,
 				8B22E27019FE7A110006E39C /* GreedyPlayer.swift in Sources */,
 				8B22E27719FFE1080006E39C /* ClassicalEvaluator.swift in Sources */,
 				8B22E2811A0280C30006E39C /* BoardBuilder.swift in Sources */,
