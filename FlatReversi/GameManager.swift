@@ -15,13 +15,17 @@ class GameManager {
     private(set) var hUI: HumanUserInput?
     private(set) var boardMediator: BoardMediator?
     private var gameViewModel: GameViewModel?
+    private var evaluator: Evaluator?
+
+    // just for show
+    private var blackEval: Double = 0.0
+    private var whiteEval: Double = 0.0
 
     var challengeLevelId: Int = -1
 
     private(set) var turn: Pieces = Pieces.None
 
     init() {
-        
     }
 
     func initialize(gameViewModel: GameViewModel, gameSettings: GameSettings) {
@@ -48,6 +52,12 @@ class GameManager {
         default:
             NSLog("Not challenge mode")
         }
+
+
+        let z = ZonesFactory().createZoneTypical7(99, bVal: 0.6, cVal: 3, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
+        let ev = ClassicalEvaluator()
+        ev.configure([3.0, 0.5], wEdge: [1.0, 1.0], wFixedPieces: [5.0, 3.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0], zones: z)
+        self.evaluator = ev
     }
 
     func isChallengeMode() -> Bool {
@@ -94,14 +104,18 @@ class GameManager {
 
     // Main game loop logic
     func startGame() {
-        NSLog("Game start")
+        let br = BoardRepresentation(boardMediator: boardMediator!)
+        let eval = evaluator?.eval(br, forPlayer: turn)
+        NSLog("Game start -- now \(turn.toString()) s turn. Eval is \(eval!)")
         // Start
         switch (self.turn) {
         case Pieces.Black:
-            NSLog("Black turn start")
+            blackEval = eval!
+//            NSLog("Black turn start")
             blackPlayer?.play()
         case Pieces.White:
-            NSLog("White turn start")
+            whiteEval = eval!
+//            NSLog("White turn start")
             whitePlayer?.play()
         default:
             assertionFailure("Should not reach this code!")
@@ -127,7 +141,7 @@ class GameManager {
                 while(!gvm.isUpdateBoardViewQueueEmpty()) {
                     NSThread.sleepForTimeInterval(5/1000)
                 }
-                gvm.update(unwrappedChanges, put: [(x, y)], showPuttables: showPuttables, showAnimation: gs.showAnimation)
+                gvm.update(unwrappedChanges, put: [(x, y)], showPuttables: showPuttables, showAnimation: gs.showAnimation, blackEval: blackEval, whiteEval: whiteEval)
             }
         }
         self.turn = nextTurn(self.turn)
@@ -202,7 +216,7 @@ class GameManager {
             // Current player cannot do anything. Skip
             self.turn = nextTurn(self.turn)
             self.boardMediator?.updateGuides(self.turn)
-            self.gameViewModel?.update([], put: [], showPuttables: isCurrentTurnHuman(), showAnimation: gs.showAnimation)
+            self.gameViewModel?.update([], put: [], showPuttables: isCurrentTurnHuman(), showAnimation: gs.showAnimation, blackEval: blackEval, whiteEval: whiteEval)
             self.gameViewModel?.showPasses()
             startGame()
         } else {

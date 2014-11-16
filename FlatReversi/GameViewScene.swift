@@ -9,7 +9,7 @@
 import Foundation
 
 protocol GameViewScene {
-    func updateView(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool)
+    func updateView(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double)
 
     func showPasses()
 

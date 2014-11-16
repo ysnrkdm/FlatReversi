@@ -38,6 +38,8 @@
 		8B22E27B1A011CD20006E39C /* SimpleProofSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E27A1A011CD20006E39C /* SimpleProofSolver.swift */; };
 		8B22E27D1A0278730006E39C /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E27C1A0278730006E39C /* Stack.swift */; };
 		8B22E2811A0280C30006E39C /* BoardBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E2801A0280C30006E39C /* BoardBuilder.swift */; };
+		8B2517A21A13B03800B700F3 /* SimpleSearchStaticEvaluationPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2517A11A13B03800B700F3 /* SimpleSearchStaticEvaluationPlayer.swift */; };
+		8B2517A41A164E9500B700F3 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2517A31A164E9500B700F3 /* Utils.swift */; };
 		8B4E16791A03B8B900BE87E2 /* SimpleProofSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E27A1A011CD20006E39C /* SimpleProofSolver.swift */; };
 		8B4E167A1A03B8CF00BE87E2 /* ProofSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E2781A011C550006E39C /* ProofSolver.swift */; };
 		8B4E167B1A03B8DA00BE87E2 /* BoardRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1EA19F9EE6900B5E87E /* BoardRepresentation.swift */; };
@@ -143,6 +145,8 @@
 		8B22E27A1A011CD20006E39C /* SimpleProofSolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleProofSolver.swift; sourceTree = "<group>"; };
 		8B22E27C1A0278730006E39C /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		8B22E2801A0280C30006E39C /* BoardBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardBuilder.swift; sourceTree = "<group>"; };
+		8B2517A11A13B03800B700F3 /* SimpleSearchStaticEvaluationPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleSearchStaticEvaluationPlayer.swift; sourceTree = "<group>"; };
+		8B2517A31A164E9500B700F3 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		8B4E167D1A03BB4000BE87E2 /* GameViewScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewScene.swift; sourceTree = "<group>"; };
 		8B74E1BF19F9ED9600B5E87E /* FlatReversi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlatReversi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B74E1C319F9ED9600B5E87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -303,6 +307,7 @@
 				8B22E26F19FE7A110006E39C /* GreedyPlayer.swift */,
 				8B22E27219FE7A450006E39C /* ComputerPlayer.swift */,
 				8B15FEAF1A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift */,
+				8B2517A11A13B03800B700F3 /* SimpleSearchStaticEvaluationPlayer.swift */,
 			);
 			name = Player;
 			sourceTree = "<group>";
@@ -343,6 +348,7 @@
 				8B22E1C319FD34220006E39C /* Ad */,
 				8B74E1E819F9EE6900B5E87E /* Board.swift */,
 				8B15FEC91A0D12B900A8C998 /* SimpleSearchTree.swift */,
+				8B2517A31A164E9500B700F3 /* Utils.swift */,
 				8B22E2801A0280C30006E39C /* BoardBuilder.swift */,
 				8B22E1BF19FC75100006E39C /* Zones.swift */,
 				8B74E1E919F9EE6900B5E87E /* BoardMediator.swift */,
@@ -516,7 +522,9 @@
 				8B22E2811A0280C30006E39C /* BoardBuilder.swift in Sources */,
 				8B74E20419F9EE6900B5E87E /* RandomComputerPlayer.swift in Sources */,
 				8B22E1C219FC80C50006E39C /* Queue.swift in Sources */,
+				8B2517A21A13B03800B700F3 /* SimpleSearchStaticEvaluationPlayer.swift in Sources */,
 				8B22E27519FFE0890006E39C /* Evaluator.swift in Sources */,
+				8B2517A41A164E9500B700F3 /* Utils.swift in Sources */,
 				8B22E1C019FC75100006E39C /* Zones.swift in Sources */,
 				8B74E1FD19F9EE6900B5E87E /* GameSettings.swift in Sources */,
 				8B74E20019F9EE6900B5E87E /* HumanUserInput.swift in Sources */,

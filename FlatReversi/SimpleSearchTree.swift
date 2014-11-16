@@ -93,32 +93,60 @@ class SearchResult {
     var value: Double
     var pv: [(Int, Int)]
 
+    //
+    var nodesSearched = 0
+    var elapsedTimeInSec = 0.0
+    var nps: Double {
+        return Double(self.nodesSearched) / elapsedTimeInSec
+    }
+
     init(value: Double, pv: [(Int, Int)]) {
         self.value = value
         self.pv = pv
     }
+
+    func toString() -> String {
+        return "\(value) - pv \(pv) : searched \(nodesSearched) nodes in \(elapsedTimeInSec). NPS is \(nps)"
+    }
 }
 
 class SimpleSearchTree {
-    var depth: Int = 3
+    var nodeCount = 0
+    var startTimeInSec = 0.0
+    var minTimeLimitInSec: Double = 5
+    var timeLimitInSec: Double = 5
+    var secPerDepth: Double = 1.2
 
-    func search(boardRepresentation: BoardRepresentation, forPlayer: Pieces, evaluator: Evaluator) -> SearchResult {
-        let ret = recSearch(depth, boardRepresentation: boardRepresentation, forPlayer: forPlayer, currentPlayer: forPlayer, evaluator: evaluator, pv: [])
+    func search(boardRepresentation: BoardRepresentation, forPlayer: Pieces, evaluator: Evaluator, depth: Int) -> SearchResult {
+        nodeCount = 0
 
+        let date = NSDate()
+        startTimeInSec = date.timeIntervalSince1970
+        let inf = 99999999.9
+
+        timeLimitInSec = max([minTimeLimitInSec, (Double(depth) * secPerDepth)])
+
+        let ret = recSearch(depth, boardRepresentation: boardRepresentation, forPlayer: forPlayer, currentPlayer: forPlayer, alpha: -inf, beta: inf, evaluator: evaluator, pv: [])
+
+        ret.nodesSearched = nodeCount
+        ret.elapsedTimeInSec = NSDate().timeIntervalSince1970 - startTimeInSec
         return ret
     }
 
-    func recSearch(depth: Int, boardRepresentation: BoardRepresentation, forPlayer: Pieces, currentPlayer: Pieces, evaluator: Evaluator, pv: [(Int, Int)]) -> SearchResult {
-        if depth <= 0 || boardRepresentation.isTerminal() {
+    func recSearch(depth: Int, boardRepresentation: BoardRepresentation, forPlayer: Pieces, currentPlayer: Pieces, alpha: Double, beta: Double, evaluator: Evaluator, pv: [(Int, Int)]) -> SearchResult {
+        ++nodeCount
+//        println("Searched \(nodeCount), depth = \(depth)")
+        if depth <= 0 || boardRepresentation.isTerminal() || (NSDate().timeIntervalSince1970 - startTimeInSec) > timeLimitInSec {
             // Depth reached, or terminal state. Returning
-            let value = evaluator.eval(boardRepresentation, forPlayer: currentPlayer)
-            let ret = SearchResult(value: value, pv: [])
+            let value = evaluator.eval(boardRepresentation, forPlayer: forPlayer)
+            let ret = SearchResult(value: value, pv: pv)
+//            println("\(ret.toString())\n\(boardRepresentation.toString())")
 
             return ret
         } else {
             // Here, no terminal state (at least one of players can play)
 
-            var turn = forPlayer
+            var turn = currentPlayer
             // Generate Moves
             var puttables = boardRepresentation.getPuttables(turn)
 
@@ -132,29 +160,34 @@ class SimpleSearchTree {
                 }
             }
 
-            var value = forPlayer == turn ? -Double.infinity : Double.infinity
+//            var value = forPlayer == turn ? -Double.infinity : Double.infinity
 
-            var state: SearchResult = SearchResult(value: value, pv: pv)
+            var state: SearchResult = SearchResult(value: 0, pv: pv)
+            var alpha = alpha
+            var beta = beta
 
             for (px, py) in puttables {
                 var newBoard = boardRepresentation.clone()
-                newBoard.boardMediator.put(turn, x: px, y: py)
+                newBoard.boardMediator.put(turn, x: px, y: py, guides: false)
                 var newPv = pv
                 newPv.append((px, py))
-                let r = recSearch(depth - 1, boardRepresentation: boardRepresentation, forPlayer: forPlayer, currentPlayer: boardRepresentation.boardMediator.nextTurn(turn), evaluator: evaluator, pv: newPv)
+                let r = recSearch(depth - 1, boardRepresentation: newBoard, forPlayer: forPlayer, currentPlayer: boardRepresentation.boardMediator.nextTurn(turn), alpha: alpha, beta: beta, evaluator: evaluator, pv: newPv)
 
                 if forPlayer == turn {
                     // Max
-                    if value < r.value {
+                    if alpha < r.value {
                         state = r
-                        value = r.value
+                        alpha = r.value
                     }
                 } else {
                     // Min
-                    if value > r.value {
+                    if beta > r.value {
                         state = r
-                        value = r.value
+                        beta = r.value
                     }
+                }
+                if alpha >= beta {
+                    break
                 }
             }
 

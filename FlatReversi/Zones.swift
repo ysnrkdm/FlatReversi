@@ -99,13 +99,29 @@ class ZonesFactory {
     func createZoneTypical7(aVal: Double, bVal: Double, cVal: Double, dVal: Double, eVal: Double, fVal: Double, gVal: Double) -> Zones{
         var zones: [[Double]] = [
             [aVal, bVal, cVal, dVal, dVal, cVal, bVal, aVal, ],
-            [bVal, cVal, eVal, eVal, eVal, eVal, cVal, bVal, ],
+            [bVal, cVal, eVal, fVal, eVal, eVal, cVal, bVal, ],
             [cVal, eVal, fVal, gVal, gVal, fVal, eVal, cVal, ],
             [dVal, eVal, gVal, gVal, gVal, gVal, eVal, dVal, ],
             [dVal, eVal, gVal, gVal, gVal, gVal, eVal, dVal, ],
             [cVal, eVal, fVal, gVal, gVal, fVal, eVal, cVal, ],
             [bVal, cVal, eVal, eVal, eVal, eVal, cVal, bVal, ],
             [aVal, bVal, cVal, dVal, dVal, cVal, bVal, aVal, ],
+        ]
+
+        let z = Zones(zones: zones)
+        return z
+    }
+
+    func createZoneTypical8(aVal: Double, bVal: Double, cVal: Double, dVal: Double, eVal: Double, fVal: Double, gVal: Double, hVal: Double) -> Zones{
+        var zones: [[Double]] = [
+            [aVal, bVal, dVal, eVal, eVal, dVal, bVal, aVal, ],
+            [bVal, cVal, fVal, fVal, fVal, fVal, cVal, bVal, ],
+            [dVal, fVal, gVal, hVal, hVal, gVal, fVal, dVal, ],
+            [eVal, fVal, hVal, hVal, hVal, hVal, fVal, eVal, ],
+            [eVal, fVal, hVal, hVal, hVal, hVal, fVal, eVal, ],
+            [dVal, fVal, gVal, hVal, hVal, gVal, fVal, dVal, ],
+            [bVal, cVal, fVal, fVal, fVal, fVal, cVal, bVal, ],
+            [aVal, bVal, dVal, eVal, eVal, dVal, bVal, aVal, ],
         ]
 
         let z = Zones(zones: zones)

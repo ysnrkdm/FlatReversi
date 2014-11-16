@@ -94,17 +94,17 @@ class BoardMediator {
         var reversed: [(Int, Int)] = []
 
         let directions = [
-            [-1,-1], [0,-1], [1,-1],
-            [-1,0],  /* */   [1,0],
-            [-1,1],  [0,1],  [1,1],
+            (-1,-1), (0,-1), (1,-1),
+            (-1,0),  /* */   (1,0),
+            (-1,1),  (0,1),  (1,1),
         ]
 
         for direc in directions {
             var reversedForDirec: [(Int, Int)] = []
             var mode = 0
             for var d = 1; d < board.height; ++d {
-                var cx = direc[0] * d + x
-                var cy = direc[1] * d + y
+                var cx = direc.0 * d + x
+                var cy = direc.1 * d + y
                 if(!withinBoard(cx, y: cy)) {
                     break
                 }
@@ -116,9 +116,7 @@ class BoardMediator {
                     reversedForDirec.append(coordToAdd)
                 } else if (mode == 1 && p == color) {
                     // Can reverse them!
-                    for reversible in reversedForDirec {
-                        reversed.append(reversible)
-                    }
+                    reversed += reversedForDirec
                 } else {
                     break
                 }
@@ -132,11 +130,13 @@ class BoardMediator {
 
     // Does set and reverse pieces
     // Returns [x,y] of changes (except put piece)
-    func put(color: Pieces, x: Int, y: Int) -> [(Int, Int)] {
+    func put(color: Pieces, x: Int, y: Int, guides: Bool = true) -> [(Int, Int)] {
         if(withinBoard(x, y: y) && canPut(color, x: x, y: y)) {
             set(color, x: x, y: y)
             var reversed = reverse(color, x: x, y: y)
-            updateGuides(nextTurn(color))
+            if guides {
+                updateGuides(nextTurn(color))
+            }
             return reversed
         } else {
             return []

@@ -42,7 +42,10 @@ class LevelController {
         Level(level: 6, levelId: 6, levelTitle: "Random + zone ordering+3", levelDescr: ""),
         Level(level: 7, levelId: 7, levelTitle: "Random + zone ordering+4", levelDescr: ""),
         Level(level: 8, levelId: 8, levelTitle: "Random + zone ordering+5", levelDescr: ""),
-        Level(level: 9, levelId: 9, levelTitle: "Random + PNS", levelDescr: ""),
+        Level(level: 9, levelId: 9, levelTitle: "Random + 6 PNS", levelDescr: ""),
+        Level(level: 10, levelId: 10, levelTitle: "1 Depth Static Eval Search + 6 PNS", levelDescr: ""),
+        Level(level: 11, levelId: 11, levelTitle: "3 Depth Static Eval Search + 6 PNS", levelDescr: ""),
+        Level(level: 12, levelId: 12, levelTitle: "5 Depth Static Eval Search + 6 PNS", levelDescr: ""),
         Level(level: 0, levelId: 1001, levelTitle: "SpecialAI", levelDescr: ""),
     ]
 
@@ -140,6 +143,22 @@ class LevelController {
             let z = ZonesFactory().createZoneTypical7(99, bVal: 0.6, cVal: 3, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
             rcp.configure(z, pnsLessThan: 6)
             return rcp
+        case 10:
+            let sssep = SimpleSearchStaticEvaluationPlayer(playerMediator: playerMediator, color: color)
+            let z = ZonesFactory().createZoneTypical8(99, bVal: 1.6, cVal: 1, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
+            sssep.configure(z, pnsLessThan: 6, searchDepth: 1, wPossibleMoves: [20.0, 15, 3.2, 1.1], wEdge: [1.0, 1.0], wFixedPieces: [2.0, 20.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0])
+            return sssep
+        case 11:
+            let sssep = SimpleSearchStaticEvaluationPlayer(playerMediator: playerMediator, color: color)
+            let z = ZonesFactory().createZoneTypical8(99, bVal: 1.6, cVal: 1, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
+            sssep.configure(z, pnsLessThan: 6, searchDepth: 3, wPossibleMoves: [20.0, 15, 3.2, 1.1], wEdge: [1.0, 1.0], wFixedPieces: [2.0, 20.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0])
+            return sssep
+        case 12:
+            let sssep = SimpleSearchStaticEvaluationPlayer(playerMediator: playerMediator, color: color)
+            let z = ZonesFactory().createZoneTypical8(99, bVal: 1.6, cVal: 1, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
+            sssep.configure(z, pnsLessThan: 6, searchDepth: 5, wPossibleMoves: [20.0, 15, 3.2, 1.1], wEdge: [1.0, 1.0], wFixedPieces: [2.0, 20.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0])
+            return sssep
+
         default:
             return nil
         }

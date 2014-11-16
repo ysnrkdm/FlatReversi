@@ -14,13 +14,17 @@ class UpdateBoardViewContext {
     var put: [(Int, Int)]
     var showPuttables: Bool
     var showAnimation: Bool
+    var blackEval: Double
+    var whiteEval: Double
 
-    init(boardMediator : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool) {
+    init(boardMediator : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double) {
         self.boardMediator = boardMediator
         self.changes = changes
         self.put = put
         self.showPuttables = showPuttables
         self.showAnimation = showAnimation
+        self.blackEval = blackEval
+        self.whiteEval = whiteEval
     }
 }
 
@@ -40,6 +44,8 @@ class GameScene: SKScene, GameViewScene {
     var numPiecesWhiteCircle: SKShapeNode? = nil
     var numPiecesBlack: SKLabelNode? = nil
     var numPiecesWhite: SKLabelNode? = nil
+    var numBlackEval: SKLabelNode? = nil
+    var numWhiteEval: SKLabelNode? = nil
 
     //
     var gameOverFrame: SKShapeNode? = nil
@@ -93,7 +99,7 @@ class GameScene: SKScene, GameViewScene {
 
         updateBoardViewQueue = Queue<UpdateBoardViewContext>()
 
-        showNumPieces(0, white: 0)
+        showNumPieces(0, white: 0, blackEval: 0.0, whiteEval: 0.0)
 
         startGame()
         NSLog("\n" + gameManager.toString())
@@ -118,7 +124,7 @@ class GameScene: SKScene, GameViewScene {
         lastPut = nil
     }
 
-    private func showNumPieces(black: Int, white: Int) {
+    private func showNumPieces(black: Int, white: Int, blackEval: Double, whiteEval: Double) {
         let boardView = self.childNodeWithName("Board") as SKSpriteNode
         var width : CGFloat = boardView.size.width
         var height : CGFloat = boardView.size.height
@@ -149,6 +155,28 @@ class GameScene: SKScene, GameViewScene {
         numPiecesWhite?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 + piece_width + 20, yPosOffset))
         boardView.addChild(numPiecesWhite!)
 
+        numBlackEval?.removeFromParent()
+        numWhiteEval?.removeFromParent()
+
+        numBlackEval = SKLabelNode(text: "\(blackEval)")
+        numBlackEval?.name = "blackEval"
+        numBlackEval?.fontColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
+        numBlackEval?.fontSize = 30
+        numBlackEval?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
+        numBlackEval?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
+        numBlackEval?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 - piece_width - 20 - 80, yPosOffset))
+        boardView.addChild(numBlackEval!)
+
+        numWhiteEval = SKLabelNode(text: "\(whiteEval)")
+        numWhiteEval?.name = "blackEval"
+        numWhiteEval?.fontColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
+        numWhiteEval?.fontSize = 30
+        numWhiteEval?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
+        numWhiteEval?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
+        numWhiteEval?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 + piece_width + 20 + 80, yPosOffset))
+        boardView.addChild(numWhiteEval!)
+
+        //
         var radius = width / 8 / 2 * 0.8
 
         numPiecesBlackCircle?.removeFromParent()
@@ -178,7 +206,7 @@ class GameScene: SKScene, GameViewScene {
             gameManager.initialize(gameViewModel!, gameSettings: gameSettings)
         }
         clearPieces()
-        updateView(gameManager.boardMediator!, changes: [], put: [], showPuttables: gameManager.isCurrentTurnHuman() && gameSettings.showPossibleMoves, showAnimation: gameSettings.showAnimation)
+        updateView(gameManager.boardMediator!, changes: [], put: [], showPuttables: gameManager.isCurrentTurnHuman() && gameSettings.showPossibleMoves, showAnimation: gameSettings.showAnimation, blackEval: 0.0, whiteEval: 0.0)
         time = 0
         lastUpdatedTime = 0
         timeCounterOn = false
@@ -210,9 +238,9 @@ class GameScene: SKScene, GameViewScene {
         return (pos_x, pos_y)
     }
 
-    func updateView(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool) {
+    func updateView(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double) {
         if let q = updateBoardViewQueue {
-            let ubvc = UpdateBoardViewContext(boardMediator: bd, changes: changes, put: put, showPuttables: showPuttables, showAnimation: showAnimation)
+            let ubvc = UpdateBoardViewContext(boardMediator: bd, changes: changes, put: put, showPuttables: showPuttables, showAnimation: showAnimation, blackEval: blackEval, whiteEval: whiteEval)
             q.enqueue(ubvc)
         }
     }
@@ -237,13 +265,13 @@ class GameScene: SKScene, GameViewScene {
     }
 
     func processUpdateBoardViewContext(context: UpdateBoardViewContext) -> Bool {
-        return addChildrenFromBoard(context.boardMediator, changes: context.changes, put: context.put, showPuttables: context.showPuttables, showAnimation: context.showAnimation)
+        return addChildrenFromBoard(context.boardMediator, changes: context.changes, put: context.put, showPuttables: context.showPuttables, showAnimation: context.showAnimation, blackEval: context.blackEval, whiteEval: context.whiteEval)
     }
 
-    func addChildrenFromBoard(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool) -> Bool {
-        NSLog("!syncstart!")
+    func addChildrenFromBoard(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double) -> Bool {
+//        NSLog("!syncstart!")
         if(self.drawCount > 0) {
-            NSLog("Waiting for finish drawing...: \(self.drawCount)")
+//            NSLog("Waiting for finish drawing...: \(self.drawCount)")
             return false
         }
         synchronized(lock) {
@@ -328,7 +356,7 @@ class GameScene: SKScene, GameViewScene {
                                 fadeOut2, colorChange2, fadeIn2,
                                 ])
 
-                            spriteUnwrapped.runAction(sequenceActions, completion: {() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.alpha = 1.0; self.drawCount-=1; NSLog("put$")})
+                            spriteUnwrapped.runAction(sequenceActions, completion: {() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.alpha = 1.0; self.drawCount-=1})
                         } else if(flipAnimation && showAnimation) {
                             let fadeOut = SKAction.fadeAlphaTo(0.0, duration: 0.2)
                             let colorChange = SKAction.runBlock({() in spriteUnwrapped.fillColor = colorTo})
@@ -336,7 +364,7 @@ class GameScene: SKScene, GameViewScene {
 
                             let sequenceActions = SKAction.sequence([fadeOut, colorChange, fadeIn])
 
-                            spriteUnwrapped.runAction(sequenceActions, completion: {() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.alpha = 1.0; self.drawCount-=1; NSLog("flip$")})
+                            spriteUnwrapped.runAction(sequenceActions, completion: {() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.alpha = 1.0; self.drawCount-=1})
                         } else {
                             spriteUnwrapped.fillColor = colorTo
                             self.drawCount-=1
@@ -370,9 +398,9 @@ class GameScene: SKScene, GameViewScene {
 
             // Play information
             // piece_width + width + statusBarHeight
-            self.showNumPieces(bd.getNumBlack(), white: bd.getNumWhite())
+            self.showNumPieces(bd.getNumBlack(), white: bd.getNumWhite(), blackEval: blackEval, whiteEval: whiteEval)
         } // synchronized
-        NSLog("!syncend!")
+//        NSLog("!syncend!")
         return true
     }
 
@@ -438,6 +466,7 @@ class GameScene: SKScene, GameViewScene {
             }))
         }
 
+        viewController.updateNavBarTitle("Game Set")
         viewController.popupAlert(title, message: message, actions: actions)
     }
 

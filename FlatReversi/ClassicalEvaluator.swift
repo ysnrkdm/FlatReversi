@@ -27,7 +27,19 @@ class ClassicalEvaluator: Evaluator {
     }
 
     func eval(board: BoardRepresentation, forPlayer: Pieces) -> Double {
-        return 0.0
+        let ePossibleMoves = getWeightByPhase(wPossibleMoves, board: board) * Double(possibleMoves(board, forPlayer: forPlayer))
+        let eEdge =
+            getWeightByPhase(wEdge, board: board) * edge(board, forPlayer: forPlayer)
+        let eFixedPieces =
+            getWeightByPhase(wFixedPieces, board: board) * Double(fixedPieces(board, forPlayer: forPlayer))
+        let eOpenness =
+            getWeightByPhase(wOpenness, board: board) * Double(openness(board, forPlayer: forPlayer))
+        let eBoardEvaluation =
+            getWeightByPhase(wBoardEvaluation, board: board) * boardEvaluation(board, forPlayer: forPlayer, zones: zones)
+
+//        println("\(ePossibleMoves), \(eEdge), \(eFixedPieces), \(eOpenness), \(eBoardEvaluation)")
+
+        return ePossibleMoves + eEdge + eFixedPieces + eOpenness + eBoardEvaluation
     }
 
     // MARK: Factors
@@ -68,22 +80,25 @@ class ClassicalEvaluator: Evaluator {
             for i in 1..<length-1 {
                 cur = (org.0 + direc.0 * i, org.1 + direc.1 * i)
                 if board.isEmpty(cur.0, y: cur.1) {
-                    cont = false
+                    if cont {
+                        cont = false
+                        ret += tmp
+                    }
+                    tmp = 0
                 }
 
                 if board.get(cur.0, y: cur.1) == forPlayer {
                     ++tmp
                 }
+            }
+            ret += tmp
+        }
 
-                if !cont {
-                    ret += tmp
-                    tmp = 0
-                    break
-                }
-
-                if (cur.0 == dst.0 && cur.1 == dst.1) {
-
-                }
+        // Corner
+        let corners = [(0,0), (W-1,0), (0,H-1), (W-1,H-1)]
+        for (cx, cy) in corners {
+            if board.get(cx, y: cy) == forPlayer {
+                ++ret
             }
         }
 
@@ -91,11 +106,39 @@ class ClassicalEvaluator: Evaluator {
     }
 
     func openness(board: BoardRepresentation, forPlayer: Pieces) -> Int {
-        return 0
+        var ret = 0
+
+        let peripherals = [
+            (-1, -1), (0,-1), (1,-1),
+            (-1,  0),         (1, 0),
+            (-1,  1), (0, 1), (1, 1),
+        ]
+
+        for y in 0..<board.height() {
+            for x in 0..<board.width() {
+                if board.get(x, y: y) == forPlayer {
+                    for (dx, dy) in peripherals {
+                        if board.withinBoard(x + dx, y: y + dy) && board.isEmpty(x + dx, y: y + dy) {
+                            ++ret
+                        }
+                    }
+                }
+            }
+        }
+
+        return ret
     }
 
-    func boardEvaluation(board: BoardRepresentation, forPlayer: Pieces) -> Double {
-        return 0.0
+    func boardEvaluation(board: BoardRepresentation, forPlayer: Pieces, zones: Zones) -> Double {
+        var ret = 0.0
+        for y in 0..<board.height() {
+            for x in 0..<board.width() {
+                if board.get(x, y: y) == forPlayer {
+                    ret += 1.0 * zones.zones[x][y]
+                }
+            }
+        }
+        return ret
     }
 
     // MARK: Private functions
