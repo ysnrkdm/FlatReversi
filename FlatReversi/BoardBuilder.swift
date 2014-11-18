@@ -10,7 +10,7 @@ import Foundation
 
 class BoardBuilder {
     internal class func build(fromText: String) -> BoardRepresentation {
-        var board = Board()
+        var board = ArrayBoard()
         board.initialize(8, height: 8)
 
         var i = 0
@@ -28,8 +28,7 @@ class BoardBuilder {
             ++i
         }
 
-        let bm = BoardMediator()
-        bm.board = board
+        let bm = BoardMediator(board: board)
         let ret = BoardRepresentation(boardMediator: bm)
         return ret
     }

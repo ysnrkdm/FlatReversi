@@ -112,9 +112,8 @@ class BoardRepresentation {
     }
 
     func clone() -> BoardRepresentation {
-        let b: [[Pieces]] = self.boardMediator.board.board
-        let newBR = BoardRepresentation(boardMediator: BoardMediator())
-        newBR.boardMediator.board.board = b
+        let bm = self.boardMediator.clone()
+        let newBR = BoardRepresentation(boardMediator: bm)
 
         return newBR
     }

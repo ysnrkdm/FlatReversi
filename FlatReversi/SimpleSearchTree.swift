@@ -136,7 +136,7 @@ class SimpleSearchTree {
     func recSearch(depth: Int, boardRepresentation: BoardRepresentation, forPlayer: Pieces, currentPlayer: Pieces, alpha: Double, beta: Double, evaluator: Evaluator, pv: [(Int, Int)]) -> SearchResult {
         ++nodeCount
 //        println("Searched \(nodeCount), depth = \(depth)")
-        if depth <= 0 || boardRepresentation.isTerminal() || (NSDate().timeIntervalSince1970 - startTimeInSec) > timeLimitInSec {
+        if depth <= 0 || boardRepresentation.isTerminal()/* || (NSDate().timeIntervalSince1970 - startTimeInSec) > timeLimitInSec*/ {
             // Depth reached, or terminal state. Returning
             let value = evaluator.eval(boardRepresentation, forPlayer: forPlayer)
             let ret = SearchResult(value: value, pv: pv)

@@ -9,11 +9,11 @@
 import Foundation
 
 class BoardMediator {
-    var board: Board
+    private var board: Board
 
     // MARK: Initialization
-    init() {
-        self.board = Board()
+    init(board:Board) {
+        self.board = board
     }
 
     func initializeBoard() {
@@ -25,11 +25,11 @@ class BoardMediator {
     // MARK: Direct access to Board
 
     func height() -> Int {
-        return self.board.height
+        return self.board.height()
     }
 
     func width() -> Int {
-        return self.board.width
+        return self.board.width()
     }
 
     func withinBoard(x: Int, y: Int) -> Bool {
@@ -48,8 +48,8 @@ class BoardMediator {
 
     func getNumBlack() -> Int {
         var ret = 0
-        for sy in 0..<self.board.height {
-            for sx in 0..<self.board.width {
+        for sy in 0..<self.board.height() {
+            for sx in 0..<self.board.width() {
                 if(board.get(sx, y: sy) == Pieces.Black) {
                     ret++
                 }
@@ -61,8 +61,8 @@ class BoardMediator {
 
     func getNumWhite() -> Int {
         var ret = 0
-        for sy in 0..<self.board.height {
-            for sx in 0..<self.board.width {
+        for sy in 0..<self.board.height() {
+            for sx in 0..<self.board.width() {
                 if(board.get(sx, y: sy) == Pieces.White) {
                     ret++
                 }
@@ -78,8 +78,8 @@ class BoardMediator {
 
     func getPuttables(color: Pieces) -> [(Int, Int)] {
         var puttables: [(Int, Int)] = []
-        for sy in 0..<self.board.height {
-            for sx in 0..<self.board.width {
+        for sy in 0..<self.board.height() {
+            for sx in 0..<self.board.width() {
                 if(canPut(color, x: sx, y: sy)) {
                     puttables.append((sx, sy))
                 }
@@ -102,7 +102,7 @@ class BoardMediator {
         for direc in directions {
             var reversedForDirec: [(Int, Int)] = []
             var mode = 0
-            for var d = 1; d < board.height; ++d {
+            for var d = 1; d < board.height(); ++d {
                 var cx = direc.0 * d + x
                 var cy = direc.1 * d + y
                 if(!withinBoard(cx, y: cy)) {
@@ -144,8 +144,8 @@ class BoardMediator {
     }
 
     func boardForAll(mapfun: (Pieces -> Pieces)) {
-        for y in 0..<board.height {
-            for x in 0..<board.width {
+        for y in 0..<board.height() {
+            for x in 0..<board.width() {
                 var p = get(x, y: y)
                 set(mapfun(p), x: x, y: y)
             }
@@ -153,8 +153,8 @@ class BoardMediator {
     }
 
     func boardForAll(mapfun: ((Int, Int) -> Pieces)) {
-        for y in 0..<board.height {
-            for x in 0..<board.width {
+        for y in 0..<board.height() {
+            for x in 0..<board.width() {
                 var p = get(x, y: y)
                 set(mapfun(x, y), x: x, y: y)
             }
@@ -187,6 +187,12 @@ class BoardMediator {
 
     func toString() -> String {
         return self.board.toString()
+    }
+
+    func clone() -> BoardMediator {
+        let b = self.board.clone()
+        let bm = BoardMediator(board:b)
+        return bm
     }
 
     func nextTurn(color: Pieces) -> Pieces {
