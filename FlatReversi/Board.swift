@@ -30,28 +30,29 @@ enum Pieces {
 }
 
 protocol Board {
-//    var board : [[Pieces]] = []
-//    var _height = 8
-//    var _width = 8
-//    var height: Int {
-//        return _height
-//    }
-//    var width: Int {
-//        return _width
-//    }
-
     func initialize(width: Int, height: Int)
 
+    // MARK: Basic functions
     func withinBoard(x: Int, y: Int) -> Bool
 
     func set(color: Pieces, x: Int, y: Int)
-
     func get(x: Int, y: Int) -> Pieces
 
     func width() -> Int
-
     func height() -> Int
 
+    // MARK: Query functions
+    func getNumBlack() -> Int
+    func getNumWhite() -> Int
+
+    func canPut(color: Pieces, x: Int, y: Int) -> Bool
+    func getPuttables(color: Pieces) -> [(Int, Int)]
+    func getReversible(color: Pieces, x: Int, y: Int) -> [(Int, Int)]
+    
+
+    // MARK: Update functions
+
+    // MARK: Utility functions
     func clone() -> Board
 
     func toString() -> String

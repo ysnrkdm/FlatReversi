@@ -34,7 +34,7 @@ class GameManager {
 
         hUI = HumanUserInput(gameManager: self)
 
-        let b = ArrayBoard()
+        let b = SimpleBitBoard()
         b.initialize(8, height: 8)
         boardMediator = BoardMediator(board:b)
         boardMediator?.initializeBoard()
