@@ -465,6 +465,7 @@
 				TargetAttributes = {
 					8B74E1BE19F9ED9600B5E87E = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = X946KV89SN;
 					};
 					8B74E1D719F9ED9700B5E87E = {
 						CreatedOnToolsVersion = 6.1;
@@ -689,6 +690,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_UNROLL_LOOPS = YES;
 				INFOPLIST_FILE = FlatReversi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -701,6 +704,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PROJECT)/Swift_Bridging_Header.h";
 			};
 			name = Debug;
@@ -710,6 +714,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_UNROLL_LOOPS = YES;
 				INFOPLIST_FILE = FlatReversi/Info.plist;
@@ -723,6 +729,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PROJECT)/Swift_Bridging_Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Ounchecked";
 			};

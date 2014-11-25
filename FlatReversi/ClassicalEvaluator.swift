@@ -118,7 +118,7 @@ class ClassicalEvaluator: Evaluator {
             for x in 0..<board.width() {
                 if board.get(x, y: y) == forPlayer {
                     for (dx, dy) in peripherals {
-                        if board.withinBoard(x + dx, y: y + dy) && board.isEmpty(x + dx, y: y + dy) {
+                        if board.isEmpty(x + dx, y: y + dy) {
                             ++ret
                         }
                     }
@@ -126,7 +126,7 @@ class ClassicalEvaluator: Evaluator {
             }
         }
 
-        return ret
+        return -ret
     }
 
     func boardEvaluation(board: BoardRepresentation, forPlayer: Pieces, zones: Zones) -> Double {

@@ -129,6 +129,7 @@ class GameManager {
             // No valid hand
             // If returned false, not going to next turn
             // Current player must think another hand
+            NSLog("Cannot put \(x), \(y)")
             return false
         }
 
@@ -232,12 +233,12 @@ class GameManager {
         return true
     }
 
-    private func isGameOver() -> Bool {
+    func isGameOver() -> Bool {
         if let unwrappedBoardMediator = boardMediator {
             // If no action from both side, game over
             let puttablesFromCurrentTurn = unwrappedBoardMediator.getPuttables(turn)
             let puttablesFromNextTurn = unwrappedBoardMediator.getPuttables(nextTurn(turn))
-            NSLog("game over check -- current : \(puttablesFromCurrentTurn.count), next : \(puttablesFromNextTurn.count)")
+//            NSLog("game over check -- current : \(puttablesFromCurrentTurn.count), next : \(puttablesFromNextTurn.count)")
             if(puttablesFromCurrentTurn.count == 0 && puttablesFromNextTurn.count == 0) {
                 return true
             }

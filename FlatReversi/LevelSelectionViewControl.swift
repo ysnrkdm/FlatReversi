@@ -37,20 +37,25 @@ class LevelSelectionViewController: UIViewController, UITableViewDataSource, UIT
 
         cells = [
             ("Levels", []),
-            ("Achievement AIs", [])
+//            ("Achievement AIs", [])
             ]
+
+        var lastRowString = "To be added..."
 
         for level in LevelController().getLevels(true) {
             if lc.isNullAI(level) {
+                if level.levelTitle == "To be added in next version..." {
+                    lastRowString = level.levelTitle
+                }
                 continue
             } else if lc.isAchievementAI(level) {
-                cells![1].1.append(LevelTableCell(tableView: self.tableView, level: level))
+//                cells![1].1.append(LevelTableCell(tableView: self.tableView, level: level))
             } else {
                 cells![0].1.append(LevelTableCell(tableView: self.tableView, level: level))
             }
         }
 
-        var lastrow = LabelTableCell(tableView: self.tableView, label: "To be added...")
+        var lastrow = LabelTableCell(tableView: self.tableView, label: lastRowString)
         lastrow.getTableViewCell()
         cells![0].1.append(lastrow)
     }

@@ -11,6 +11,7 @@ import Foundation
 class SimpleBitBoard: Board {
     var black: UInt64 = 0b1000000001 << 27
     var white: UInt64 = 0b0100000010 << 27
+    var guide: UInt64 = 0b0
 
     var _height = 8
     var _width = 8
@@ -39,10 +40,11 @@ class SimpleBitBoard: Board {
             white = white | bitwhere
             black = black & (~bitwhere)
         case .Guide:
-            println("Guide not yet implemented")
+            guide = guide | bitwhere
         case .Empty:
             black = black & (~bitwhere)
             white = white & (~bitwhere)
+            guide = guide & (~bitwhere)
         default:
             println("Do nothing \(color.toString())")
         }
@@ -50,6 +52,10 @@ class SimpleBitBoard: Board {
 
     func get(x: Int, y: Int) -> Pieces {
 //        println("getting \(x),\(y)")
+        if !withinBoard(x, y: y) {
+            return .None
+        }
+
         let bitwhere: UInt64 = 1 << (UInt64(x) + UInt64(y) * 8)
         let blackExists: Bool = black & bitwhere > 0
         let whiteExists: Bool = white & bitwhere > 0
@@ -60,6 +66,8 @@ class SimpleBitBoard: Board {
             return .Black
         } else if !blackExists && whiteExists {
             return .White
+        } else if guide & bitwhere > 0 {
+            return .Guide
         } else {
             return .Empty
         }
@@ -99,81 +107,59 @@ class SimpleBitBoard: Board {
     }
 
     func getBitPuttables(color: Pieces, direc: Int) -> UInt64 {
-        //        println(toString())
-        //        println("\(direc)")
+        var mask: UInt64
+
+        if direc == 1 || direc == -1 {
+            mask = 0x7e7e7e7e7e7e7e7e
+        } else if direc == 8 || direc == -8 {
+            mask = 0x00ffffffffffff00
+        } else if direc == 7 || direc == -9 {
+            mask = 0x7e7e7e7e7e7e7e7e
+        } else if direc == 9 || direc == -7 {
+            mask = 0x7e7e7e7e7e7e7e7e
+        } else {
+            assertionFailure("Should not reach this code!")
+        }
+
         var attacker: UInt64
         var attackee: UInt64
 
-        var mask: UInt64
-
-        //        println(bitBoardToString(black))
-        //        println(bitBoardToString(white))
-
-        switch direc {
-            // Horizontal
-        case 1:
-            mask = 0x7e7e7e7e7e7e7e7e
-        case -1:
-            mask = 0x7e7e7e7e7e7e7e7e
-            // Vertical
-        case -8:
-            mask = 0x00ffffffffffff00
-        case 8:
-            mask = 0x00ffffffffffff00
-            // Diag LU -> RD
-        case -9:
-            mask = 0x7e7e7e7e7e7e7e7e
-        case 7:
-            mask = 0x7e7e7e7e7e7e7e7e
-            // Diag RU -> LD
-        case 9:
-            mask = 0x7e7e7e7e7e7e7e7e
-        case -7:
-            mask = 0x7e7e7e7e7e7e7e7e
-        default:
-            assertionFailure("Should not reach this code!")
-        }
-
         switch color {
         case .Black:
-            attacker = black & mask
-            attackee = white
+            attacker = black
+            attackee = white & mask
         case .White:
-            attacker = white & mask
-            attackee = black
+            attacker = white
+            attackee = black & mask
         default:
             assertionFailure("Should not reach this code!")
         }
 
-        //        println(bitBoardToString(attacker))
-        //        println(bitBoardToString(attackee))
-
-        //        println(bitBoardToString(pos))
         var rev: UInt64 = 0
         var t: UInt64 = 0
         if direc >= 0 {
-            t = attackee & (attacker >> UInt64(direc))
-            t |= attackee & (t >> UInt64(direc))
-            t |= attackee & (t >> UInt64(direc))
-            t |= attackee & (t >> UInt64(direc))
-            t |= attackee & (t >> UInt64(direc))
-            t |= attackee & (t >> UInt64(direc))
-            t = (t >> UInt64(direc))
+            let ui64_direc: UInt64 = UInt64(direc)
+            t = attackee & (attacker >> ui64_direc)
+            t |= attackee & (t >> ui64_direc)
+            t |= attackee & (t >> ui64_direc)
+            t |= attackee & (t >> ui64_direc)
+            t |= attackee & (t >> ui64_direc)
+            t |= attackee & (t >> ui64_direc)
+            t = (t >> ui64_direc)
         } else {
-            t = attackee & (attacker << UInt64(-direc))
-            t |= attackee & (t << UInt64(-direc))
-            t |= attackee & (t << UInt64(-direc))
-            t |= attackee & (t << UInt64(-direc))
-            t |= attackee & (t << UInt64(-direc))
-            t |= attackee & (t << UInt64(-direc))
-            t = (t << UInt64(-direc))
+            let ui64_direc: UInt64 = UInt64(-direc)
+            t = attackee & (attacker << ui64_direc)
+            t |= attackee & (t << ui64_direc)
+            t |= attackee & (t << ui64_direc)
+            t |= attackee & (t << ui64_direc)
+            t |= attackee & (t << ui64_direc)
+            t |= attackee & (t << ui64_direc)
+            t = (t << ui64_direc)
         }
 
         var blank: UInt64 = ~(black | white)
         var ret = blank & t
 
-        //        println(bitBoardToString(rev))
-        
         return ret
     }
 
@@ -199,12 +185,11 @@ class SimpleBitBoard: Board {
     }
 
     func getBitReversible(color: Pieces, x: Int, y: Int, direc: Int) -> UInt64 {
-//        println("getBitReversible \(color.toString()), \(x), \(y) for \(direc) - b:\(black) + w:\(white) :\n" + toString())
+//        println("getBitReversible \(color.toString()), \(x), \(y) for \(direc) :: b:\(black) + w:\(white) :\n" + toString())
         var attacker: UInt64
         var attackee: UInt64
 
         var pp = 0
-//        print("\(pp++)")
         var mask: UInt64
 
         if direc == 1 || direc == -1 {
@@ -218,25 +203,26 @@ class SimpleBitBoard: Board {
         } else {
             assertionFailure("Should not reach this code!")
         }
-//print("\(pp++)")
+
         switch color {
         case .Black:
-            attacker = black & mask
-            attackee = white
+            attacker = black
+            attackee = white & mask
         case .White:
-            attacker = white & mask
-            attackee = black
+            attacker = white
+            attackee = black & mask
         default:
             assertionFailure("Should not reach this code!")
         }
-//print("\(pp++)")
+
         var m1: UInt64
         var m2: UInt64
         var m3: UInt64
         var m4: UInt64
         var m5: UInt64
         var m6: UInt64
-//print("\(pp++)")
+        var m7: UInt64
+
         let pos: UInt64 = 1 << (UInt64(x) + UInt64(y) * 8)
 
         var ui64_direc: UInt64
@@ -248,6 +234,7 @@ class SimpleBitBoard: Board {
             m4 = m3 >> ui64_direc
             m5 = m4 >> ui64_direc
             m6 = m5 >> ui64_direc
+            m7 = m6 >> ui64_direc
         } else {
             ui64_direc = UInt64(-direc)
             m1 = pos << ui64_direc
@@ -256,8 +243,9 @@ class SimpleBitBoard: Board {
             m4 = m3 << ui64_direc
             m5 = m4 << ui64_direc
             m6 = m5 << ui64_direc
+            m7 = m6 << ui64_direc
         }
-//print("\(pp++)")
+
         var rev: UInt64 = 0
 
         if (m1 & attackee) != 0 {
@@ -282,12 +270,15 @@ class SimpleBitBoard: Board {
                     rev = m1 | m2 | m3 | m4 | m5
                 }
             } else {
-                if ((m6 >> ui64_direc) & attacker) != 0 {
+//                println(bitBoardToString(m7))
+//                println(bitBoardToString(m7 & attacker))
+                if (m7 & attacker) != 0 {
                     rev = m1 | m2 | m3 | m4 | m5 | m6
                 }
             }
         }
-//        println("getBitReversible \(color.toString()), \(x), \(y) for \(direc) - b:\(black) + w:\(white) :\n" + toString())
+
+//        println("\(bitBoardToString(rev))")
         return rev
     }
 

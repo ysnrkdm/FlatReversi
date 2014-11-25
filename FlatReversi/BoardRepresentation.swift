@@ -33,7 +33,7 @@ class BoardRepresentation {
 
     func isEmpty(x: Int, y: Int) -> Bool {
         let p = get(x, y: y)
-        return p != .Black && p != .White
+        return p != .Black && p != .White && p != .None
     }
 
     func canPut(color: Pieces, x: Int, y: Int) -> Bool {
@@ -47,40 +47,6 @@ class BoardRepresentation {
     // Only diag or horizontal/vertical lines can change by putting piece at x,y
     func getReversible(color: Pieces, x: Int, y: Int) -> [(Int, Int)] {
         return boardMediator.getReversible(color, x: x, y: y)
-//        var reversed: [(Int, Int)] = []
-//
-//        let directions = [
-//            [-1,-1], [0,-1], [1,-1],
-//            [-1,0],  /* */   [1,0],
-//            [-1,1],  [0,1],  [1,1],
-//        ]
-//
-//        for direc in directions {
-//            var reversedForDirec: [(Int, Int)] = []
-//            var mode = 0
-//            for var d = 1; d < boardMediator.height(); ++d {
-//                var cx = direc[0] * d + x
-//                var cy = direc[1] * d + y
-//                if(!withinBoard(cx, y: cy)) {
-//                    break
-//                }
-//                var p = get(cx, y: cy)
-//
-//                if((mode == 0 || mode == 1) && p != color && p != .Empty && p != .Guide && p != .None) {
-//                    mode = 1
-//                    let coordToAdd = (cx, cy)
-//                    reversedForDirec.append(coordToAdd)
-//                } else if (mode == 1 && p == color) {
-//                    // Can reverse them!
-//                    for reversible in reversedForDirec {
-//                        reversed.append(reversible)
-//                    }
-//                } else {
-//                    break
-//                }
-//            }
-//        }
-//        return reversed
     }
 
     func getNumBlack() -> Int {

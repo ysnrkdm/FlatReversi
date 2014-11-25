@@ -134,6 +134,7 @@ class GameScene: SKScene, GameViewScene {
 
         let yPosOffset = width + 3 * statusBarHeight
 
+        // Number of pieces
         numPiecesBlack?.removeFromParent()
         numPiecesWhite?.removeFromParent()
 
@@ -155,26 +156,28 @@ class GameScene: SKScene, GameViewScene {
         numPiecesWhite?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 + piece_width + 20, yPosOffset))
         boardView.addChild(numPiecesWhite!)
 
+        // Evaluation
         numBlackEval?.removeFromParent()
         numWhiteEval?.removeFromParent()
+        if false {
+            numBlackEval = SKLabelNode(text: "\(blackEval)")
+            numBlackEval?.name = "blackEval"
+            numBlackEval?.fontColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
+            numBlackEval?.fontSize = 30
+            numBlackEval?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
+            numBlackEval?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
+            numBlackEval?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 - piece_width - 20 - 80, yPosOffset))
+            boardView.addChild(numBlackEval!)
 
-        numBlackEval = SKLabelNode(text: "\(blackEval)")
-        numBlackEval?.name = "blackEval"
-        numBlackEval?.fontColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
-        numBlackEval?.fontSize = 30
-        numBlackEval?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
-        numBlackEval?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
-        numBlackEval?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 - piece_width - 20 - 80, yPosOffset))
-        boardView.addChild(numBlackEval!)
-
-        numWhiteEval = SKLabelNode(text: "\(whiteEval)")
-        numWhiteEval?.name = "blackEval"
-        numWhiteEval?.fontColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
-        numWhiteEval?.fontSize = 30
-        numWhiteEval?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
-        numWhiteEval?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
-        numWhiteEval?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 + piece_width + 20 + 80, yPosOffset))
-        boardView.addChild(numWhiteEval!)
+            numWhiteEval = SKLabelNode(text: "\(whiteEval)")
+            numWhiteEval?.name = "blackEval"
+            numWhiteEval?.fontColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
+            numWhiteEval?.fontSize = 30
+            numWhiteEval?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
+            numWhiteEval?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
+            numWhiteEval?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 + piece_width + 20 + 80, yPosOffset))
+            boardView.addChild(numWhiteEval!)
+        }
 
         //
         var radius = width / 8 / 2 * 0.8
@@ -502,7 +505,9 @@ class GameScene: SKScene, GameViewScene {
             let viewController = self.view?.window?.rootViewController as GameViewController
 
             var title = ""
-            if(self.gameManager.isCurrentTurnHuman()) {
+            if self.gameManager.isGameOver() {
+                title = "Game set"
+            } else if self.gameManager.isCurrentTurnHuman() {
                 title = "Your turn"
             } else {
                 title = "Computer is thinking..."
