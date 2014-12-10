@@ -114,7 +114,7 @@ class LevelSelectionViewController: UIViewController, UITableViewDataSource, UIT
     // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "MyTestCell")
-        cell.textLabel.text = "Row #\(indexPath.row)"
+        cell.textLabel!.text = "Row #\(indexPath.row)"
 
         if let unwrappedCells = cells {
             cell = unwrappedCells[indexPath.section].1[indexPath.row].getTableViewCell()
@@ -153,7 +153,7 @@ class LevelSelectionViewController: UIViewController, UITableViewDataSource, UIT
 
         override func getTableViewCell() -> UITableViewCell {
             var cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
-            cell.textLabel.text = label
+            cell.textLabel!.text = label
             return cell
         }
         
@@ -168,7 +168,7 @@ class LevelSelectionViewController: UIViewController, UITableViewDataSource, UIT
 
         override func getTableViewCell() -> UITableViewCell {
             var cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
-            cell.textLabel.text = level.toString()
+            cell.textLabel!.text = level.toString()
             return cell
         }
 

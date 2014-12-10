@@ -97,6 +97,24 @@ class GameScene: SKScene, GameViewScene {
             boardView.addChild(sprite)
         }
 
+        // 4 dots
+        let dotsUL = SKShapeNode(circleOfRadius: line_width * 3)
+        dotsUL.position = self.screenPointFromVirtualPoint(CGPointMake(piece_width * 2, piece_width * 2))
+        dotsUL.fillColor = color
+        boardView.addChild(dotsUL)
+        let dotsUR = SKShapeNode(circleOfRadius: line_width * 3)
+        dotsUR.position = self.screenPointFromVirtualPoint(CGPointMake(piece_width * 2, piece_width * 6))
+        dotsUR.fillColor = color
+        boardView.addChild(dotsUR)
+        let dotsDL = SKShapeNode(circleOfRadius: line_width * 3)
+        dotsDL.position = self.screenPointFromVirtualPoint(CGPointMake(piece_width * 6, piece_width * 2))
+        dotsDL.fillColor = color
+        boardView.addChild(dotsDL)
+        let dotsDR = SKShapeNode(circleOfRadius: line_width * 3)
+        dotsDR.position = self.screenPointFromVirtualPoint(CGPointMake(piece_width * 6, piece_width * 6))
+        dotsDR.fillColor = color
+        boardView.addChild(dotsDR)
+
         updateBoardViewQueue = Queue<UpdateBoardViewContext>()
 
         showNumPieces(0, white: 0, blackEval: 0.0, whiteEval: 0.0)

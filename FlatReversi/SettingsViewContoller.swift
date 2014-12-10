@@ -306,7 +306,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "MyTestCell")
-        cell.textLabel.text = "Row #\(indexPath.row)"
+        cell.textLabel!.text = "Row #\(indexPath.row)"
 
         if let unwrappedCells = cells {
             cell = unwrappedCells[indexPath.section].1[indexPath.row].getTableViewCell()
@@ -378,7 +378,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
 
         override func getTableViewCell() -> UITableViewCell {
             var cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
-            cell.textLabel.text = labelText
+            cell.textLabel!.text = labelText
             let items = segmentItems
             let segmentView: UISegmentedControl = UISegmentedControl(items: items)
             segmentView.addTarget(targetObject, action: targetSelector, forControlEvents: UIControlEvents.ValueChanged)
@@ -431,7 +431,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
 
         override func getTableViewCell() -> UITableViewCell {
             let cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
-            cell.textLabel.text = labelText
+            cell.textLabel!.text = labelText
             let switchView: UISwitch = UISwitch()
             switchView.addTarget(targetObject, action: targetSelector, forControlEvents: UIControlEvents.TouchUpInside)
             switchView.setOn(switchOn, animated: true)
@@ -452,7 +452,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
 
         override func getTableViewCell() -> UITableViewCell {
             let cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
-            cell.textLabel.text = labelText
+            cell.textLabel!.text = labelText
 
             return cell
         }

@@ -9,8 +9,8 @@
 import Foundation
 
 class SimpleBitBoard: Board {
-    var black: UInt64 = 0b1000000001 << 27
-    var white: UInt64 = 0b0100000010 << 27
+    var black: UInt64 = 0b0100000010 << 27
+    var white: UInt64 = 0b1000000001 << 27
     var guide: UInt64 = 0b0
 
     var _height = 8
