@@ -19,7 +19,6 @@ class SimpleSearchTree : Search {
 
     var boardEvalCacheBlack: Dictionary<BoardHash, Double> = Dictionary<BoardHash, Double>()
     var boardEvalCacheWhite: Dictionary<BoardHash, Double> = Dictionary<BoardHash, Double>()
-    var boardTranspositionCache: Dictionary<BoardHash, BoardCacheTable> = Dictionary<BoardHash, BoardCacheTable>()
 
     func search(boardRepresentation: BoardRepresentation, forPlayer: Pieces, evaluator: Evaluator, depth: Int) -> SearchResult {
         nodeCount = 0
