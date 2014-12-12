@@ -61,6 +61,10 @@ class BoardMediator {
         return self.board.getPuttables(color)
     }
 
+    func hash() -> (UInt64, UInt64) {
+        return self.board.hash()
+    }
+
     // Only diag or horizontal/vertical lines can change by putting piece at x,y
     func getReversible(color: Pieces, x: Int, y: Int) -> [(Int, Int)] {
         return self.board.getReversible(color, x: x, y: y)

@@ -282,6 +282,10 @@ class SimpleBitBoard: Board {
         return rev
     }
 
+    func hash() -> (UInt64, UInt64) {
+        return (black, white)
+    }
+
     // MARK: Bitwise operations
     func pop(i:UInt64) -> Int {
         var x = i

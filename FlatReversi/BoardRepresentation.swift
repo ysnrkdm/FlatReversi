@@ -73,6 +73,10 @@ class BoardRepresentation {
         return false
     }
 
+    func hash() -> (UInt64, UInt64) {
+        return self.boardMediator.hash()
+    }
+
     func toString() -> String {
         return self.boardMediator.toString()
     }

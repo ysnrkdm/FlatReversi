@@ -142,6 +142,10 @@ class ArrayBoard: Board {
         return reversed
     }
 
+    func hash() -> (UInt64, UInt64) {
+        return (0,0)
+    }
+
     // MARK: Update functions
 
     // MARK: Utility functions
