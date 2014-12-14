@@ -1,14 +1,14 @@
 //
-//  TranspositionedAlphaBetaSearchWithEvaluationPlayer.swift
+//  TranspositionAlphaBetaSimplePlayer.swift
 //  FlatReversi
 //
-//  Created by Kodama Yoshinori on 12/12/14.
+//  Created by Kodama Yoshinori on 12/14/14.
 //  Copyright (c) 2014 Yoshinori Kodama. All rights reserved.
 //
 
 import Foundation
 
-class TranspositionedAlphaBetaSearchWithEvaluationPlayer: ComputerPlayer {
+class TranspositionAlphaBetaSimplePlayer: ComputerPlayer {
 
     var zones: Zones? = nil
     var pnsLessThan: Int = 0
@@ -20,7 +20,7 @@ class TranspositionedAlphaBetaSearchWithEvaluationPlayer: ComputerPlayer {
     var wOpenness: [Double] = [1.0]
     var wBoardEvaluation: [Double] = [1.0]
 
-    var evaluator = ClassicalEvaluator()
+    var evaluator = SimpleEvaluator()
     var sst = TranspositionedAlphaBetaSearch()
 
     func configure(zones: Zones, pnsLessThan: Int, searchDepth: Int, wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double]) {
@@ -38,7 +38,7 @@ class TranspositionedAlphaBetaSearchWithEvaluationPlayer: ComputerPlayer {
     }
 
     override func think() {
-        NSLog("Start thinking")
+        NSLog("Start thinking: simple tree search")
         var retx = 0
         var rety = 0
 
@@ -55,7 +55,7 @@ class TranspositionedAlphaBetaSearchWithEvaluationPlayer: ComputerPlayer {
                     playerMediator.put(self.color, x: retx, y: rety)
                     return
                 }
-                NSLog("No PV found.")
+                NSLog("No PV found. Doing random.")
             }
 
             if puttables.count > 0 {
@@ -71,7 +71,7 @@ class TranspositionedAlphaBetaSearchWithEvaluationPlayer: ComputerPlayer {
         } else {
             assertionFailure("Should not reach this code!")
         }
-
+        
         playerMediator.put(self.color, x: retx, y: rety)
     }
 }

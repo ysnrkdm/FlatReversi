@@ -29,6 +29,19 @@ enum Pieces {
     }
 }
 
+func nextTurn(color: Pieces) -> Pieces {
+    var s : Pieces = .Black
+    switch color {
+    case .Black:
+        s = .White
+    case .White:
+        s = .Black
+    default:
+        s = .Black
+    }
+    return s
+}
+
 protocol Board {
     func initialize(width: Int, height: Int)
 
@@ -38,6 +51,7 @@ protocol Board {
     func set(color: Pieces, x: Int, y: Int)
     func get(x: Int, y: Int) -> Pieces
     func isPieceAt(piece: Pieces, x: Int, y: Int) -> Bool
+    func put(color: Pieces, x: Int, y: Int, guides: Bool, returnChanges: Bool) -> [(Int, Int)]
 
     func width() -> Int
     func height() -> Int
@@ -48,6 +62,7 @@ protocol Board {
 
     func canPut(color: Pieces, x: Int, y: Int) -> Bool
     func getPuttables(color: Pieces) -> [(Int, Int)]
+    func isAnyPuttable(color: Pieces) -> Bool
     func getReversible(color: Pieces, x: Int, y: Int) -> [(Int, Int)]
     func isEmpty(x: Int, y: Int) -> Bool
 
@@ -56,6 +71,7 @@ protocol Board {
     func hash() -> (UInt64, UInt64)
 
     // MARK: Update functions
+    func updateGuides(color: Pieces) -> Int
 
     // MARK: Utility functions
     func clone() -> Board

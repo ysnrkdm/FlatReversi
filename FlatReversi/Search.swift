@@ -34,7 +34,7 @@ class SearchResult {
         let eltime = String(format: "%.01f", Float(elapsedTimeInSec))
         let npsStr = String(format: "%.01f", Float(nps))
 
-        return "Searched in \(eltime) secs. NPS is \(npsStr)"
+        return "\(nodesSearched) nodes in \(eltime) secs. NPS: \(npsStr)"
 
     }
 }

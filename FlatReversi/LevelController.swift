@@ -50,6 +50,7 @@ class LevelController {
         Level(level: 14, levelId: 14, levelTitle: "Swing left and right PNS", levelDescr: ""),
         Level(level: 15, levelId: 15, levelTitle: "Openness only search", levelDescr: ""),
         Level(level: 16, levelId: 16, levelTitle: "DepthSearcher with Perturbation", levelDescr: ""),
+        Level(level: 17, levelId: 17, levelTitle: "5 Depth Static Eval Search + 10 PNS", levelDescr: ""),
         Level(level: 100, levelId: 1000, levelTitle: "To be added in next version...", levelDescr: ""),
 //        Level(level: 0, levelId: 1001, levelTitle: "SpecialAI", levelDescr: ""),
     ]
@@ -185,6 +186,11 @@ class LevelController {
             let sssep = TreeSearchWithPerturbationPlayer(playerMediator: playerMediator, color: color)
             let z = ZonesFactory().createZoneTypical8(99, bVal: 1.6, cVal: -5, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
             sssep.configure(z, pnsLessThan: 10, searchDepth: 3, wPossibleMoves: [20.0, 15, 3.2, 1.1], wEdge: [1.0, 1.0], wFixedPieces: [2.0, 20.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0], randomThreshold: 0.1)
+            return sssep
+        case 17:
+            let sssep = TranspositionAlphaBetaSimplePlayer(playerMediator: playerMediator, color: color)
+            let z = ZonesFactory().createZoneTypical8(999, bVal: 1.6, cVal: -5, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
+            sssep.configure(z, pnsLessThan: 10, searchDepth: 5, wPossibleMoves: [20.0, 15, 3.2, 1.1], wEdge: [1.0, 1.0], wFixedPieces: [2.0, 400.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0])
             return sssep
 
         default:

@@ -73,6 +73,91 @@ class SimpleBitBoard: Board {
         }
     }
 
+    private func reverse(color: Pieces, x: Int, y: Int) -> [(Int, Int)] {
+        var reversibles = getReversible(color, x: x, y: y)
+        for (rev_x, rev_y) in reversibles {
+            set(color, x: rev_x, y: rev_y)
+        }
+
+        return reversibles
+    }
+
+    func boardForAll(mapfun: (Pieces -> Pieces)) {
+        for y in 0..<height() {
+            for x in 0..<width() {
+                var p = get(x, y: y)
+                set(mapfun(p), x: x, y: y)
+            }
+        }
+    }
+
+    func boardForAll(mapfun: ((Int, Int) -> Pieces)) {
+        for y in 0..<height() {
+            for x in 0..<width() {
+                var p = get(x, y: y)
+                set(mapfun(x, y), x: x, y: y)
+            }
+        }
+    }
+
+    func updateGuides(color: Pieces) -> Int {
+        // Clear exising guides first
+        boardForAll({
+            (x: Pieces) -> Pieces in if(x == Pieces.Guide) { return Pieces.Empty } else { return x }
+        })
+
+        var ret = 0
+        boardForAll({
+            (x: Int, y: Int) -> Pieces in if(self.canPut(color, x: x, y: y)) { ++ret; return Pieces.Guide } else { return self.get(x, y: y) }
+        })
+
+        return ret
+    }
+
+    func put(color: Pieces, x: Int, y: Int, guides: Bool, returnChanges: Bool) -> [(Int, Int)] {
+        if !withinBoard(x, y: y) {
+            return []
+        }
+
+        let direcs = [1,-1,8,-8,-9,7,9,-7]
+
+        var r: UInt64 = 0
+        for direc in direcs {
+            let pd = getBitReversible(color, x: x, y: y, direc: direc)
+            r |= pd
+        }
+
+        if r <= 0 {
+            return []
+        }
+
+        let putAt = bitWhere(x, y: y)
+
+        switch color {
+        case .Black:
+            black = black ^ (putAt | r)
+            white = white ^ r
+        case .White:
+            black = black ^ r
+            white = white ^ (putAt | r)
+        default:
+            assertionFailure("Should not reach this code!")
+        }
+
+        return returnChanges ? listFromBitBoard(r) : []
+
+//        if(withinBoard(x, y: y) && canPut(color, x: x, y: y)) {
+//            set(color, x: x, y: y)
+//            var reversed = reverse(color, x: x, y: y)
+//            if guides {
+//                updateGuides(nextTurn(color))
+//            }
+//            return reversed
+//        } else {
+//            return []
+//        }
+    }
+
     func isPieceAt(piece: Pieces, x: Int, y: Int) -> Bool {
         switch piece {
         case .Black:
@@ -98,7 +183,21 @@ class SimpleBitBoard: Board {
     }
 
     func canPut(color: Pieces, x: Int, y: Int) -> Bool {
-        return (get(x, y: y) != .White) && (get(x, y: y) != .Black) && (getReversible(color, x: x, y: y).count > 0)
+        if (black | white) & bitWhere(x, y: y) > 0 {
+            return false
+        }
+
+        let direcs = [1,-1,8,-8,-9,7,9,-7]
+
+        var r: UInt64 = 0
+        for direc in direcs {
+            r |= getBitPuttables(color, direc: direc)
+            if r > 0 {
+                return true
+            }
+        }
+
+        return false
     }
 
     func getPuttables(color: Pieces) -> [(Int, Int)] {
@@ -108,12 +207,26 @@ class SimpleBitBoard: Board {
         for direc in direcs {
             r |= getBitPuttables(color, direc: direc)
         }
+        return listFromBitBoard(r)
+    }
 
+    func isAnyPuttable(color: Pieces) -> Bool {
+        let direcs = [1,-1,8,-8,-9,7,9,-7]
+
+        for direc in direcs {
+            if getBitPuttables(color, direc: direc) > 0 {
+                return true
+            }
+        }
+        return false
+    }
+
+    private func listFromBitBoard(bits: UInt64) -> [(Int, Int)] {
         var ret: [(Int, Int)] = []
         for iy in 0..<height() {
             for ix in 0..<width() {
                 let bitwhere: UInt64 = 1 << (UInt64(ix) + UInt64(iy) * 8)
-                if r & bitwhere > 0 {
+                if bits & bitwhere > 0 {
                     ret.append((ix, iy))
                 }
             }
@@ -187,16 +300,7 @@ class SimpleBitBoard: Board {
             r |= pd
         }
 
-        var ret: [(Int, Int)] = []
-        for iy in 0..<height() {
-            for ix in 0..<width() {
-                let bitwhere: UInt64 = 1 << (UInt64(ix) + UInt64(iy) * 8)
-                if r & bitwhere > 0 {
-                    ret.append((ix, iy))
-                }
-            }
-        }
-        return ret
+        return listFromBitBoard(r)
     }
 
     func getBitReversible(color: Pieces, x: Int, y: Int, direc: Int) -> UInt64 {

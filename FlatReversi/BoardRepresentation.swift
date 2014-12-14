@@ -52,6 +52,10 @@ class BoardRepresentation {
         return boardMediator.getReversible(color, x: x, y: y)
     }
 
+    func isAnyPuttable(color: Pieces) -> Bool {
+        return boardMediator.isAnyPuttable(color)
+    }
+
     func getNumBlack() -> Int {
         return boardMediator.getNumBlack()
     }
@@ -69,11 +73,15 @@ class BoardRepresentation {
             return true
         }
 
-        if getPuttables(.Black).isEmpty && getPuttables(.White).isEmpty {
-            return true
+        if isAnyPuttable(.Black) {
+            return false
         }
 
-        return false
+        if isAnyPuttable(.White) {
+            return false
+        }
+
+        return true
     }
 
     func numPeripherals(color: Pieces, x: Int, y: Int) -> Int {

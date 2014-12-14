@@ -147,7 +147,7 @@ class GameScene: SKScene, GameViewScene {
     }
 
     private func showNumPieces(black: Int, white: Int, blackEval: Double, whiteEval: Double, debugString: String) {
-        let debug = false
+        let debug = true
         let boardView = self.childNodeWithName("Board") as SKSpriteNode
         var width : CGFloat = boardView.size.width
         var height : CGFloat = boardView.size.height

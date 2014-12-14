@@ -55,6 +55,8 @@
 		8B50B0CE1A3D3EDC0057C14A /* TreeSearchWithPerturbationPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B50B0CD1A3D3EDC0057C14A /* TreeSearchWithPerturbationPlayer.swift */; };
 		8B50B0D01A3D41480057C14A /* LeftyPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B50B0CF1A3D41480057C14A /* LeftyPlayer.swift */; };
 		8B50B0D21A3D48C80057C14A /* SwingPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B50B0D11A3D48C80057C14A /* SwingPlayer.swift */; };
+		8B50B0D41A3D78EC0057C14A /* SimpleEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B50B0D31A3D78EC0057C14A /* SimpleEvaluator.swift */; };
+		8B50B0D61A3D79690057C14A /* TranspositionAlphaBetaSimplePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B50B0D51A3D79690057C14A /* TranspositionAlphaBetaSimplePlayer.swift */; };
 		8B60ED2A1A3AF9F60062AACC /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B60ED291A3AF9F60062AACC /* Search.swift */; };
 		8B60ED2C1A3B058D0062AACC /* TranspositionedAlphaBetaSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B60ED2B1A3B058D0062AACC /* TranspositionedAlphaBetaSearch.swift */; };
 		8B60ED2E1A3B0C4C0062AACC /* TranspositionedAlphaBetaSearchWithEvaluationPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B60ED2D1A3B0C4C0062AACC /* TranspositionedAlphaBetaSearchWithEvaluationPlayer.swift */; };
@@ -161,6 +163,8 @@
 		8B50B0CD1A3D3EDC0057C14A /* TreeSearchWithPerturbationPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeSearchWithPerturbationPlayer.swift; sourceTree = "<group>"; };
 		8B50B0CF1A3D41480057C14A /* LeftyPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftyPlayer.swift; sourceTree = "<group>"; };
 		8B50B0D11A3D48C80057C14A /* SwingPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwingPlayer.swift; sourceTree = "<group>"; };
+		8B50B0D31A3D78EC0057C14A /* SimpleEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleEvaluator.swift; sourceTree = "<group>"; };
+		8B50B0D51A3D79690057C14A /* TranspositionAlphaBetaSimplePlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranspositionAlphaBetaSimplePlayer.swift; sourceTree = "<group>"; };
 		8B60ED291A3AF9F60062AACC /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		8B60ED2B1A3B058D0062AACC /* TranspositionedAlphaBetaSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranspositionedAlphaBetaSearch.swift; sourceTree = "<group>"; };
 		8B60ED2D1A3B0C4C0062AACC /* TranspositionedAlphaBetaSearchWithEvaluationPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranspositionedAlphaBetaSearchWithEvaluationPlayer.swift; sourceTree = "<group>"; };
@@ -325,6 +329,7 @@
 				8B15FEAF1A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift */,
 				8B2517A11A13B03800B700F3 /* SimpleSearchStaticEvaluationPlayer.swift */,
 				8B60ED2D1A3B0C4C0062AACC /* TranspositionedAlphaBetaSearchWithEvaluationPlayer.swift */,
+				8B50B0D51A3D79690057C14A /* TranspositionAlphaBetaSimplePlayer.swift */,
 				8B50B0CD1A3D3EDC0057C14A /* TreeSearchWithPerturbationPlayer.swift */,
 				8B50B0CF1A3D41480057C14A /* LeftyPlayer.swift */,
 				8B50B0D11A3D48C80057C14A /* SwingPlayer.swift */,
@@ -347,6 +352,7 @@
 			children = (
 				8B22E27419FFE0890006E39C /* Evaluator.swift */,
 				8B22E27619FFE1080006E39C /* ClassicalEvaluator.swift */,
+				8B50B0D31A3D78EC0057C14A /* SimpleEvaluator.swift */,
 			);
 			name = Evaluation;
 			sourceTree = "<group>";
@@ -576,6 +582,7 @@
 				8B15FECA1A0D12B900A8C998 /* SimpleSearchTree.swift in Sources */,
 				8B22E27019FE7A110006E39C /* GreedyPlayer.swift in Sources */,
 				8B22E27719FFE1080006E39C /* ClassicalEvaluator.swift in Sources */,
+				8B50B0D41A3D78EC0057C14A /* SimpleEvaluator.swift in Sources */,
 				8B22E2811A0280C30006E39C /* BoardBuilder.swift in Sources */,
 				8B74E20419F9EE6900B5E87E /* RandomComputerPlayer.swift in Sources */,
 				8B22E1C219FC80C50006E39C /* Queue.swift in Sources */,
@@ -588,6 +595,7 @@
 				8B22E1C019FC75100006E39C /* Zones.swift in Sources */,
 				8B74E1FD19F9EE6900B5E87E /* GameSettings.swift in Sources */,
 				8B74E20019F9EE6900B5E87E /* HumanUserInput.swift in Sources */,
+				8B50B0D61A3D79690057C14A /* TranspositionAlphaBetaSimplePlayer.swift in Sources */,
 				8B22E2791A011C550006E39C /* ProofSolver.swift in Sources */,
 				8B74E20219F9EE6900B5E87E /* Player.swift in Sources */,
 				8B74E1F919F9EE6900B5E87E /* BoardRepresentation.swift in Sources */,
@@ -748,6 +756,8 @@
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_DYNAMIC_NO_PIC = YES;
+				GCC_FAST_MATH = YES;
 				GCC_UNROLL_LOOPS = YES;
 				INFOPLIST_FILE = FlatReversi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -758,6 +768,7 @@
 					"$(PROJECT_DIR)/FlatReversi/Ad/Nend",
 					"$(PROJECT_DIR)/FlatReversi/Ad/Nend/Nend/NendAd",
 				);
+				LLVM_LTO = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -772,6 +783,8 @@
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_DYNAMIC_NO_PIC = YES;
+				GCC_FAST_MATH = YES;
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_UNROLL_LOOPS = YES;
 				INFOPLIST_FILE = FlatReversi/Info.plist;
@@ -783,6 +796,7 @@
 					"$(PROJECT_DIR)/FlatReversi/Ad/Nend",
 					"$(PROJECT_DIR)/FlatReversi/Ad/Nend/Nend/NendAd",
 				);
+				LLVM_LTO = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

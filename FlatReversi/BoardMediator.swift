@@ -65,6 +65,10 @@ class BoardMediator {
         return self.board.getPuttables(color)
     }
 
+    func isAnyPuttable(color: Pieces) -> Bool {
+        return self.board.isAnyPuttable(color)
+    }
+
     func isEmpty(x: Int, y: Int) -> Bool {
         return self.board.isEmpty(x, y: y)
     }
@@ -84,62 +88,17 @@ class BoardMediator {
 
     // MARK: Board update functions
 
+    func updateGuides(color: Pieces) -> Int {
+        return self.board.updateGuides(color)
+    }
+
     // Does set and reverse pieces
     // Returns [x,y] of changes (except put piece)
-    func put(color: Pieces, x: Int, y: Int, guides: Bool = true) -> [(Int, Int)] {
-        if(withinBoard(x, y: y) && canPut(color, x: x, y: y)) {
-            set(color, x: x, y: y)
-            var reversed = reverse(color, x: x, y: y)
-            if guides {
-                updateGuides(nextTurn(color))
-            }
-            return reversed
-        } else {
-            return []
-        }
-    }
-
-    func boardForAll(mapfun: (Pieces -> Pieces)) {
-        for y in 0..<board.height() {
-            for x in 0..<board.width() {
-                var p = get(x, y: y)
-                set(mapfun(p), x: x, y: y)
-            }
-        }
-    }
-
-    func boardForAll(mapfun: ((Int, Int) -> Pieces)) {
-        for y in 0..<board.height() {
-            for x in 0..<board.width() {
-                var p = get(x, y: y)
-                set(mapfun(x, y), x: x, y: y)
-            }
-        }
-    }
-
-    func updateGuides(color: Pieces) -> Int {
-        // Clear exising guides first
-        boardForAll({
-            (x: Pieces) -> Pieces in if(x == Pieces.Guide) { return Pieces.Empty } else { return x }
-        })
-
-        var ret = 0
-        boardForAll({
-            (x: Int, y: Int) -> Pieces in if(self.canPut(color, x: x, y: y)) { ++ret; return Pieces.Guide } else { return self.get(x, y: y) }
-        })
-
-        return ret
+    func put(color: Pieces, x: Int, y: Int, guides: Bool = true, returnChanges: Bool = true) -> [(Int, Int)] {
+        return self.board.put(color, x: x, y: y, guides: guides, returnChanges: returnChanges)
     }
 
     // Normalize the board
-    func reverse(color: Pieces, x: Int, y: Int) -> [(Int, Int)] {
-        var reversibles = getReversible(color, x: x, y: y)
-        for (rev_x, rev_y) in reversibles {
-            set(color, x: rev_x, y: rev_y)
-        }
-
-        return reversibles
-    }
 
     func toString() -> String {
         return self.board.toString()

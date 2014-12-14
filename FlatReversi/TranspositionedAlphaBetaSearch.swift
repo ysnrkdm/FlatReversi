@@ -101,7 +101,7 @@ class TranspositionedAlphaBetaSearch : Search {
 
             for (px, py) in puttables {
                 var newBoard = boardRepresentation.clone()
-                newBoard.boardMediator.put(turn, x: px, y: py, guides: false)
+                newBoard.boardMediator.put(turn, x: px, y: py, guides: false, returnChanges: false)
                 var newPv = pv
                 newPv.append((px, py))
                 let r = recSearch(depth - 1, boardRepresentation: newBoard, forPlayer: forPlayer, currentPlayer: boardRepresentation.boardMediator.nextTurn(turn), alpha: alpha, beta: beta, evaluator: evaluator, pv: newPv)
