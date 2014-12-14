@@ -147,6 +147,7 @@ class GameScene: SKScene, GameViewScene {
     }
 
     private func showNumPieces(black: Int, white: Int, blackEval: Double, whiteEval: Double, debugString: String) {
+        let debug = false
         let boardView = self.childNodeWithName("Board") as SKSpriteNode
         var width : CGFloat = boardView.size.width
         var height : CGFloat = boardView.size.height
@@ -181,7 +182,7 @@ class GameScene: SKScene, GameViewScene {
         // Evaluation
         numBlackEval?.removeFromParent()
         numWhiteEval?.removeFromParent()
-        if true {
+        if debug {
             numBlackEval = SKLabelNode(text: "\(blackEval)")
             numBlackEval?.name = "blackEval"
             numBlackEval?.fontColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
@@ -203,7 +204,7 @@ class GameScene: SKScene, GameViewScene {
 
         // Show Result
         debugLabel?.removeFromParent()
-        if true {
+        if debug {
             debugLabel = SKLabelNode(text: "\(debugString)")
             debugLabel?.name = "blackEval"
             debugLabel?.fontColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
