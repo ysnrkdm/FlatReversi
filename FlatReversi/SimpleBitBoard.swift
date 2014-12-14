@@ -73,6 +73,21 @@ class SimpleBitBoard: Board {
         }
     }
 
+    func isPieceAt(piece: Pieces, x: Int, y: Int) -> Bool {
+        switch piece {
+        case .Black:
+            return bitWhere(x, y: y) & black > 0
+        case .White:
+            return bitWhere(x, y: y) & white > 0
+        case .Guide:
+            return bitWhere(x, y: y) & guide > 0
+        case .Empty:
+            return bitWhere(x, y: y) & (black | white) > 0
+        default:
+            return false
+        }
+    }
+
     // MARK: Query functions
     func getNumBlack() -> Int {
         return pop(black)
@@ -280,6 +295,53 @@ class SimpleBitBoard: Board {
 
 //        println("\(bitBoardToString(rev))")
         return rev
+    }
+
+    func isEmpty(x: Int, y: Int) -> Bool {
+        return (black & white) & bitWhere(x, y: y) > 0
+    }
+
+    func numPeripherals(color: Pieces, x: Int, y: Int) -> Int {
+        let peripherals_row: [UInt64] = [
+            0b00000011, 0b00000111, 0b00001110, 0b00011100, 0b00111000, 0b01110000, 0b11100000, 0b11000000
+        ]
+
+        let peripherals_x: UInt64 = peripherals_row[x]
+        var peripherals_xs : UInt64 = peripherals_x << 16 + peripherals_x << 8 + peripherals_x
+
+        switch y {
+        case 0:
+            peripherals_xs = peripherals_x << 8 + peripherals_x
+        case 1:
+            peripherals_xs = peripherals_xs * 1
+        case 2:
+            peripherals_xs = peripherals_xs << (8 * 1)
+        case 3:
+            peripherals_xs = peripherals_xs << (8 * 2)
+        case 4:
+            peripherals_xs = peripherals_xs << (8 * 3)
+        case 5:
+            peripherals_xs = peripherals_xs << (8 * 4)
+        case 6:
+            peripherals_xs = peripherals_xs << (8 * 5)
+        case 7:
+            peripherals_xs = peripherals_xs << (8 * 6)
+        default:
+            assertionFailure("Should not reach this code!")
+        }
+
+        let peripherals = peripherals_xs & (bitWhere(x, y: y) ^ 0xFFFFFFFFFFFFFFFF)
+
+        if color == .Black {
+            return pop(black & peripherals)
+        } else if color == .White {
+            return pop(white & peripherals)
+        } else if color == .Empty {
+            let empty_cells = (black | white) ^ 0xFFFFFFFFFFFFFFFF
+            return pop(empty_cells & peripherals)
+        } else {
+            return 0
+        }
     }
 
     func hash() -> (UInt64, UInt64) {

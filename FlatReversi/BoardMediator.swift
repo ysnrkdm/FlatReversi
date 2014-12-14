@@ -44,6 +44,10 @@ class BoardMediator {
         return self.board.get(x, y: y)
     }
 
+    func isPieceAt(piece: Pieces, x: Int, y: Int) -> Bool {
+        return self.board.isPieceAt(piece, x: x, y: y)
+    }
+
     // MARK: Query functions
     func getNumBlack() -> Int {
         return self.board.getNumBlack()
@@ -59,6 +63,14 @@ class BoardMediator {
 
     func getPuttables(color: Pieces) -> [(Int, Int)] {
         return self.board.getPuttables(color)
+    }
+
+    func isEmpty(x: Int, y: Int) -> Bool {
+        return self.board.isEmpty(x, y: y)
+    }
+
+    func numPeripherals(color: Pieces, x: Int, y: Int) -> Int {
+        return self.board.numPeripherals(color, x: x, y: y)
     }
 
     func hash() -> (UInt64, UInt64) {

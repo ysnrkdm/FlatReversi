@@ -37,6 +37,7 @@ protocol Board {
 
     func set(color: Pieces, x: Int, y: Int)
     func get(x: Int, y: Int) -> Pieces
+    func isPieceAt(piece: Pieces, x: Int, y: Int) -> Bool
 
     func width() -> Int
     func height() -> Int
@@ -48,6 +49,10 @@ protocol Board {
     func canPut(color: Pieces, x: Int, y: Int) -> Bool
     func getPuttables(color: Pieces) -> [(Int, Int)]
     func getReversible(color: Pieces, x: Int, y: Int) -> [(Int, Int)]
+    func isEmpty(x: Int, y: Int) -> Bool
+
+    func numPeripherals(color: Pieces, x: Int, y: Int) -> Int
+
     func hash() -> (UInt64, UInt64)
 
     // MARK: Update functions

@@ -15,6 +15,7 @@ class SearchResult {
     //
     var nodesSearched = 0
     var elapsedTimeInSec = 0.0
+    var transpositionHitCount = 0
     var nps: Double {
         return Double(self.nodesSearched) / elapsedTimeInSec
     }
@@ -25,7 +26,16 @@ class SearchResult {
     }
 
     func toString() -> String {
-        return "\(value) - pv \(pv) : searched \(nodesSearched) nodes in \(elapsedTimeInSec). NPS is \(nps)"
+        let transRatio: Double = Double(transpositionHitCount) / Double(nodesSearched) * 100.0
+        return "\(value) - pv \(pv) : searched \(nodesSearched) (\(transRatio)%% transposition table hit) nodes in \(elapsedTimeInSec). NPS is \(nps)"
+    }
+
+    func toShortString() -> String {
+        let eltime = String(format: "%.01f", Float(elapsedTimeInSec))
+        let npsStr = String(format: "%.01f", Float(nps))
+
+        return "Searched in \(eltime) secs. NPS is \(npsStr)"
+
     }
 }
 
@@ -40,20 +50,10 @@ func boardHashFromTuple(tuple: (UInt64, UInt64)) -> BoardHash {
     return BoardHash(x: tuple.0, y: tuple.1)
 }
 
-struct BoardCacheTable {
-    var turn: Pieces
-
-    var lowerBound: Double
-    var upperBound: Double
-
-    var next: (Int, Int)
-}
-
 func == (lhs: BoardHash, rhs: BoardHash) -> Bool {
     return lhs.x == rhs.x && lhs.y == rhs.y
 }
 
 protocol Search {
     func search(boardRepresentation: BoardRepresentation, forPlayer: Pieces, evaluator: Evaluator, depth: Int) -> SearchResult
-    func evaluate(boardRepresentation: BoardRepresentation, forPlayer: Pieces, evaluator: Evaluator) -> Double
 }

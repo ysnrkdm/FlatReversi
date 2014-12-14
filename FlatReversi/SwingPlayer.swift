@@ -1,17 +1,19 @@
 //
-//  RandomPlayerWithPNS.swift
+//  SwingPlayer.swift
 //  FlatReversi
 //
-//  Created by Kodama Yoshinori on 11/6/14.
+//  Created by Kodama Yoshinori on 12/14/14.
 //  Copyright (c) 2014 Yoshinori Kodama. All rights reserved.
 //
 
 import Foundation
 
-class RandomPlayerWithPNS: ComputerPlayer {
+class SwingPlayer: ComputerPlayer {
 
     var zones: Zones? = nil
     var pnsLessThan: Int = 0
+
+    var swing = 0       // odd to right, even to left
 
     func configure(zones: Zones, pnsLessThan: Int) {
         self.zones = zones
@@ -41,8 +43,13 @@ class RandomPlayerWithPNS: ComputerPlayer {
             NSLog("No PV found. Doing random.")
             if puttables.count > 0 {
                 if let uzones = zones {
-                    let coords = uzones.getTopNByRandomInPuttables(1, puttables: puttables)
+                    var coords = uzones.getTopNByRandomInPuttables(10, puttables: puttables)
                     if coords.count > 0 {
+                        if swing++ % 2 == 0{
+                            coords.sort({$0.0 < $1.0})
+                        } else {
+                            coords.sort({$0.0 > $1.0})
+                        }
                         (retx, rety) = coords[0]
                     }
                 }

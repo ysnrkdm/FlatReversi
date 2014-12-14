@@ -1,14 +1,14 @@
 //
-//  SimpleSearchStaticEvaluationPlayer.swift
+//  TreeSearchWithPerturbationPlayer.swift
 //  FlatReversi
 //
-//  Created by Kodama Yoshinori on 11/13/14.
+//  Created by Kodama Yoshinori on 12/14/14.
 //  Copyright (c) 2014 Yoshinori Kodama. All rights reserved.
 //
 
 import Foundation
 
-class SimpleSearchStaticEvaluationPlayer: ComputerPlayer {
+class TreeSearchWithPerturbationPlayer: ComputerPlayer {
 
     var zones: Zones? = nil
     var pnsLessThan: Int = 0
@@ -20,10 +20,12 @@ class SimpleSearchStaticEvaluationPlayer: ComputerPlayer {
     var wOpenness: [Double] = [1.0]
     var wBoardEvaluation: [Double] = [1.0]
 
-    var evaluator = ClassicalEvaluator()
-    var sst = SimpleSearchTree()
+    var randomThreshold: Double = 0.1
 
-    func configure(zones: Zones, pnsLessThan: Int, searchDepth: Int, wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double]) {
+    var evaluator = ClassicalEvaluator()
+    var sst = TranspositionedAlphaBetaSearch()
+
+    func configure(zones: Zones, pnsLessThan: Int, searchDepth: Int, wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double], randomThreshold: Double) {
         self.zones = zones
         self.pnsLessThan = pnsLessThan
         self.searchDepth = searchDepth
@@ -33,6 +35,8 @@ class SimpleSearchStaticEvaluationPlayer: ComputerPlayer {
         self.wFixedPieces = wFixedPieces
         self.wOpenness = wOpenness
         self.wBoardEvaluation = wBoardEvaluation
+
+        self.randomThreshold = randomThreshold
 
         evaluator.configure(wPossibleMoves, wEdge: wEdge, wFixedPieces: wFixedPieces, wOpenness: wOpenness, wBoardEvaluation: wBoardEvaluation, zones: zones)
     }
@@ -58,19 +62,32 @@ class SimpleSearchStaticEvaluationPlayer: ComputerPlayer {
                 NSLog("No PV found. Doing random.")
             }
 
-            if puttables.count > 0 {
-                let res = sst.search(br.clone(), forPlayer: color, evaluator: evaluator, depth: searchDepth)
-
-                NSLog("Searched -- " + res.toString())
-                let coords = res.pv
-                if coords.count > 0 {
-                    (retx, rety) = coords[0]
+            let ra: Double = Double(arc4random()) / Double(UINT32_MAX)
+            if randomThreshold > ra {
+                NSLog("Doing random play.")
+                if puttables.count > 0 {
+                    if let uzones = zones {
+                        let coords = uzones.getTopNByRandomInPuttables(1, puttables: puttables)
+                        if coords.count > 0 {
+                            (retx, rety) = coords[0]
+                        }
+                    }
+                }
+            } else {
+                if puttables.count > 0 {
+                    let res = sst.search(br.clone(), forPlayer: color, evaluator: evaluator, depth: searchDepth)
+                    NSLog("Searched -- " + res.toString())
+                    self.playerMediator.gameManager.setDebugString(res.toShortString())
+                    let coords = res.pv
+                    if coords.count > 0 {
+                        (retx, rety) = coords[0]
+                    }
                 }
             }
         } else {
             assertionFailure("Should not reach this code!")
         }
-
+        
         playerMediator.put(self.color, x: retx, y: rety)
     }
 }

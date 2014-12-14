@@ -9,5 +9,5 @@
 import Foundation
 
 protocol Evaluator {
-    func eval(board: BoardRepresentation, forPlayer: Pieces) -> Double
+    func evaluate(board: BoardRepresentation, forPlayer: Pieces) -> Double
 }

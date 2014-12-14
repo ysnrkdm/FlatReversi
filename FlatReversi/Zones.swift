@@ -28,6 +28,7 @@ class Zones {
 
     func getTopNByRandomInPuttables(n: Int, puttables: [(Int, Int)]) -> [(Int, Int)] {
         var arr: [(Double, (Int, Int))] = []
+        let n = n > puttables.count ? puttables.count : n
         for (x, y) in puttables {
             let ra: Double = Double(arc4random()) / Double(UINT32_MAX)
             let a = (ra * zones[y][x], (x, y))
@@ -39,10 +40,10 @@ class Zones {
             $0.0 > $1.0
         })
 
-        NSLog("Eval")
-        for e in arr {
-            NSLog("\(e.1.0), \(e.1.1) - \(e.0)")
-        }
+//        NSLog("Eval")
+//        for e in arr {
+//            NSLog("\(e.1.0), \(e.1.1) - \(e.0)")
+//        }
 
         var ret: [(Int, Int)] = []
         for elem in arr[0..<n] {

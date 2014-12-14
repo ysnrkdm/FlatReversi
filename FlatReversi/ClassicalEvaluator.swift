@@ -17,6 +17,9 @@ class ClassicalEvaluator: Evaluator {
 
     var zones: Zones = Zones(width: 8, height: 8, initVal: 1)
 
+    var boardEvalCacheBlack: Dictionary<BoardHash, Double> = Dictionary<BoardHash, Double>()
+    var boardEvalCacheWhite: Dictionary<BoardHash, Double> = Dictionary<BoardHash, Double>()
+
     func configure(wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double], zones: Zones) {
         self.wPossibleMoves = wPossibleMoves
         self.wEdge = wEdge
@@ -24,6 +27,30 @@ class ClassicalEvaluator: Evaluator {
         self.wOpenness = wOpenness
         self.wBoardEvaluation = wBoardEvaluation
         self.zones = zones
+    }
+
+    func evaluate(boardRepresentation: BoardRepresentation, forPlayer: Pieces) -> Double {
+        return eval(boardRepresentation, forPlayer: forPlayer)
+        // Firstly looking into cache
+//        if forPlayer == .Black {
+//            if let value = boardEvalCacheBlack[boardHashFromTuple(boardRepresentation.hash())] {
+//                NSLog("Black cache - \(boardEvalCacheBlack.count)")
+//                return value
+//            } else {
+//                let value = eval(boardRepresentation, forPlayer: forPlayer)
+//                boardEvalCacheBlack.updateValue(value, forKey: boardHashFromTuple(boardRepresentation.hash()))
+//                return value
+//            }
+//        } else {
+//            if let value = boardEvalCacheWhite[boardHashFromTuple(boardRepresentation.hash())] {
+//                NSLog("White cache - \(boardEvalCacheWhite.count)")
+//                return value
+//            } else {
+//                let value = eval(boardRepresentation, forPlayer: forPlayer)
+//                boardEvalCacheWhite.updateValue(value, forKey: boardHashFromTuple(boardRepresentation.hash()))
+//                return value
+//            }
+//        }
     }
 
     func eval(board: BoardRepresentation, forPlayer: Pieces) -> Double {
@@ -97,7 +124,7 @@ class ClassicalEvaluator: Evaluator {
         // Corner
         let corners = [(0,0), (W-1,0), (0,H-1), (W-1,H-1)]
         for (cx, cy) in corners {
-            if board.get(cx, y: cy) == forPlayer {
+            if board.isPieceAt(forPlayer, x: cx, y: cy) {
                 ++ret
             }
         }
@@ -108,32 +135,22 @@ class ClassicalEvaluator: Evaluator {
     func openness(board: BoardRepresentation, forPlayer: Pieces) -> Int {
         var ret = 0
 
-        let peripherals = [
-            (-1, -1), (0,-1), (1,-1),
-            (-1,  0),         (1, 0),
-            (-1,  1), (0, 1), (1, 1),
-        ]
-
         for y in 0..<board.height() {
             for x in 0..<board.width() {
-                if board.get(x, y: y) == forPlayer {
-                    for (dx, dy) in peripherals {
-                        if board.isEmpty(x + dx, y: y + dy) {
-                            ++ret
-                        }
-                    }
+                if board.isPieceAt(forPlayer, x: x, y: y) {
+                    ret += board.numPeripherals(.Empty, x: x, y: y)
                 }
             }
         }
 
-        return -ret
+        return ret
     }
 
     func boardEvaluation(board: BoardRepresentation, forPlayer: Pieces, zones: Zones) -> Double {
         var ret = 0.0
         for y in 0..<board.height() {
             for x in 0..<board.width() {
-                if board.get(x, y: y) == forPlayer {
+                if board.isPieceAt(forPlayer, x: x, y: y) {
                     ret += 1.0 * zones.zones[x][y]
                 }
             }

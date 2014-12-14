@@ -20,6 +20,7 @@ class GameManager {
     // just for show
     private var blackEval: Double = 0.0
     private var whiteEval: Double = 0.0
+    private var debugString: String = ""
 
     var challengeLevelId: Int = -1
 
@@ -107,17 +108,15 @@ class GameManager {
     // Main game loop logic
     func startGame() {
         let br = BoardRepresentation(boardMediator: boardMediator!)
-        let eval = evaluator?.eval(br, forPlayer: turn)
+        let eval = evaluator?.evaluate(br, forPlayer: turn)
         NSLog("Game start -- now \(turn.toString()) s turn. Eval is \(eval!)")
         // Start
         switch (self.turn) {
         case Pieces.Black:
             blackEval = eval!
-//            NSLog("Black turn start")
             blackPlayer?.play()
         case Pieces.White:
             whiteEval = eval!
-//            NSLog("White turn start")
             whitePlayer?.play()
         default:
             assertionFailure("Should not reach this code!")
@@ -144,7 +143,7 @@ class GameManager {
                 while(!gvm.isUpdateBoardViewQueueEmpty()) {
                     NSThread.sleepForTimeInterval(5/1000)
                 }
-                gvm.update(unwrappedChanges, put: [(x, y)], showPuttables: showPuttables, showAnimation: gs.showAnimation, blackEval: blackEval, whiteEval: whiteEval)
+                gvm.update(unwrappedChanges, put: [(x, y)], showPuttables: showPuttables, showAnimation: gs.showAnimation, blackEval: blackEval, whiteEval: whiteEval, debugString: debugString)
             }
         }
         self.turn = nextTurn(self.turn)
@@ -219,12 +218,11 @@ class GameManager {
             // Current player cannot do anything. Skip
             self.turn = nextTurn(self.turn)
             self.boardMediator?.updateGuides(self.turn)
-            self.gameViewModel?.update([], put: [], showPuttables: isCurrentTurnHuman(), showAnimation: gs.showAnimation, blackEval: blackEval, whiteEval: whiteEval)
+            self.gameViewModel?.update([], put: [], showPuttables: isCurrentTurnHuman(), showAnimation: gs.showAnimation, blackEval: blackEval, whiteEval: whiteEval, debugString: debugString)
             self.gameViewModel?.showPasses()
             startGame()
         } else {
             // Then next player's turn
-            NSLog("Next turn")
             startGame()
         }
 
@@ -238,7 +236,6 @@ class GameManager {
             // If no action from both side, game over
             let puttablesFromCurrentTurn = unwrappedBoardMediator.getPuttables(turn)
             let puttablesFromNextTurn = unwrappedBoardMediator.getPuttables(nextTurn(turn))
-//            NSLog("game over check -- current : \(puttablesFromCurrentTurn.count), next : \(puttablesFromNextTurn.count)")
             if(puttablesFromCurrentTurn.count == 0 && puttablesFromNextTurn.count == 0) {
                 return true
             }
@@ -261,7 +258,6 @@ class GameManager {
         if let unwrappedBoardMediator = boardMediator {
             // If can puttable position is more than 0, doable action
             let puttablesFromCurrentTurn = unwrappedBoardMediator.getPuttables(turn)
-            NSLog("next player's puttables are \(puttablesFromCurrentTurn)")
             if(puttablesFromCurrentTurn.count > 0) {
                 return true
             }
@@ -315,6 +311,10 @@ class GameManager {
         let blackPlayerAndHuman = turn == Pieces.Black && blackPlayer != nil && !blackPlayer!.isComputerPlayer()
         let whitePlayerAndHuman = turn == Pieces.White && whitePlayer != nil && !whitePlayer!.isComputerPlayer()
         return (blackPlayerAndHuman) || (whitePlayerAndHuman)
+    }
+
+    func setDebugString(string: String) {
+        self.debugString = string
     }
 
     private func nextTurn(color: Pieces) -> Pieces {

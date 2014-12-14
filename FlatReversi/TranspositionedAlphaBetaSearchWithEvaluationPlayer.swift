@@ -1,14 +1,14 @@
 //
-//  SimpleSearchStaticEvaluationPlayer.swift
+//  TranspositionedAlphaBetaSearchWithEvaluationPlayer.swift
 //  FlatReversi
 //
-//  Created by Kodama Yoshinori on 11/13/14.
+//  Created by Kodama Yoshinori on 12/12/14.
 //  Copyright (c) 2014 Yoshinori Kodama. All rights reserved.
 //
 
 import Foundation
 
-class SimpleSearchStaticEvaluationPlayer: ComputerPlayer {
+class TranspositionedAlphaBetaSearchWithEvaluationPlayer: ComputerPlayer {
 
     var zones: Zones? = nil
     var pnsLessThan: Int = 0
@@ -21,7 +21,7 @@ class SimpleSearchStaticEvaluationPlayer: ComputerPlayer {
     var wBoardEvaluation: [Double] = [1.0]
 
     var evaluator = ClassicalEvaluator()
-    var sst = SimpleSearchTree()
+    var sst = TranspositionedAlphaBetaSearch()
 
     func configure(zones: Zones, pnsLessThan: Int, searchDepth: Int, wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double]) {
         self.zones = zones
@@ -62,6 +62,7 @@ class SimpleSearchStaticEvaluationPlayer: ComputerPlayer {
                 let res = sst.search(br.clone(), forPlayer: color, evaluator: evaluator, depth: searchDepth)
 
                 NSLog("Searched -- " + res.toString())
+                self.playerMediator.gameManager.setDebugString(res.toShortString())
                 let coords = res.pv
                 if coords.count > 0 {
                     (retx, rety) = coords[0]

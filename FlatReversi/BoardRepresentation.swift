@@ -31,9 +31,12 @@ class BoardRepresentation {
         return self.boardMediator.get(x, y: y)
     }
 
+    func isPieceAt(piece: Pieces, x: Int, y: Int) -> Bool {
+        return self.boardMediator.isPieceAt(piece, x: x, y: y)
+    }
+
     func isEmpty(x: Int, y: Int) -> Bool {
-        let p = get(x, y: y)
-        return p != .Black && p != .White && p != .None
+        return self.boardMediator.isEmpty(x, y: y)
     }
 
     func canPut(color: Pieces, x: Int, y: Int) -> Bool {
@@ -71,6 +74,10 @@ class BoardRepresentation {
         }
 
         return false
+    }
+
+    func numPeripherals(color: Pieces, x: Int, y: Int) -> Int {
+        return self.boardMediator.numPeripherals(color, x: x, y: y)
     }
 
     func hash() -> (UInt64, UInt64) {

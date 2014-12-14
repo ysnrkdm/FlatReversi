@@ -16,7 +16,6 @@ class RandomComputerPlayer: ComputerPlayer {
         var rety = 0
         if(level >= 1) {
             if let puttables = playerMediator.getBoardRepresentation()?.getPuttables(self.color) {
-                NSLog("puttables are \(puttables.count)")
                 if(puttables.count > 0) {
                     let selected = Int(arc4random_uniform((puttables.count - 1) - 0 + 1)) + 0
                     assert(selected < puttables.count, "selected must be less than num of puttables")
@@ -29,7 +28,6 @@ class RandomComputerPlayer: ComputerPlayer {
 
         }
 
-        NSLog("Answer \(retx), \(rety)")
         playerMediator.put(self.color, x: retx, y: rety)
     }
 }

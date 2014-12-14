@@ -60,6 +60,10 @@ class ArrayBoard: Board {
         }
     }
 
+    func isPieceAt(piece: Pieces, x: Int, y: Int) -> Bool {
+        return get(x, y: y) == piece
+    }
+
     // MARK: Query functions
     func getNumBlack() -> Int {
         var ret = 0
@@ -140,6 +144,38 @@ class ArrayBoard: Board {
         }
         
         return reversed
+    }
+
+    func isEmpty(x: Int, y: Int) -> Bool {
+        let p = get(x, y: y)
+        return p != .Black && p != .White && p != .None
+    }
+
+    func numPeripherals(color: Pieces, x: Int, y: Int) -> Int {
+        let peripherals = [
+            (-1, -1), (0,-1), (1,-1),
+            (-1,  0),         (1, 0),
+            (-1,  1), (0, 1), (1, 1),
+        ]
+
+        var ret = 0
+        for (dx, dy) in peripherals {
+            if color == .Black {
+                if get(x + dx, y: y + dy) == .Black {
+                    ++ret
+                }
+            } else if color == .White {
+                if get(x + dx, y: y + dy) == .Black {
+                    ++ret
+                }
+            } else if color == .Empty {
+                if isEmpty(x + dx, y: y + dy) {
+                    ++ret
+                }
+            }
+        }
+
+        return ret
     }
 
     func hash() -> (UInt64, UInt64) {

@@ -15,7 +15,6 @@ class GreedyPlayer: ComputerPlayer {
         var rety = 0
 
         if let puttables = playerMediator.getBoardRepresentation()?.getPuttables(self.color) {
-            NSLog("puttables are \(puttables.count)")
             var maxNumReversibles = 0
             if puttables.count > 0 {
                 for (px, py) in puttables {
@@ -31,7 +30,6 @@ class GreedyPlayer: ComputerPlayer {
             assertionFailure("Should not reach this code!")
         }
 
-        NSLog("Answer \(retx), \(rety)")
         playerMediator.put(self.color, x: retx, y: rety)
     }
 }

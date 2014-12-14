@@ -22,7 +22,6 @@ class RandomPlayerWithEvaluation: ComputerPlayer {
         var rety = 0
 
         if let puttables = playerMediator.getBoardRepresentation()?.getPuttables(self.color) {
-            NSLog("puttables are \(puttables.count)")
             if puttables.count > 0 {
                 if let uzones = zones {
                     NSLog("\n" + uzones.toString())
@@ -36,7 +35,6 @@ class RandomPlayerWithEvaluation: ComputerPlayer {
             assertionFailure("Should not reach this code!")
         }
 
-        NSLog("Answer \(retx), \(rety)")
         playerMediator.put(self.color, x: retx, y: rety)
     }
 }

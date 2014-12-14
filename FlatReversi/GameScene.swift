@@ -16,8 +16,9 @@ class UpdateBoardViewContext {
     var showAnimation: Bool
     var blackEval: Double
     var whiteEval: Double
+    var debugString: String
 
-    init(boardMediator : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double) {
+    init(boardMediator : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double, debugString: String) {
         self.boardMediator = boardMediator
         self.changes = changes
         self.put = put
@@ -25,6 +26,7 @@ class UpdateBoardViewContext {
         self.showAnimation = showAnimation
         self.blackEval = blackEval
         self.whiteEval = whiteEval
+        self.debugString = debugString
     }
 }
 
@@ -46,6 +48,8 @@ class GameScene: SKScene, GameViewScene {
     var numPiecesWhite: SKLabelNode? = nil
     var numBlackEval: SKLabelNode? = nil
     var numWhiteEval: SKLabelNode? = nil
+
+    var debugLabel: SKLabelNode? = nil
 
     //
     var gameOverFrame: SKShapeNode? = nil
@@ -117,7 +121,7 @@ class GameScene: SKScene, GameViewScene {
 
         updateBoardViewQueue = Queue<UpdateBoardViewContext>()
 
-        showNumPieces(0, white: 0, blackEval: 0.0, whiteEval: 0.0)
+        showNumPieces(0, white: 0, blackEval: 0.0, whiteEval: 0.0, debugString: "")
 
         startGame()
         NSLog("\n" + gameManager.toString())
@@ -142,7 +146,7 @@ class GameScene: SKScene, GameViewScene {
         lastPut = nil
     }
 
-    private func showNumPieces(black: Int, white: Int, blackEval: Double, whiteEval: Double) {
+    private func showNumPieces(black: Int, white: Int, blackEval: Double, whiteEval: Double, debugString: String) {
         let boardView = self.childNodeWithName("Board") as SKSpriteNode
         var width : CGFloat = boardView.size.width
         var height : CGFloat = boardView.size.height
@@ -177,7 +181,7 @@ class GameScene: SKScene, GameViewScene {
         // Evaluation
         numBlackEval?.removeFromParent()
         numWhiteEval?.removeFromParent()
-        if false {
+        if true {
             numBlackEval = SKLabelNode(text: "\(blackEval)")
             numBlackEval?.name = "blackEval"
             numBlackEval?.fontColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
@@ -195,6 +199,19 @@ class GameScene: SKScene, GameViewScene {
             numWhiteEval?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
             numWhiteEval?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 + piece_width + 20 + 80, yPosOffset))
             boardView.addChild(numWhiteEval!)
+        }
+
+        // Show Result
+        debugLabel?.removeFromParent()
+        if true {
+            debugLabel = SKLabelNode(text: "\(debugString)")
+            debugLabel?.name = "blackEval"
+            debugLabel?.fontColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
+            debugLabel?.fontSize = 30
+            debugLabel?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+            debugLabel?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
+            debugLabel?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2, yPosOffset + piece_width))
+            boardView.addChild(debugLabel!)
         }
 
         //
@@ -227,7 +244,7 @@ class GameScene: SKScene, GameViewScene {
             gameManager.initialize(gameViewModel!, gameSettings: gameSettings)
         }
         clearPieces()
-        updateView(gameManager.boardMediator!, changes: [], put: [], showPuttables: gameManager.isCurrentTurnHuman() && gameSettings.showPossibleMoves, showAnimation: gameSettings.showAnimation, blackEval: 0.0, whiteEval: 0.0)
+        updateView(gameManager.boardMediator!, changes: [], put: [], showPuttables: gameManager.isCurrentTurnHuman() && gameSettings.showPossibleMoves, showAnimation: gameSettings.showAnimation, blackEval: 0.0, whiteEval: 0.0, debugString: "")
         time = 0
         lastUpdatedTime = 0
         timeCounterOn = false
@@ -259,9 +276,9 @@ class GameScene: SKScene, GameViewScene {
         return (pos_x, pos_y)
     }
 
-    func updateView(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double) {
+    func updateView(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double, debugString: String) {
         if let q = updateBoardViewQueue {
-            let ubvc = UpdateBoardViewContext(boardMediator: bd, changes: changes, put: put, showPuttables: showPuttables, showAnimation: showAnimation, blackEval: blackEval, whiteEval: whiteEval)
+            let ubvc = UpdateBoardViewContext(boardMediator: bd, changes: changes, put: put, showPuttables: showPuttables, showAnimation: showAnimation, blackEval: blackEval, whiteEval: whiteEval, debugString: debugString)
             q.enqueue(ubvc)
         }
     }
@@ -286,13 +303,11 @@ class GameScene: SKScene, GameViewScene {
     }
 
     func processUpdateBoardViewContext(context: UpdateBoardViewContext) -> Bool {
-        return addChildrenFromBoard(context.boardMediator, changes: context.changes, put: context.put, showPuttables: context.showPuttables, showAnimation: context.showAnimation, blackEval: context.blackEval, whiteEval: context.whiteEval)
+        return addChildrenFromBoard(context.boardMediator, changes: context.changes, put: context.put, showPuttables: context.showPuttables, showAnimation: context.showAnimation, blackEval: context.blackEval, whiteEval: context.whiteEval, debugString: context.debugString)
     }
 
-    func addChildrenFromBoard(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double) -> Bool {
-//        NSLog("!syncstart!")
+    func addChildrenFromBoard(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double, debugString: String) -> Bool {
         if(self.drawCount > 0) {
-//            NSLog("Waiting for finish drawing...: \(self.drawCount)")
             return false
         }
         synchronized(lock) {
@@ -419,7 +434,7 @@ class GameScene: SKScene, GameViewScene {
 
             // Play information
             // piece_width + width + statusBarHeight
-            self.showNumPieces(bd.getNumBlack(), white: bd.getNumWhite(), blackEval: blackEval, whiteEval: whiteEval)
+            self.showNumPieces(bd.getNumBlack(), white: bd.getNumWhite(), blackEval: blackEval, whiteEval: whiteEval, debugString: debugString)
         } // synchronized
 //        NSLog("!syncend!")
         return true
