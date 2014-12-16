@@ -39,20 +39,22 @@ class SearchResult {
     }
 }
 
-struct BoardHash : Hashable, Equatable {
-    var x: UInt64
-    var y: UInt64
+typealias BoardHash = Int
 
-    var hashValue: Int { return Int(x) ^ Int(y) }
-}
-
-func boardHashFromTuple(tuple: (UInt64, UInt64)) -> BoardHash {
-    return BoardHash(x: tuple.0, y: tuple.1)
-}
-
-func == (lhs: BoardHash, rhs: BoardHash) -> Bool {
-    return lhs.x == rhs.x && lhs.y == rhs.y
-}
+//struct BoardHash : Hashable, Equatable {
+//    var x: UInt64
+//    var y: UInt64
+//
+//    var hashValue: Int { return Int(x) ^ Int(y) }
+//}
+//
+//func boardHashFromTuple(tuple: (UInt64, UInt64)) -> BoardHash {
+//    return BoardHash(x: tuple.0, y: tuple.1)
+//}
+//
+//func == (lhs: BoardHash, rhs: BoardHash) -> Bool {
+//    return lhs.x == rhs.x && lhs.y == rhs.y
+//}
 
 protocol Search {
     func search(boardRepresentation: BoardRepresentation, forPlayer: Pieces, evaluator: Evaluator, depth: Int) -> SearchResult

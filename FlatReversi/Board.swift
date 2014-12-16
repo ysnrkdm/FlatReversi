@@ -68,7 +68,7 @@ protocol Board {
 
     func numPeripherals(color: Pieces, x: Int, y: Int) -> Int
 
-    func hash() -> (UInt64, UInt64)
+    func hashValue() -> Int
 
     // MARK: Update functions
     func updateGuides(color: Pieces) -> Int

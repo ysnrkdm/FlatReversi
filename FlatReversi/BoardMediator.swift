@@ -77,8 +77,8 @@ class BoardMediator {
         return self.board.numPeripherals(color, x: x, y: y)
     }
 
-    func hash() -> (UInt64, UInt64) {
-        return self.board.hash()
+    func hashValue() -> Int {
+        return self.board.hashValue()
     }
 
     // Only diag or horizontal/vertical lines can change by putting piece at x,y
@@ -108,6 +108,10 @@ class BoardMediator {
         let b = self.board.clone()
         let bm = BoardMediator(board:b)
         return bm
+    }
+
+    func getBoard() -> Board {
+        return self.board
     }
 
     func nextTurn(color: Pieces) -> Pieces {

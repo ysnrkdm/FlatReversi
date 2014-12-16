@@ -88,8 +88,8 @@ class BoardRepresentation {
         return self.boardMediator.numPeripherals(color, x: x, y: y)
     }
 
-    func hash() -> (UInt64, UInt64) {
-        return self.boardMediator.hash()
+    func hashValue() -> Int {
+        return self.boardMediator.hashValue()
     }
 
     func toString() -> String {

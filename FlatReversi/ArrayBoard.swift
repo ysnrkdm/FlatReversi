@@ -236,8 +236,8 @@ class ArrayBoard: Board {
         return ret
     }
 
-    func hash() -> (UInt64, UInt64) {
-        return (0,0)
+    func hashValue() -> Int {
+        return 0
     }
 
     // MARK: Update functions
