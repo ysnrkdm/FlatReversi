@@ -45,7 +45,7 @@ class LevelController {
         Level(level: 9, levelId: 9, levelTitle: "Random + 6 PNS", levelDescr: ""),
         Level(level: 10, levelId: 10, levelTitle: "1 Depth Static Eval Search + 10 PNS", levelDescr: ""),
         Level(level: 11, levelId: 11, levelTitle: "3 Depth Static Eval Search + 10 PNS", levelDescr: ""),
-        Level(level: 12, levelId: 12, levelTitle: "4 Depth Static Eval Search + 10 PNS", levelDescr: ""),
+        Level(level: 12, levelId: 12, levelTitle: "5 Depth Static Eval Search + 10 PNS", levelDescr: ""),
         Level(level: 13, levelId: 13, levelTitle: "Lefty PNS", levelDescr: ""),
         Level(level: 14, levelId: 14, levelTitle: "Swing left and right PNS", levelDescr: ""),
         Level(level: 15, levelId: 15, levelTitle: "Openness only search", levelDescr: ""),
@@ -164,8 +164,8 @@ class LevelController {
             return sssep
         case 12:
             let sssep = TranspositionedAlphaBetaSearchWithEvaluationPlayer(playerMediator: playerMediator, color: color)
-            let z = ZonesFactory().createZoneTypical8(999, bVal: 1.6, cVal: -5, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
-            sssep.configure(z, pnsLessThan: 10, searchDepth: 4, wPossibleMoves: [20.0, 15, 3.2, 1.1], wEdge: [1.0, 1.0], wFixedPieces: [2.0, 400.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0])
+            let z = ZonesFactory().createZoneTypical8(99, bVal: 1.6, cVal: -5, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
+            sssep.configure(z, pnsLessThan: 10, searchDepth: 5, wPossibleMoves: [20.0, 15, 3.2, 1.1], wEdge: [1.0, 1.0], wFixedPieces: [2.0, 400.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0])
             return sssep
         case 13:
             let rcp = LeftyPlayer(playerMediator: playerMediator, color: color)

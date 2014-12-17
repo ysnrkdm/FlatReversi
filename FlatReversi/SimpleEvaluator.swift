@@ -17,9 +17,6 @@ class SimpleEvaluator: Evaluator {
 
     var zones: Zones = Zones(width: 8, height: 8, initVal: 1)
 
-    //    var boardEvalCacheBlack: Dictionary<BoardHash, Double> = Dictionary<BoardHash, Double>()
-    //    var boardEvalCacheWhite: Dictionary<BoardHash, Double> = Dictionary<BoardHash, Double>()
-
     func configure(wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double], zones: Zones) {
         self.wPossibleMoves = wPossibleMoves
         self.wEdge = wEdge
@@ -30,17 +27,12 @@ class SimpleEvaluator: Evaluator {
     }
 
     func evaluate(boardRepresentation: BoardRepresentation, forPlayer: Pieces) -> Double {
-        return eval(boardRepresentation, forPlayer: forPlayer)
-    }
-
-    func eval(board: BoardRepresentation, forPlayer: Pieces) -> Double {
         let ePossibleMoves = Double(arc4random()) / Double(UINT32_MAX)
 
         return ePossibleMoves
     }
 
     // MARK: Factors
-
     func possibleMoves(board: BoardRepresentation, forPlayer: Pieces) -> Int {
         return board.getPuttables(forPlayer).count
     }

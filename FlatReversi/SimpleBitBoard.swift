@@ -10,60 +10,53 @@ import Foundation
 
 typealias Moves = UInt64
 
-class FastBitBoard : Board {
-    func getUnsafeBitBoard() -> BitBoard { assertionFailure("Implement actual class by inheriting this class.") }
+func isEmpty(m: Moves) -> Bool {
+    return m <= 0
+}
 
-    // MARK: Board functions
-    func initialize(width: Int, height: Int) { assertionFailure("Implement actual class by inheriting this class.") }
+let bsfMagicTable = [
+     0, 47,  1, 56, 48, 27,  2, 60,
+    57, 49, 41, 37, 28, 16,  3, 61,
+    54, 58, 35, 52, 50, 42, 21, 44,
+    38, 32, 29, 23, 17, 11,  4, 62,
+    46, 55, 26, 59, 40, 36, 15, 53,
+    34, 51, 20, 43, 31, 22, 10, 45,
+    25, 39, 14, 33, 19, 30,  9, 24,
+    13, 18,  8, 12,  7,  6,  5, 63
+]
 
-    // MARK: Basic functions
-    func withinBoard(x: Int, y: Int) -> Bool { assertionFailure("Implement actual class by inheriting this class.") }
+let magic: UInt64 = 0x03f79d71b4cb0a89
 
-    func set(color: Pieces, x: Int, y: Int) { assertionFailure("Implement actual class by inheriting this class.") }
-    func get(x: Int, y: Int) -> Pieces { assertionFailure("Implement actual class by inheriting this class.") }
-    func isPieceAt(piece: Pieces, x: Int, y: Int) -> Bool { assertionFailure("Implement actual class by inheriting this class.") }
-    func put(color: Pieces, x: Int, y: Int, guides: Bool, returnChanges: Bool) -> [(Int, Int)] { assertionFailure("Implement actual class by inheriting this class.") }
+func bitScanForward(b: Moves) -> Int {
+    let binv = (b ^ (b - 1))
+    let bm = binv &* magic
+    let bmShifted = (bm) >> 58
+    let index = Int(bmShifted)
+    return bsfMagicTable[index]
+}
 
-    func width() -> Int { assertionFailure("Implement actual class by inheriting this class.") }
-    func height() -> Int { assertionFailure("Implement actual class by inheriting this class.") }
+func xOrBitWhere(b: Moves, nthBit: Int) -> UInt64 {
+    return b ^ bitWhere(nthBit)
+}
 
-    // MARK: Query functions
-    func getNumBlack() -> Int { assertionFailure("Implement actual class by inheriting this class.") }
-    func getNumWhite() -> Int { assertionFailure("Implement actual class by inheriting this class.") }
+func bitWhere(x: Int) -> UInt64 {
+    return 1 << UInt64(x)
+}
 
-    func canPut(color: Pieces, x: Int, y: Int) -> Bool { assertionFailure("Implement actual class by inheriting this class.") }
-    func getPuttables(color: Pieces) -> [(Int, Int)] { assertionFailure("Implement actual class by inheriting this class.") }
-    func isAnyPuttable(color: Pieces) -> Bool { assertionFailure("Implement actual class by inheriting this class.") }
-    func getReversible(color: Pieces, x: Int, y: Int) -> [(Int, Int)] { assertionFailure("Implement actual class by inheriting this class.") }
-    func isEmpty(x: Int, y: Int) -> Bool { assertionFailure("Implement actual class by inheriting this class.") }
-
-    func numPeripherals(color: Pieces, x: Int, y: Int) -> Int { assertionFailure("Implement actual class by inheriting this class.") }
-
-    func hashValue() -> Int { assertionFailure("Implement actual class by inheriting this class.") }
-
-    // MARK: Update functions
-    func updateGuides(color: Pieces) -> Int { assertionFailure("Implement actual class by inheriting this class.") }
-
-    // MARK: Utility functions
-    func clone() -> Board { assertionFailure("Implement actual class by inheriting this class.") }
-    func cloneBitBoard() -> FastBitBoard { assertionFailure("Implement actual class by inheriting this class.") }
-    
-    func toString() -> String { assertionFailure("Implement actual class by inheriting this class.") }
-
-    func isTerminal() -> Bool { assertionFailure("Implement actual class by inheriting this class.") }
-
-    func nextTurn(color: Pieces) -> Pieces {
-        var s : Pieces = .Black
-        switch color {
-        case .Black:
-            s = .White
-        case .White:
-            s = .Black
-        default:
-            s = .Black
+func stringFromBitBoard(x: UInt64) -> String {
+    var ret = ""
+    for iy in 0..<8 {
+        for ix in 0..<8 {
+            let bitwhere = bitWhere(ix + iy * 8)
+            var s = "."
+            if bitwhere & x > 0 {
+                s = "*"
+            }
+            ret += " " + s + " "
         }
-        return s
+        ret += "\n"
     }
+    return ret
 }
 
 func == (lhs: BitBoard, rhs: BitBoard) -> Bool {
@@ -77,8 +70,15 @@ struct BitBoard : Hashable, Equatable {
 
     var hashValue: Int { return Int(black) ^ Int(white) }
 
+    func height() -> Int {
+        return 8
+    }
+    func width() -> Int {
+        return 8
+    }
+
     func withinBoard(x: Int, y: Int) -> Bool {
-        return (0 <= x && x < 8 && 0 <= y && y < 8)
+        return (0 <= x && x < height() && 0 <= y && y < width())
     }
 
     mutating func set(color: Pieces, x: Int, y: Int) {
@@ -194,8 +194,12 @@ struct BitBoard : Hashable, Equatable {
         return pop(white)
     }
 
+    func getNumVacant() -> Int {
+        return 64 - getNumBlack() - getNumWhite()
+    }
+
     func isTerminal() -> Bool {
-        if 64 - getNumBlack() - getNumWhite() == 0 {
+        if getNumVacant() == 0 {
             return true
         }
 
@@ -459,22 +463,6 @@ struct BitBoard : Hashable, Equatable {
 
         return Int(x)
     }
-
-    func bitBoardToString(x: UInt64) -> String {
-        var ret = ""
-        for iy in 0..<8 {
-            for ix in 0..<8 {
-                let bitwhere = bitWhere(ix, y: iy)
-                var s = "."
-                if bitwhere & x > 0 {
-                    s = "*"
-                }
-                ret += " " + s + " "
-            }
-            ret += "\n"
-        }
-        return ret
-    }
 }
 
 class SimpleBitBoard: FastBitBoard {
@@ -482,6 +470,14 @@ class SimpleBitBoard: FastBitBoard {
 
     var _height = 8
     var _width = 8
+
+    override init() {
+        self.bb = BitBoard()
+    }
+
+    init(bitBoard: BitBoard) {
+        self.bb = bitBoard
+    }
 
     override func getUnsafeBitBoard() -> BitBoard {
         return bb
@@ -603,19 +599,7 @@ class SimpleBitBoard: FastBitBoard {
     }
 
     override func isTerminal() -> Bool {
-        if 64 - getNumBlack() - getNumWhite() == 0 {
-            return true
-        }
-
-        if isAnyPuttable(.Black) {
-            return false
-        }
-
-        if isAnyPuttable(.White) {
-            return false
-        }
-
-        return true
+        return bb.isTerminal()
     }
 
     override func hashValue() -> Int {

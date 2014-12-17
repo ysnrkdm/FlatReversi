@@ -29,19 +29,6 @@ enum Pieces {
     }
 }
 
-func nextTurn(color: Pieces) -> Pieces {
-    var s : Pieces = .Black
-    switch color {
-    case .Black:
-        s = .White
-    case .White:
-        s = .Black
-    default:
-        s = .Black
-    }
-    return s
-}
-
 protocol Board {
     func initialize(width: Int, height: Int)
 

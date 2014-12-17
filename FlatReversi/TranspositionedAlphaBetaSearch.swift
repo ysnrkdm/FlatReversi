@@ -42,25 +42,28 @@ class TranspositionedAlphaBetaSearch : Search {
 
         if let bitBoardClass = boardRepresentation.boardMediator.getBoard() as? FastBitBoard {
             let bitBoard = bitBoardClass.getUnsafeBitBoard()
-
-            let ret = recSearch(depth, board: bitBoardClass, forPlayer: forPlayer, currentPlayer: forPlayer, alpha: -inf, beta: inf, evaluator: evaluator, pv: [])
-            ret.nodesSearched = nodeCount
-            ret.transpositionHitCount = transpositionHitCount
-            ret.elapsedTimeInSec = NSDate().timeIntervalSince1970 - startTimeInSec
-            return ret
+            if let bitBoardEvaluator = evaluator as? BitBoardEvaluator {
+                let ret = recSearch(depth, board: bitBoard, forPlayer: forPlayer, currentPlayer: forPlayer, alpha: -inf, beta: inf, evaluator: bitBoardEvaluator, pv: [])
+                ret.nodesSearched = nodeCount
+                ret.transpositionHitCount = transpositionHitCount
+                ret.elapsedTimeInSec = NSDate().timeIntervalSince1970 - startTimeInSec
+                return ret
+            } else {
+                assertionFailure("TranspositionedAlphaBetaSearch needs bit board")
+            }
         } else {
             assertionFailure("TranspositionedAlphaBetaSearch needs bit board")
         }
     }
 
-    func recSearch(depth: Int, board: FastBitBoard, forPlayer: Pieces, currentPlayer: Pieces, alpha: Double, beta: Double, evaluator: Evaluator, pv: [(Int, Int)]) -> SearchResult {
+    func recSearch(depth: Int, board: BitBoard, forPlayer: Pieces, currentPlayer: Pieces, alpha: Double, beta: Double, evaluator: BitBoardEvaluator, pv: [(Int, Int)]) -> SearchResult {
         ++nodeCount
-        let bitBoard = board.getUnsafeBitBoard()
+//        let bitBoard = board.getUnsafeBitBoard()
         var alpha = alpha
         var beta = beta
 
         if pv.count > 0 {
-            if let trans = boardTransTable[board.hashValue()] {
+            if let trans = boardTransTable[board.hashValue] {
                 if beta <= trans.lowerBound {
                     ++transpositionHitCount
                     return SearchResult(value: trans.lowerBound, pv: pv)
@@ -79,11 +82,10 @@ class TranspositionedAlphaBetaSearch : Search {
 
         if depth <= 0 || board.isTerminal() {
             // Depth reached, or terminal state. Returning
-            let boardRepresentation = BoardRepresentation(boardMediator: BoardMediator(board: board))
-            let value = evaluator.evaluate(boardRepresentation, forPlayer: forPlayer)
+            let value = evaluator.evaluateBitBoard(board, forPlayer: forPlayer)
             let ret = SearchResult(value: value, pv: pv)
             let transToUpdate = BoardCacheTable(turn: currentPlayer, lowerBound: value, upperBound: value)
-            boardTransTable.updateValue(transToUpdate, forKey: bitBoard.hashValue)
+            boardTransTable.updateValue(transToUpdate, forKey: board.hashValue)
             return ret
         } else {
             // Here, no terminal state (at least one of players can play)
@@ -92,11 +94,11 @@ class TranspositionedAlphaBetaSearch : Search {
             // Generate Moves
             var puttables = board.getPuttables(turn)
 
-            if puttables.isEmpty {
+            if isEmpty(puttables) {
                 // Pass and skip
-                turn = board.nextTurn(turn)
+                turn = nextTurn(turn)
                 puttables = board.getPuttables(turn)
-                if puttables.isEmpty {
+                if isEmpty(puttables) {
                     // Skip both sides. Termination
                     assertionFailure("Should not be reached at this code. Either of player should be able to play.")
                 }
@@ -104,22 +106,26 @@ class TranspositionedAlphaBetaSearch : Search {
 
             var state: SearchResult = SearchResult(value: 0, pv: pv)
 
-            for (px, py) in puttables {
-                var newBoard = board.cloneBitBoard()
-                newBoard.put(turn, x: px, y: py, guides: false, returnChanges: false)
+            while !isEmpty(puttables) {
+                var newBoard = board
+                let move = bitScanForward(puttables)
+                puttables = xOrBitWhere(puttables, move)
+                let px = move % 8
+                let py = move / 8
+                newBoard.put(turn, x: px, y: py, guides: false)
                 var newPv = pv
                 newPv.append((px, py))
-                let r = recSearch(depth - 1, board: newBoard, forPlayer: forPlayer, currentPlayer: board.nextTurn(turn), alpha: alpha, beta: beta, evaluator: evaluator, pv: newPv)
+                let r = recSearch(depth - 1, board: newBoard, forPlayer: forPlayer, currentPlayer: nextTurn(turn), alpha: alpha, beta: beta, evaluator: evaluator, pv: newPv)
 
                 if forPlayer == turn {
                     // fail high
                     if beta <= r.value {
                         var upperBound = inf
-                        if let trans = boardTransTable[bitBoard.hashValue] {
+                        if let trans = boardTransTable[board.hashValue] {
                             upperBound = trans.upperBound
                         }
                         let transToUpdate = BoardCacheTable(turn: turn, lowerBound: r.value, upperBound: upperBound)
-                        boardTransTable.updateValue(transToUpdate, forKey: bitBoard.hashValue)
+                        boardTransTable.updateValue(transToUpdate, forKey: board.hashValue)
                         state = r
                         break
                     }
@@ -137,11 +143,11 @@ class TranspositionedAlphaBetaSearch : Search {
                     // fail low
                     if r.value <= alpha {
                         var lowerBound = -inf
-                        if let trans = boardTransTable[bitBoard.hashValue] {
+                        if let trans = boardTransTable[board.hashValue] {
                             lowerBound = trans.lowerBound
                         }
                         let transToUpdate = BoardCacheTable(turn: turn, lowerBound: lowerBound, upperBound: r.value)
-                        boardTransTable.updateValue(transToUpdate, forKey: bitBoard.hashValue)
+                        boardTransTable.updateValue(transToUpdate, forKey: board.hashValue)
                         state = r
                         break
                     }

@@ -35,3 +35,16 @@ func max (var array : [Double]) -> Double {
     }
     return reduce(array, array[0]) {$0 < $1 ? $1 : $0}
 }
+
+func nextTurn(color: Pieces) -> Pieces {
+    var s : Pieces = .Black
+    switch color {
+    case .Black:
+        s = .White
+    case .White:
+        s = .Black
+    default:
+        s = .Black
+    }
+    return s
+}
