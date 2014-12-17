@@ -289,8 +289,12 @@ struct BitBoard : Hashable, Equatable {
         return ret
     }
 
+    func getDirections() -> [Int] {
+        return [1,-1,8,-8,-9,7,9,-7]
+    }
+
     func getPuttables(color: Pieces) -> Moves {
-        let direcs = [1,-1,8,-8,-9,7,9,-7]
+        let direcs = getDirections()
 
         var r: UInt64 = 0
         for direc in direcs {
@@ -394,7 +398,7 @@ struct BitBoard : Hashable, Equatable {
     }
 
     func getReversible(color: Pieces, x: Int, y: Int) -> Moves {
-        let direcs = [1,-1,8,-8,-9,7,9,-7]
+        let direcs = getDirections()
 
         var r: UInt64 = 0
         for direc in direcs {
