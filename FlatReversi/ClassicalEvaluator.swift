@@ -91,25 +91,19 @@ class ClassicalEvaluator: BitBoardEvaluator {
     func fixedPieces(board: BitBoard, forPlayer: Pieces) -> Int {
         let H = board.height()
         let W = board.width()
-        let direcs = [
-            ((0,0), (W-1,0), W, (1,0)),
-            ((0,0), (0,H-1), H, (0,1)),
-            ((0,H-1), (W-1,H-1), W, (1,0)),
-            ((W-1,0), (W-1,H-1), H, (0,1)),
-        ]
 
-        var ret = 0
-        for d in direcs {
-            let org = d.0
-            let dst = d.1
-            let length = d.2
-            let direc = d.3
+        let fixedPiecesEdgeHelper = { (board: BitBoard, forPlayer: Pieces, direc: ((Int, Int), (Int, Int), Int, (Int, Int))) -> Int in
+            let org = direc.0
+            let dst = direc.1
+            let length = direc.2
+            let direc = direc.3
             // No piece at either of corners
             if board.isEmpty(org.0, y: org.1) && board.isEmpty(dst.0, y: dst.1) {
-                continue
+                return 0
             }
 
             var cont = true
+            var ret = 0
             var tmp = 0
             var cur = org
             for i in 1..<length-1 {
@@ -127,15 +121,29 @@ class ClassicalEvaluator: BitBoardEvaluator {
                 }
             }
             ret += tmp
+            return ret
         }
 
+        var ret = 0
+        ret += fixedPiecesEdgeHelper(board, forPlayer, ((0,0), (W-1,0), W, (1,0)))
+        ret += fixedPiecesEdgeHelper(board, forPlayer, ((0,0), (0,H-1), H, (0,1)))
+        ret += fixedPiecesEdgeHelper(board, forPlayer, ((0,H-1), (W-1,H-1), W, (1,0)))
+        ret += fixedPiecesEdgeHelper(board, forPlayer, ((W-1,0), (W-1,H-1), H, (0,1)))
+
         // Corner
-        let corners = [(0,0), (W-1,0), (0,H-1), (W-1,H-1)]
-        for (cx, cy) in corners {
+        let fixedPiecesCornerHelper = { (board: BitBoard, forPlayer: Pieces, corner: (Int, Int)) -> Int in
+        let (cx, cy) = corner
+            var ret = 0
             if board.isPieceAt(forPlayer, x: cx, y: cy) {
                 ++ret
             }
+            return ret
         }
+
+        ret += fixedPiecesCornerHelper(board, forPlayer, (0,0))
+        ret += fixedPiecesCornerHelper(board, forPlayer, (W-1,0))
+        ret += fixedPiecesCornerHelper(board, forPlayer, (0,H-1))
+        ret += fixedPiecesCornerHelper(board, forPlayer, (W-1,H-1))
 
         return ret
     }

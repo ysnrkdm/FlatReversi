@@ -22,6 +22,10 @@ func min (var array : [Int]) -> Int {
     return reduce(array, array[0]) {$0 > $1 ? $1 : $0}
 }
 
+func min(a: Double, b: Double) -> Double {
+    return a > b ? b : a
+}
+
 func max (var array : [Int]) -> Int {
     if array.isEmpty {
         return Int.min
@@ -34,6 +38,10 @@ func max (var array : [Double]) -> Double {
         return 0.0
     }
     return reduce(array, array[0]) {$0 < $1 ? $1 : $0}
+}
+
+func max(a: Double, b: Double) -> Double {
+    return a > b ? a : b
 }
 
 func nextTurn(color: Pieces) -> Pieces {

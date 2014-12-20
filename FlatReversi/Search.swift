@@ -8,16 +8,17 @@
 
 import Foundation
 
-class SearchResult {
-    var value: Double
-    var pv: [(Int, Int)]
+struct SearchResult {
+    var value: Double = 0
+    var pv: [(Int, Int)] = []
 
     //
     var nodesSearched = 0
     var elapsedTimeInSec = 0.0
     var transpositionHitCount = 0
-    var nps: Double {
-        return Double(self.nodesSearched) / elapsedTimeInSec
+
+    init(value: Double) {
+        self.value = value
     }
 
     init(value: Double, pv: [(Int, Int)]) {
@@ -25,9 +26,13 @@ class SearchResult {
         self.pv = pv
     }
 
+    var nps: Double {
+        return Double(self.nodesSearched) / elapsedTimeInSec
+    }
+
     func toString() -> String {
         let transRatio: Double = Double(transpositionHitCount) / Double(nodesSearched) * 100.0
-        return "\(value) - pv \(pv) : searched \(nodesSearched) (\(transRatio)%% transposition table hit) nodes in \(elapsedTimeInSec). NPS is \(nps)"
+        return "\(value) - pv \(pv) : searched \(nodesSearched) (\(transRatio)% transposition table hit) nodes in \(elapsedTimeInSec). NPS is \(nps)"
     }
 
     func toShortString() -> String {

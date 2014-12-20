@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SimpleEvaluator: Evaluator {
+class SimpleEvaluator: BitBoardEvaluator {
     var wPossibleMoves: [Double] = [1.0]
     var wEdge: [Double] = [1.0]
     var wFixedPieces: [Double] = [1.0]
@@ -26,7 +26,13 @@ class SimpleEvaluator: Evaluator {
         self.zones = zones
     }
 
-    func evaluate(boardRepresentation: BoardRepresentation, forPlayer: Pieces) -> Double {
+    override func evaluate(boardRepresentation: BoardRepresentation, forPlayer: Pieces) -> Double {
+        let ePossibleMoves = Double(arc4random()) / Double(UINT32_MAX)
+
+        return ePossibleMoves
+    }
+
+    override func evaluateBitBoard(board: BitBoard, forPlayer: Pieces) -> Double {
         let ePossibleMoves = Double(arc4random()) / Double(UINT32_MAX)
 
         return ePossibleMoves

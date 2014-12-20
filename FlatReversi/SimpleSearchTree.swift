@@ -28,7 +28,7 @@ class SimpleSearchTree : Search {
 
         timeLimitInSec = max([minTimeLimitInSec, (Double(depth) * secPerDepth)])
 
-        let ret = recSearch(depth, boardRepresentation: boardRepresentation, forPlayer: forPlayer, currentPlayer: forPlayer, alpha: -inf, beta: inf, evaluator: evaluator, pv: [])
+        var ret = recSearch(depth, boardRepresentation: boardRepresentation, forPlayer: forPlayer, currentPlayer: forPlayer, alpha: -inf, beta: inf, evaluator: evaluator, pv: [])
 
         ret.nodesSearched = nodeCount
         ret.elapsedTimeInSec = NSDate().timeIntervalSince1970 - startTimeInSec

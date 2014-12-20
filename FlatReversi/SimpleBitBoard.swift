@@ -59,6 +59,8 @@ func stringFromBitBoard(x: UInt64) -> String {
     return ret
 }
 
+let direcs = [1,-1,8,-8,-9,7,9,-7]
+
 func == (lhs: BitBoard, rhs: BitBoard) -> Bool {
     return lhs.black == rhs.black && lhs.white == rhs.white
 }
@@ -68,7 +70,14 @@ struct BitBoard : Hashable, Equatable {
     var white: UInt64 = 0b1000000001 << 27
     var guide: UInt64 = 0b0
 
-    var hashValue: Int { return Int(black) ^ Int(white) }
+    var hashValue: Int {
+        get {
+            let b = Int(black &% UInt64(Int.max))
+            let w = Int(white &% UInt64(Int.max))
+            let hash = b &+ w &* 17
+            return hash
+        }
+    }
 
     func height() -> Int {
         return 8
@@ -128,8 +137,6 @@ struct BitBoard : Hashable, Equatable {
             return 0x0
         }
 
-        let direcs = [1,-1,8,-8,-9,7,9,-7]
-
         var r: UInt64 = 0
         for direc in direcs {
             let pd = getBitReversible(color, x: x, y: y, direc: direc)
@@ -176,13 +183,12 @@ struct BitBoard : Hashable, Equatable {
     }
 
     func isAnyPuttable(color: Pieces) -> Bool {
-        let direcs = [1,-1,8,-8,-9,7,9,-7]
-
         for direc in direcs {
             if getBitPuttables(color, direc: direc) > 0 {
                 return true
             }
         }
+
         return false
     }
 
@@ -218,8 +224,6 @@ struct BitBoard : Hashable, Equatable {
         if (black | white) & bitWhere(x, y: y) > 0 {
             return false
         }
-
-        let direcs = [1,-1,8,-8,-9,7,9,-7]
 
         var r: UInt64 = 0
         for direc in direcs {
@@ -289,13 +293,7 @@ struct BitBoard : Hashable, Equatable {
         return ret
     }
 
-    func getDirections() -> [Int] {
-        return [1,-1,8,-8,-9,7,9,-7]
-    }
-
     func getPuttables(color: Pieces) -> Moves {
-        let direcs = getDirections()
-
         var r: UInt64 = 0
         for direc in direcs {
             r |= getBitPuttables(color, direc: direc)
@@ -398,8 +396,6 @@ struct BitBoard : Hashable, Equatable {
     }
 
     func getReversible(color: Pieces, x: Int, y: Int) -> Moves {
-        let direcs = getDirections()
-
         var r: UInt64 = 0
         for direc in direcs {
             let pd = getBitReversible(color, x: x, y: y, direc: direc)
@@ -410,11 +406,28 @@ struct BitBoard : Hashable, Equatable {
     }
 
     func numPeripherals(color: Pieces, x: Int, y: Int) -> Int {
-        let peripherals_row: [UInt64] = [
-            0b00000011, 0b00000111, 0b00001110, 0b00011100, 0b00111000, 0b01110000, 0b11100000, 0b11000000
-        ]
+        var peripherals_x: UInt64 = 0
+        switch x {
+        case 0:
+            peripherals_x = 0b00000011
+        case 1:
+            peripherals_x = 0b00000111
+        case 2:
+            peripherals_x = 0b00001110
+        case 3:
+            peripherals_x = 0b00011100
+        case 4:
+            peripherals_x = 0b00111000
+        case 5:
+            peripherals_x = 0b01110000
+        case 6:
+            peripherals_x = 0b11100000
+        case 7:
+            peripherals_x = 0b11000000
+        default:
+            assertionFailure("Should not reach this code!")
+        }
 
-        let peripherals_x: UInt64 = peripherals_row[x]
         var peripherals_xs : UInt64 = peripherals_x << 16 + peripherals_x << 8 + peripherals_x
 
         switch y {
