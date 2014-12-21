@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B07152B1A46AD7D0089C25B /* NegaAlphaSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B07152A1A46AD7D0089C25B /* NegaAlphaSearch.swift */; };
 		8B15FEB01A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15FEAF1A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift */; };
 		8B15FECA1A0D12B900A8C998 /* SimpleSearchTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15FEC91A0D12B900A8C998 /* SimpleSearchTree.swift */; };
 		8B1683861A404AB600C64E93 /* FasterBitBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1683851A404AB600C64E93 /* FasterBitBoard.swift */; };
@@ -97,6 +98,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B07152A1A46AD7D0089C25B /* NegaAlphaSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NegaAlphaSearch.swift; sourceTree = "<group>"; };
 		8B15FEAF1A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomPlayerWithPNS.swift; sourceTree = "<group>"; };
 		8B15FEC91A0D12B900A8C998 /* SimpleSearchTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleSearchTree.swift; sourceTree = "<group>"; };
 		8B1683851A404AB600C64E93 /* FasterBitBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FasterBitBoard.swift; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				8B15FEC91A0D12B900A8C998 /* SimpleSearchTree.swift */,
+				8B07152A1A46AD7D0089C25B /* NegaAlphaSearch.swift */,
 				8B60ED2B1A3B058D0062AACC /* TranspositionedAlphaBetaSearch.swift */,
 				8B60ED291A3AF9F60062AACC /* Search.swift */,
 			);
@@ -596,6 +599,7 @@
 				8B60ED2C1A3B058D0062AACC /* TranspositionedAlphaBetaSearch.swift in Sources */,
 				8B2517A41A164E9500B700F3 /* Utils.swift in Sources */,
 				8B22E1C019FC75100006E39C /* Zones.swift in Sources */,
+				8B07152B1A46AD7D0089C25B /* NegaAlphaSearch.swift in Sources */,
 				8B74E1FD19F9EE6900B5E87E /* GameSettings.swift in Sources */,
 				8B74E20019F9EE6900B5E87E /* HumanUserInput.swift in Sources */,
 				8B50B0D61A3D79690057C14A /* TranspositionAlphaBetaSimplePlayer.swift in Sources */,

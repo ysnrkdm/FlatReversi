@@ -43,7 +43,7 @@ class TranspositionedAlphaBetaSearch : Search {
         if let bitBoardClass = boardRepresentation.boardMediator.getBoard() as? FastBitBoard {
             let bitBoard = bitBoardClass.getUnsafeBitBoard()
             if let bitBoardEvaluator = evaluator as? BitBoardEvaluator {
-                let ret = recSearch(depth, board: bitBoard, forPlayer: forPlayer, currentPlayer: forPlayer, alpha: -inf, beta: inf, evaluator: bitBoardEvaluator, pv: [])
+                var ret = recSearch(depth, board: bitBoard, forPlayer: forPlayer, currentPlayer: forPlayer, alpha: -inf, beta: inf, evaluator: bitBoardEvaluator, pv: [])
                 ret.nodesSearched = nodeCount
                 ret.transpositionHitCount = transpositionHitCount
                 ret.elapsedTimeInSec = NSDate().timeIntervalSince1970 - startTimeInSec
