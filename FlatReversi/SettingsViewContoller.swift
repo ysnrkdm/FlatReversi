@@ -8,8 +8,7 @@
 
 import UIKit
 
-//@objc(SettingsViewController) class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, LevelSelectionViewDelegate {
+class SettingsViewController: UIViewController, UINavigationBarDelegate, UITableViewDataSource, UITableViewDelegate, LevelSelectionViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navbar: UINavigationBar!
@@ -25,6 +24,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        navbar.delegate = self;
 
         let customStepperCell: UINib = UINib(nibName: "CustomStepperTableViewCell", bundle: nil)
         self.tableView.registerNib(customStepperCell, forCellReuseIdentifier: "stepperCell")
@@ -112,6 +113,10 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             let lsvc: LevelSelectionViewController = segue.destinationViewController as LevelSelectionViewController
             lsvc.delegate = self
         }
+    }
+
+    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+        return UIBarPosition.TopAttached
     }
 
     func addBlackPlayerDifficulty() -> (section: Int, row: Int) {
@@ -274,6 +279,16 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func switchShowPossibleMoves(sender: AnyObject) {
         let sw: UISwitch = sender as UISwitch
         NSLog("Switched switchShowPossibleMoves! Status: %d", sw.on)
+
+        //
+        if sw.on {
+            AppearanceManager.applyLikeDarculaTheme()
+            gc.loadFromUserDefaults()
+        } else {
+            AppearanceManager.applyWhiteGrayTheme()
+            gc.loadFromUserDefaults()
+        }
+
         gc.showPossibleMoves = sw.on
         gc.saveToUserDefaults()
     }

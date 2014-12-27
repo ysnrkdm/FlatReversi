@@ -17,9 +17,6 @@ class SimpleSearchTree : Search {
 
     let inf = 99999999.9
 
-    var boardEvalCacheBlack: Dictionary<BoardHash, Double> = Dictionary<BoardHash, Double>()
-    var boardEvalCacheWhite: Dictionary<BoardHash, Double> = Dictionary<BoardHash, Double>()
-
     func search(boardRepresentation: BoardRepresentation, forPlayer: Pieces, evaluator: Evaluator, depth: Int) -> SearchResult {
         nodeCount = 0
 
@@ -69,7 +66,7 @@ class SimpleSearchTree : Search {
                 newBoard.boardMediator.put(turn, x: px, y: py, guides: false)
                 var newPv = pv
                 newPv.append((px, py))
-                let r = recSearch(depth - 1, boardRepresentation: newBoard, forPlayer: forPlayer, currentPlayer: boardRepresentation.boardMediator.nextTurn(turn), alpha: alpha, beta: beta, evaluator: evaluator, pv: newPv)
+                let r = recSearch(depth - 1, boardRepresentation: newBoard, forPlayer: forPlayer, currentPlayer: nextTurn(turn), alpha: alpha, beta: beta, evaluator: evaluator, pv: newPv)
 
                 if forPlayer == turn {
                     // Max

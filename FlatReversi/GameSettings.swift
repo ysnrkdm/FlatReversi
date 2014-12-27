@@ -24,6 +24,8 @@ class GameSettings {
     var showPossibleMoves: Bool = true
     var showAnimation: Bool = true
 
+    var appearance: Appearance = .WhiteGray
+
     func saveToUserDefaults() {
         let ud = NSUserDefaults.standardUserDefaults()
         ud.setInteger(difficultyHighestBeaten, forKey: "difficultyHighestBeaten")
@@ -36,6 +38,7 @@ class GameSettings {
 
         ud.setBool(showPossibleMoves, forKey: "showPossibleMoves")
         ud.setBool(showAnimation, forKey: "showAnimation")
+        ud.setInteger(appearance.toInteger(), forKey: "appearance")
     }
 
     func loadFromUserDefaults() {
@@ -50,6 +53,8 @@ class GameSettings {
 
         showPossibleMoves = ud.boolForKey("showPossibleMoves")
         showAnimation = ud.boolForKey("showAnimation")
+
+        appearance = appearance.fromInteger(ud.integerForKey("appearance"))
     }
 
     func validate() -> Bool {

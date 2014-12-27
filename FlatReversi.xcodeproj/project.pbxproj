@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8B07152B1A46AD7D0089C25B /* NegaAlphaSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B07152A1A46AD7D0089C25B /* NegaAlphaSearch.swift */; };
+		8B07152F1A49B0230089C25B /* SearchEvalPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B07152E1A49B0230089C25B /* SearchEvalPlayer.swift */; };
+		8B0715321A4B00440089C25B /* intrinsics.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B0715301A4B00430089C25B /* intrinsics.c */; };
 		8B15FEB01A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15FEAF1A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift */; };
 		8B15FECA1A0D12B900A8C998 /* SimpleSearchTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15FEC91A0D12B900A8C998 /* SimpleSearchTree.swift */; };
 		8B1683861A404AB600C64E93 /* FasterBitBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1683851A404AB600C64E93 /* FasterBitBoard.swift */; };
@@ -85,6 +87,7 @@
 		8B74E20319F9EE6900B5E87E /* PlayerMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1F419F9EE6900B5E87E /* PlayerMediator.swift */; };
 		8B74E20419F9EE6900B5E87E /* RandomComputerPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1F519F9EE6900B5E87E /* RandomComputerPlayer.swift */; };
 		8B74E20519F9EE6900B5E87E /* SettingsViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1F619F9EE6900B5E87E /* SettingsViewContoller.swift */; };
+		8BF2C4AB1A4D860000F22AB4 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF2C4AA1A4D860000F22AB4 /* AppearanceManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +102,9 @@
 
 /* Begin PBXFileReference section */
 		8B07152A1A46AD7D0089C25B /* NegaAlphaSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NegaAlphaSearch.swift; sourceTree = "<group>"; };
+		8B07152E1A49B0230089C25B /* SearchEvalPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchEvalPlayer.swift; sourceTree = "<group>"; };
+		8B0715301A4B00430089C25B /* intrinsics.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intrinsics.c; sourceTree = "<group>"; };
+		8B0715311A4B00430089C25B /* intrinsics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = intrinsics.h; sourceTree = "<group>"; };
 		8B15FEAF1A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomPlayerWithPNS.swift; sourceTree = "<group>"; };
 		8B15FEC91A0D12B900A8C998 /* SimpleSearchTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleSearchTree.swift; sourceTree = "<group>"; };
 		8B1683851A404AB600C64E93 /* FasterBitBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FasterBitBoard.swift; sourceTree = "<group>"; };
@@ -199,6 +205,8 @@
 		8B74E1F419F9EE6900B5E87E /* PlayerMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerMediator.swift; sourceTree = "<group>"; };
 		8B74E1F519F9EE6900B5E87E /* RandomComputerPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomComputerPlayer.swift; sourceTree = "<group>"; };
 		8B74E1F619F9EE6900B5E87E /* SettingsViewContoller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewContoller.swift; sourceTree = "<group>"; };
+		8BBE916D1A4B03EC00212FFF /* FlatReversi-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FlatReversi-Bridging-Header.h"; sourceTree = "<group>"; };
+		8BF2C4AA1A4D860000F22AB4 /* AppearanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -332,6 +340,7 @@
 				8B22E27219FE7A450006E39C /* ComputerPlayer.swift */,
 				8B15FEAF1A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift */,
 				8B2517A11A13B03800B700F3 /* SimpleSearchStaticEvaluationPlayer.swift */,
+				8B07152E1A49B0230089C25B /* SearchEvalPlayer.swift */,
 				8B60ED2D1A3B0C4C0062AACC /* TranspositionedAlphaBetaSearchWithEvaluationPlayer.swift */,
 				8B50B0D51A3D79690057C14A /* TranspositionAlphaBetaSimplePlayer.swift */,
 				8B50B0CD1A3D3EDC0057C14A /* TreeSearchWithPerturbationPlayer.swift */,
@@ -385,6 +394,26 @@
 			name = ProofSolver;
 			sourceTree = "<group>";
 		};
+		8B714E171A4EF115001C2D89 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8B2517A31A164E9500B700F3 /* Utils.swift */,
+				8B22E1C119FC80C50006E39C /* Queue.swift */,
+				8B22E27C1A0278730006E39C /* Stack.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		8B714E181A4EF122001C2D89 /* Intrinsics */ = {
+			isa = PBXGroup;
+			children = (
+				8B0715301A4B00430089C25B /* intrinsics.c */,
+				8B0715311A4B00430089C25B /* intrinsics.h */,
+				8BBE916D1A4B03EC00212FFF /* FlatReversi-Bridging-Header.h */,
+			);
+			name = Intrinsics;
+			sourceTree = "<group>";
+		};
 		8B74E1B619F9ED9600B5E87E = {
 			isa = PBXGroup;
 			children = (
@@ -421,7 +450,8 @@
 				8B22E1C319FD34220006E39C /* Ad */,
 				8B60ED301A3B16E50062AACC /* Board */,
 				8B60ED281A3AF9D20062AACC /* Search */,
-				8B2517A31A164E9500B700F3 /* Utils.swift */,
+				8B714E171A4EF115001C2D89 /* Utils */,
+				8B714E181A4EF122001C2D89 /* Intrinsics */,
 				8B22E1BF19FC75100006E39C /* Zones.swift */,
 				8B60ED2F1A3B16C80062AACC /* Evaluation */,
 				8B60ED311A3B16F40062AACC /* ProofSolver */,
@@ -434,17 +464,16 @@
 				8B74E1F119F9EE6900B5E87E /* HumanUserInput.swift */,
 				8B74E1F219F9EE6900B5E87E /* Locking.swift */,
 				8B74E1F419F9EE6900B5E87E /* PlayerMediator.swift */,
-				8B74E1F619F9EE6900B5E87E /* SettingsViewContoller.swift */,
 				8B74E1C419F9ED9700B5E87E /* AppDelegate.swift */,
 				8B74E1C819F9ED9700B5E87E /* GameScene.swift */,
 				8B4E167D1A03BB4000BE87E2 /* GameViewScene.swift */,
+				8B74E1F619F9EE6900B5E87E /* SettingsViewContoller.swift */,
 				8B74E1CA19F9ED9700B5E87E /* GameViewController.swift */,
 				8B22E1B919FAAC0C0006E39C /* LevelSelectionViewControl.swift */,
 				8B22E1BB19FBAE400006E39C /* LevelController.swift */,
-				8B22E1C119FC80C50006E39C /* Queue.swift */,
-				8B22E27C1A0278730006E39C /* Stack.swift */,
 				8B22E20619FD37930006E39C /* Swift_Bridging_Header.h */,
 				8B74E1C619F9ED9700B5E87E /* GameScene.sks */,
+				8BF2C4AA1A4D860000F22AB4 /* AppearanceManager.swift */,
 				8B74E1CC19F9ED9700B5E87E /* Main.storyboard */,
 				8B74E1CF19F9ED9700B5E87E /* Images.xcassets */,
 				8B74E1D119F9ED9700B5E87E /* LaunchScreen.xib */,
@@ -623,13 +652,16 @@
 				8B74E1C519F9ED9700B5E87E /* AppDelegate.swift in Sources */,
 				8B22E27D1A0278730006E39C /* Stack.swift in Sources */,
 				8B60ED2A1A3AF9F60062AACC /* Search.swift in Sources */,
+				8B0715321A4B00440089C25B /* intrinsics.c in Sources */,
 				8B74E1FF19F9EE6900B5E87E /* HumanPlayer.swift in Sources */,
 				8B22E1BC19FBAE400006E39C /* LevelController.swift in Sources */,
 				8B74E20319F9EE6900B5E87E /* PlayerMediator.swift in Sources */,
 				8B22E1BA19FAAC0C0006E39C /* LevelSelectionViewControl.swift in Sources */,
+				8B07152F1A49B0230089C25B /* SearchEvalPlayer.swift in Sources */,
 				8B50B0D01A3D41480057C14A /* LeftyPlayer.swift in Sources */,
 				8B22E1BE19FC073B0006E39C /* RandomPlayerWithEvaluation.swift in Sources */,
 				8B74E20519F9EE6900B5E87E /* SettingsViewContoller.swift in Sources */,
+				8BF2C4AB1A4D860000F22AB4 /* AppearanceManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -761,7 +793,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_USE_OPTIMIZATION_PROFILE = YES;
+				CLANG_USE_OPTIMIZATION_PROFILE = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_DYNAMIC_NO_PIC = YES;
@@ -788,7 +820,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_USE_OPTIMIZATION_PROFILE = YES;
+				CLANG_USE_OPTIMIZATION_PROFILE = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_DYNAMIC_NO_PIC = YES;

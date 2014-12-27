@@ -80,7 +80,7 @@ class ClassicalEvaluator: BitBoardEvaluator {
     // MARK: Factors
 
     func possibleMoves(board: BitBoard, forPlayer: Pieces) -> Int {
-        return board.pop(board.getPuttables(forPlayer))
+        return pop(board.getPuttables(forPlayer))
     }
 
     func edge(board: BitBoard, forPlayer: Pieces) -> Double {
@@ -150,13 +150,16 @@ class ClassicalEvaluator: BitBoardEvaluator {
 
     func openness(board: BitBoard, forPlayer: Pieces) -> Int {
         var ret = 0
+        var bb = board.getBoardForPlayer(forPlayer)
 
-        for y in 0..<board.height() {
-            for x in 0..<board.width() {
-                if board.isPieceAt(forPlayer, x: x, y: y) {
-                    ret += board.numPeripherals(.Empty, x: x, y: y)
-                }
-            }
+        while !isEmpty(bb) {
+            let move = bitScanForward(bb)
+            bb = xOrBitWhere(bb, move)
+
+            let x = move % 8
+            let y = move / 8
+
+            ret += board.numPeripherals(.Empty, x: x, y: y)
         }
 
         return ret
@@ -164,13 +167,19 @@ class ClassicalEvaluator: BitBoardEvaluator {
 
     func boardEvaluation(board: BitBoard, forPlayer: Pieces, zones: Zones) -> Double {
         var ret = 0.0
-        for y in 0..<board.height() {
-            for x in 0..<board.width() {
-                if board.isPieceAt(forPlayer, x: x, y: y) {
-                    ret += 1.0 * zones.zones[x][y]
-                }
-            }
+        let z = zones.zones
+        var bb = board.getBoardForPlayer(forPlayer)
+
+        while !isEmpty(bb) {
+            let move = bitScanForward(bb)
+            bb = xOrBitWhere(bb, move)
+
+            let x = move % 8
+            let y = move / 8
+
+            ret += 1.0 * z[x][y]
         }
+        
         return ret
     }
 

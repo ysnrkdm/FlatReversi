@@ -109,6 +109,8 @@ class GameViewController: UIViewController, UINavigationBarDelegate, ADBannerVie
         skView.paused = false
         currentScene?.paused = false
 
+        AppearanceManager.load()
+        AppearanceManager.resetViews()
     }
 
     override func viewWillDisappear(animated: Bool) {

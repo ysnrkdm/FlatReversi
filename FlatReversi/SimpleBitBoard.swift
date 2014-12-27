@@ -27,12 +27,19 @@ let bsfMagicTable = [
 
 let magic: UInt64 = 0x03f79d71b4cb0a89
 
-func bitScanForward(b: Moves) -> Int {
-    let binv = (b ^ (b - 1))
-    let bm = binv &* magic
-    let bmShifted = (bm) >> 58
-    let index = Int(bmShifted)
-    return bsfMagicTable[index]
+//func bitScanForward(b: Moves) -> Int {
+//    let binv = (b ^ (b - 1))
+//    let bm = binv &* magic
+//    let bmShifted = (bm) >> 58
+//    let index = Int(bmShifted)
+//    return bsfMagicTable[index]
+//}
+
+@asmname("_bitScanForward")
+    func _bitScanForward(UInt64) -> UInt
+
+func bitScanForward(board: UInt64) -> Int {
+    return Int(_bitScanForward(board))
 }
 
 func xOrBitWhere(b: Moves, nthBit: Int) -> UInt64 {
@@ -41,6 +48,17 @@ func xOrBitWhere(b: Moves, nthBit: Int) -> UInt64 {
 
 func bitWhere(x: Int) -> UInt64 {
     return 1 << UInt64(x)
+}
+
+func bitWhere(x: Int, y: Int) -> UInt64 {
+    return 1 << (UInt64(x) + UInt64(y) * 8)
+}
+
+@asmname("_bitPop")
+    func _bitPop(UInt64) -> UInt
+
+func pop(i:UInt64) -> Int {
+    return Int(_bitPop(i))
 }
 
 func stringFromBitBoard(x: UInt64) -> String {
@@ -76,6 +94,17 @@ struct BitBoard : Hashable, Equatable {
             let w = Int(white &% UInt64(Int.max))
             let hash = b &+ w &* 17
             return hash
+        }
+    }
+
+    func getBoardForPlayer(forPlayer: Pieces) -> UInt64 {
+        switch forPlayer {
+        case .Black:
+            return black
+        case .White:
+            return white
+        default:
+            assertionFailure("Please specify black or white!")
         }
     }
 
@@ -147,7 +176,7 @@ struct BitBoard : Hashable, Equatable {
             return 0x0
         }
 
-        let putAt = bitWhere(x, y: y)
+        let putAt = bitWhere(x, y)
 
         switch color {
         case .Black:
@@ -166,20 +195,20 @@ struct BitBoard : Hashable, Equatable {
     func isPieceAt(piece: Pieces, x: Int, y: Int) -> Bool {
         switch piece {
         case .Black:
-            return bitWhere(x, y: y) & black > 0
+            return bitWhere(x, y) & black > 0
         case .White:
-            return bitWhere(x, y: y) & white > 0
+            return bitWhere(x, y) & white > 0
         case .Guide:
-            return bitWhere(x, y: y) & guide > 0
+            return bitWhere(x, y) & guide > 0
         case .Empty:
-            return bitWhere(x, y: y) & (black | white) > 0
+            return bitWhere(x, y) & (black | white) > 0
         default:
             return false
         }
     }
 
     func isEmpty(x: Int, y: Int) -> Bool {
-        return (black & white) & bitWhere(x, y: y) > 0
+        return (black & white) & bitWhere(x, y) > 0
     }
 
     func isAnyPuttable(color: Pieces) -> Bool {
@@ -221,7 +250,7 @@ struct BitBoard : Hashable, Equatable {
     }
 
     func canPut(color: Pieces, x: Int, y: Int) -> Bool {
-        if (black | white) & bitWhere(x, y: y) > 0 {
+        if (black | white) & bitWhere(x, y) > 0 {
             return false
         }
 
@@ -407,28 +436,35 @@ struct BitBoard : Hashable, Equatable {
 
     func numPeripherals(color: Pieces, x: Int, y: Int) -> Int {
         var peripherals_x: UInt64 = 0
+        var peripherals_xs : UInt64 = 0
         switch x {
         case 0:
             peripherals_x = 0b00000011
+            peripherals_xs = peripherals_x << 16 + peripherals_x << 8 + peripherals_x
         case 1:
             peripherals_x = 0b00000111
+            peripherals_xs = peripherals_x << 16 + peripherals_x << 8 + peripherals_x
         case 2:
             peripherals_x = 0b00001110
+            peripherals_xs = peripherals_x << 16 + peripherals_x << 8 + peripherals_x
         case 3:
             peripherals_x = 0b00011100
+            peripherals_xs = peripherals_x << 16 + peripherals_x << 8 + peripherals_x
         case 4:
             peripherals_x = 0b00111000
+            peripherals_xs = peripherals_x << 16 + peripherals_x << 8 + peripherals_x
         case 5:
             peripherals_x = 0b01110000
+            peripherals_xs = peripherals_x << 16 + peripherals_x << 8 + peripherals_x
         case 6:
             peripherals_x = 0b11100000
+            peripherals_xs = peripherals_x << 16 + peripherals_x << 8 + peripherals_x
         case 7:
             peripherals_x = 0b11000000
+            peripherals_xs = peripherals_x << 16 + peripherals_x << 8 + peripherals_x
         default:
             assertionFailure("Should not reach this code!")
         }
-
-        var peripherals_xs : UInt64 = peripherals_x << 16 + peripherals_x << 8 + peripherals_x
 
         switch y {
         case 0:
@@ -451,34 +487,19 @@ struct BitBoard : Hashable, Equatable {
             assertionFailure("Should not reach this code!")
         }
 
-        let peripherals = peripherals_xs & (bitWhere(x, y: y) ^ 0xFFFFFFFFFFFFFFFF)
+        let peripherals = peripherals_xs & (bitWhere(x, y) ^ 0xFFFFFFFFFFFFFFFF)
 
-        if color == .Black {
+        switch color {
+        case .Black:
             return pop(black & peripherals)
-        } else if color == .White {
+        case .White:
             return pop(white & peripherals)
-        } else if color == .Empty {
+        case .Empty:
             let empty_cells = (black | white) ^ 0xFFFFFFFFFFFFFFFF
             return pop(empty_cells & peripherals)
-        } else {
+        default:
             return 0
         }
-    }
-
-    func bitWhere(x: Int, y: Int) -> UInt64 {
-        return 1 << (UInt64(x) + UInt64(y) * 8)
-    }
-
-    func pop(i:UInt64) -> Int {
-        var x = i
-        x = (x & 0x5555555555555555) + ((x >>  1) & 0x5555555555555555)
-        x = (x & 0x3333333333333333) + ((x >>  2) & 0x3333333333333333)
-        x = (x & 0x0F0F0F0F0F0F0F0F) + ((x >>  4) & 0x0F0F0F0F0F0F0F0F)
-        x = (x & 0x00FF00FF00FF00FF) + ((x >>  8) & 0x00FF00FF00FF00FF)
-        x = (x & 0x0000FFFF0000FFFF) + ((x >> 16) & 0x0000FFFF0000FFFF)
-        x = (x & 0x00000000FFFFFFFF) + ((x >> 32) & 0x00000000FFFFFFFF)
-
-        return Int(x)
     }
 }
 

@@ -12,8 +12,7 @@ protocol LevelSelectionViewDelegate: class {
     func finishSelection(level: Level)
 }
 
-//@objc(SettingsViewController) class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-class LevelSelectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class LevelSelectionViewController: UIViewController, UINavigationBarDelegate, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navbar: UINavigationBar!
@@ -29,6 +28,8 @@ class LevelSelectionViewController: UIViewController, UITableViewDataSource, UIT
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        navbar.delegate = self;
 
         let customStepperCell: UINib = UINib(nibName: "CustomStepperTableViewCell", bundle: nil)
         self.tableView.registerNib(customStepperCell, forCellReuseIdentifier: "stepperCell")
@@ -96,6 +97,10 @@ class LevelSelectionViewController: UIViewController, UITableViewDataSource, UIT
         delegate?.finishSelection(Level(level: 0, levelId: -1, levelTitle: "Human", levelDescr: "Human Player"))
 
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+        return UIBarPosition.TopAttached
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
