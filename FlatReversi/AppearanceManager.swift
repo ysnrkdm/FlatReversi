@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SpriteKit
 
 enum Appearance {
     case WhiteGray, LikeDarcula
@@ -32,56 +33,96 @@ enum Appearance {
     }
 }
 
+struct ColorPalette {
+    var uiColorBackground: UIColor
+    var uiColorBackground2: UIColor
+    var uiColorTint: UIColor
+    var uiColorText: UIColor
+
+    var boardFontColor: SKColor
+    var boardGridColor: SKColor
+
+    var boardBackgroundColor: SKColor
+
+    var boardBlackPieceFillColor: SKColor
+    var boardBlackPieceStrokeColor: SKColor
+    var boardWhitePieceFillColor: SKColor
+    var boardWhitePieceStrokeColor: SKColor
+    var boardGuidePieceFillColor: SKColor
+
+    var boardPopupFillColor: SKColor
+    var boardPopupFontColor: SKColor
+}
+
 class AppearanceManager {
     class func applyWhiteGrayTheme() {
-        let colorBackground = UIColor.whiteColor()
-        let colorBackground2 = UIColor(red: 239/255, green: 239/255, blue: 244/255, alpha: 1)
-        let colorTint = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
-        let colorText = UIColor(red: 0.05, green: 0.05, blue: 0.05, alpha: 1)
-
-        UINavigationBar.appearance().tintColor = colorTint
-        UINavigationBar.appearance().backgroundColor = colorBackground
-        UINavigationBar.appearance().barTintColor = colorBackground
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: colorText]
-        UINavigationBar.appearance().titleTextAttributes = titleDict
-
-        UITableView.appearance().tintColor = colorTint
-        UITableView.appearance().backgroundColor = colorBackground2
-
-        UITableViewCell.appearance().tintColor = colorTint
-        UITableViewCell.appearance().backgroundColor = colorBackground
-
-        UILabel.appearance().textColor = colorText
-
+        applyColorPalette(getColorPalette(.WhiteGray))
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
-
-        resetViews()
         persist(.WhiteGray)
     }
 
     class func applyLikeDarculaTheme() {
-        let colorBackground = UIColor(red: 57/255, green: 57/255, blue: 57/255, alpha: 1)
-        let colorBackground2 = UIColor(red: 73/255, green: 76/255, blue: 78/255, alpha: 1)
-        let colorTint = UIColor(red: 216/255, green: 137/255, blue: 32/255, alpha: 1)
-        let colorText = UIColor.whiteColor()
+        applyColorPalette(getColorPalette(.LikeDarcula))
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        persist(.LikeDarcula)
+    }
 
-        UINavigationBar.appearance().tintColor = colorTint
-        UINavigationBar.appearance().backgroundColor = colorBackground
-        UINavigationBar.appearance().barTintColor = colorBackground
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: colorText]
+    class func getColorPalette(appearance: Appearance) -> ColorPalette {
+        switch appearance {
+        case .LikeDarcula:
+            var darcula = ColorPalette(
+                uiColorBackground: UIColor(red: 57/255, green: 57/255, blue: 57/255, alpha: 1),
+                uiColorBackground2: UIColor(red: 73/255, green: 76/255, blue: 78/255, alpha: 1),
+                uiColorTint: UIColor(red: 216/255, green: 137/255, blue: 32/255, alpha: 1),
+                uiColorText: UIColor.whiteColor(),
+                boardFontColor: SKColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1),
+                boardGridColor: SKColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1),
+                boardBackgroundColor: UIColor(red: 73/255, green: 76/255, blue: 78/255, alpha: 1),
+                boardBlackPieceFillColor: SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1),
+                boardBlackPieceStrokeColor: SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1),
+                boardWhitePieceFillColor: SKColor(red: 1, green: 1, blue: 1, alpha: 1),
+                boardWhitePieceStrokeColor: SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1),
+                boardGuidePieceFillColor: SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5),
+                boardPopupFillColor: SKColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.5),
+                boardPopupFontColor: SKColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.0))
+            return darcula
+        case .WhiteGray:
+            var whitegray = ColorPalette(
+                uiColorBackground: UIColor.whiteColor(),
+                uiColorBackground2: UIColor(red: 239/255, green: 239/255, blue: 244/255, alpha: 1),
+                uiColorTint: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),
+                uiColorText: UIColor(red: 0.05, green: 0.05, blue: 0.05, alpha: 1),
+                boardFontColor: SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1),
+                boardGridColor: SKColor(red: 0.75, green: 0.75, blue: 0.75, alpha: 1),
+                boardBackgroundColor: SKColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1),
+                boardBlackPieceFillColor: SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1),
+                boardBlackPieceStrokeColor: SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1),
+                boardWhitePieceFillColor: SKColor(red: 1, green: 1, blue: 1, alpha: 1),
+                boardWhitePieceStrokeColor: SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1),
+                boardGuidePieceFillColor: SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5),
+                boardPopupFillColor: SKColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.5),
+                boardPopupFontColor: SKColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.0))
+            return whitegray
+        }
+    }
+
+    class func applyColorPalette(colorPalette: ColorPalette) {
+        UINavigationBar.appearance().tintColor = colorPalette.uiColorTint
+        UINavigationBar.appearance().backgroundColor = colorPalette.uiColorBackground
+        UINavigationBar.appearance().barTintColor = colorPalette.uiColorBackground
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: colorPalette.uiColorText]
         UINavigationBar.appearance().titleTextAttributes = titleDict
 
-        UITableView.appearance().tintColor = colorTint
-        UITableView.appearance().backgroundColor = colorBackground2
-        UITableViewCell.appearance().tintColor = colorTint
-        UITableViewCell.appearance().backgroundColor = colorBackground
+        UITableView.appearance().tintColor = colorPalette.uiColorTint
+        UITableView.appearance().backgroundColor = colorPalette.uiColorBackground2
+        UITableViewCell.appearance().tintColor = colorPalette.uiColorTint
+        UITableViewCell.appearance().backgroundColor = colorPalette.uiColorBackground
 
-        UILabel.appearance().textColor = colorText
+        UILabel.appearance().textColor = colorPalette.uiColorText
 
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-
+        
         resetViews()
-        persist(.LikeDarcula)
     }
 
     class func persist(appearanceToSet: Appearance) {
@@ -91,15 +132,17 @@ class AppearanceManager {
         gc.saveToUserDefaults()
     }
 
-    class func load() {
+    class func load() -> ColorPalette {
         var gc = GameSettings()
         gc.loadFromUserDefaults()
 
         switch gc.appearance {
         case .WhiteGray:
             applyWhiteGrayTheme()
+            return getColorPalette(.WhiteGray)
         case .LikeDarcula:
             applyLikeDarculaTheme()
+            return getColorPalette(.LikeDarcula)
         }
     }
 

@@ -76,29 +76,77 @@ class GameScene: SKScene, GameViewScene {
 
     var updateBoardViewQueue: Queue<UpdateBoardViewContext>? = nil
 
-    override func didMoveToView(view: SKView) {
+    // Colors
+    var boardFontColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
+    var boardGridColor = SKColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 0.6)
+
+    var boardBackgroundColor = SKColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
+
+    var boardBlackPieceFillColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
+    var boardBlackPieceStrokeColor = SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+    var boardWhitePieceFillColor = SKColor(red: 1, green: 1, blue: 1, alpha: 1)
+    var boardWhitePieceStrokeColor = SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+    var boardGuidePieceFillColor = SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+
+    var boardPopupFillColor = SKColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.5)
+    var boardPopupFontColor = SKColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.0)
+
+    func loadColors() {
+        let colorPalette = AppearanceManager.load()
+
+        tintColor = colorPalette.uiColorTint
+
+        boardFontColor = colorPalette.boardFontColor
+        boardGridColor = colorPalette.boardGridColor
+
+        boardBackgroundColor = colorPalette.boardBackgroundColor
+
+        boardBlackPieceFillColor = colorPalette.boardBlackPieceFillColor
+        boardBlackPieceStrokeColor = colorPalette.boardBlackPieceStrokeColor
+        boardWhitePieceFillColor = colorPalette.boardWhitePieceFillColor
+        boardWhitePieceStrokeColor = colorPalette.boardWhitePieceStrokeColor
+        boardGuidePieceFillColor = colorPalette.boardGuidePieceFillColor
+
+        boardPopupFillColor = colorPalette.boardPopupFillColor
+        boardPopupFontColor = colorPalette.boardPopupFontColor
+
+        drawBoard()
+    }
+
+    var boardLinesH: [SKShapeNode] = []
+    var boardLinesV: [SKShapeNode] = []
+    var boardDots: [SKShapeNode] = []
+
+    func drawBoard() {
+        for shape in boardLinesH { shape.removeFromParent() }
+        for shape in boardLinesV { shape.removeFromParent() }
+        for shape in boardDots { shape.removeFromParent() }
+
         /* Setup your scene here */
         let boardView = self.childNodeWithName("Board") as SKSpriteNode
+        boardView.color = boardBackgroundColor
         var width : CGFloat = boardView.size.width
         var height : CGFloat = boardView.size.height
         var piece_width = width / 8
         var line_width : CGFloat = 2.0
-        var color = SKColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 0.6)
-
-        topYOffset += piece_width / 2
+        var color = boardGridColor
 
         // Horizontal lines
         for var by : CGFloat = 0; by <= width; by += piece_width {
             let sprite = SKShapeNode(rect: screenRectFromVritualRect(CGRectMake(0, by, width, line_width)))
             sprite.fillColor = color
+            sprite.strokeColor = SKColor(white: 0, alpha: 0)
             boardView.addChild(sprite)
+            boardLinesH.append(sprite)
         }
         // Vertical lines
         for var bx : CGFloat = 0; bx <= width; bx += piece_width {
             let rect = screenRectFromVritualRect(CGRectMake(bx, 0, line_width, width))
             let sprite = SKShapeNode(rect: rect)
             sprite.fillColor = color
+            sprite.strokeColor = SKColor(white: 0, alpha: 0)
             boardView.addChild(sprite)
+            boardLinesV.append(sprite)
         }
 
         // 4 dots
@@ -106,21 +154,33 @@ class GameScene: SKScene, GameViewScene {
         dotsUL.position = self.screenPointFromVirtualPoint(CGPointMake(piece_width * 2, piece_width * 2))
         dotsUL.fillColor = color
         boardView.addChild(dotsUL)
+        boardDots.append(dotsUL)
         let dotsUR = SKShapeNode(circleOfRadius: line_width * 3)
         dotsUR.position = self.screenPointFromVirtualPoint(CGPointMake(piece_width * 2, piece_width * 6))
         dotsUR.fillColor = color
         boardView.addChild(dotsUR)
+        boardDots.append(dotsUR)
         let dotsDL = SKShapeNode(circleOfRadius: line_width * 3)
         dotsDL.position = self.screenPointFromVirtualPoint(CGPointMake(piece_width * 6, piece_width * 2))
         dotsDL.fillColor = color
         boardView.addChild(dotsDL)
+        boardDots.append(dotsDL)
         let dotsDR = SKShapeNode(circleOfRadius: line_width * 3)
         dotsDR.position = self.screenPointFromVirtualPoint(CGPointMake(piece_width * 6, piece_width * 6))
         dotsDR.fillColor = color
         boardView.addChild(dotsDR)
+        boardDots.append(dotsDR)
+    }
+
+    override func didMoveToView(view: SKView) {
+        let boardView = self.childNodeWithName("Board") as SKSpriteNode
+        var width : CGFloat = boardView.size.width
+        var piece_width = width / 8
+        topYOffset += piece_width / 2
 
         updateBoardViewQueue = Queue<UpdateBoardViewContext>()
 
+        drawBoard()
         showNumPieces(0, white: 0, blackEval: 0.0, whiteEval: 0.0, debugString: "")
 
         startGame()
@@ -153,7 +213,6 @@ class GameScene: SKScene, GameViewScene {
         var height : CGFloat = boardView.size.height
         var piece_width = width / 8
         var line_width : CGFloat = 2.0
-        var color = SKColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 0.6)
 
         let yPosOffset = width + 3 * statusBarHeight
 
@@ -163,7 +222,7 @@ class GameScene: SKScene, GameViewScene {
 
         numPiecesBlack = SKLabelNode(text: "\(black)")
         numPiecesBlack?.name = "blackNum"
-        numPiecesBlack?.fontColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
+        numPiecesBlack?.fontColor = boardFontColor
         numPiecesBlack?.fontSize = 50
         numPiecesBlack?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
         numPiecesBlack?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
@@ -172,7 +231,7 @@ class GameScene: SKScene, GameViewScene {
 
         numPiecesWhite = SKLabelNode(text: "\(white)")
         numPiecesBlack?.name = "whiteNum"
-        numPiecesWhite?.fontColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
+        numPiecesWhite?.fontColor = boardFontColor
         numPiecesWhite?.fontSize = 50
         numPiecesWhite?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
         numPiecesWhite?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
@@ -185,7 +244,7 @@ class GameScene: SKScene, GameViewScene {
         if debug {
             numBlackEval = SKLabelNode(text: "\(blackEval)")
             numBlackEval?.name = "blackEval"
-            numBlackEval?.fontColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
+            numBlackEval?.fontColor = boardFontColor
             numBlackEval?.fontSize = 30
             numBlackEval?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
             numBlackEval?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
@@ -194,7 +253,7 @@ class GameScene: SKScene, GameViewScene {
 
             numWhiteEval = SKLabelNode(text: "\(whiteEval)")
             numWhiteEval?.name = "blackEval"
-            numWhiteEval?.fontColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
+            numWhiteEval?.fontColor = boardFontColor
             numWhiteEval?.fontSize = 30
             numWhiteEval?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
             numWhiteEval?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
@@ -207,7 +266,7 @@ class GameScene: SKScene, GameViewScene {
         if debug {
             debugLabel = SKLabelNode(text: "\(debugString)")
             debugLabel?.name = "blackEval"
-            debugLabel?.fontColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
+            debugLabel?.fontColor = boardFontColor
             debugLabel?.fontSize = 30
             debugLabel?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
             debugLabel?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
@@ -222,16 +281,16 @@ class GameScene: SKScene, GameViewScene {
         numPiecesWhiteCircle?.removeFromParent()
 
         numPiecesBlackCircle = SKShapeNode(circleOfRadius: radius)
-        numPiecesBlackCircle?.fillColor = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
+        numPiecesBlackCircle?.fillColor = boardBlackPieceFillColor
         numPiecesBlackCircle?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 - piece_width / 2 - 5, yPosOffset))
-        numPiecesBlackCircle?.strokeColor = SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+        numPiecesBlackCircle?.strokeColor = boardBlackPieceStrokeColor
         numPiecesBlackCircle?.lineWidth = 2
         boardView.addChild(numPiecesBlackCircle!)
 
         numPiecesWhiteCircle = SKShapeNode(circleOfRadius: radius)
-        numPiecesWhiteCircle?.fillColor = SKColor(red: 1, green: 1, blue: 1, alpha: 1)
+        numPiecesWhiteCircle?.fillColor = boardWhitePieceFillColor
         numPiecesWhiteCircle?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 + piece_width / 2 + 5, yPosOffset))
-        numPiecesWhiteCircle?.strokeColor = SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+        numPiecesWhiteCircle?.strokeColor = boardWhitePieceStrokeColor
         numPiecesWhiteCircle?.lineWidth = 2
         boardView.addChild(numPiecesWhiteCircle!)
     }
@@ -367,13 +426,13 @@ class GameScene: SKScene, GameViewScene {
                     }
 
                     if let spriteUnwrapped = sprite {
-                        var colorTo = SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+                        var colorTo = self.boardGuidePieceFillColor
                         if(turn == Pieces.White) {
-                            colorTo = SKColor(red: 1, green: 1, blue: 1, alpha: 1)
+                            colorTo = self.boardWhitePieceFillColor
                         } else if (turn == Pieces.Black) {
-                            colorTo = SKColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
+                            colorTo = self.boardBlackPieceFillColor
                         } else if (turn == Pieces.Guide && self.showGuides) {
-                            colorTo = SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+                            colorTo = self.boardGuidePieceFillColor
                         } else {
                             assertionFailure("Should not reach this code!")
                         }
@@ -384,7 +443,7 @@ class GameScene: SKScene, GameViewScene {
                             let colorChange = SKAction.runBlock({() in spriteUnwrapped.strokeColor = self.tintColor})
                             let fadeIn = SKAction.fadeAlphaTo(1.0, duration: 0.05)
                             let fadeOut2 = SKAction.fadeAlphaTo(0.0, duration: 0.1)
-                            let colorChange2 = SKAction.runBlock({() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.strokeColor = SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)})
+                            let colorChange2 = SKAction.runBlock({() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.strokeColor = self.boardGuidePieceFillColor})
                             let fadeIn2 = SKAction.fadeAlphaTo(1.0, duration: 0.1)
 
 
@@ -406,7 +465,7 @@ class GameScene: SKScene, GameViewScene {
                             spriteUnwrapped.fillColor = colorTo
                             self.drawCount-=1
                         }
-                        spriteUnwrapped.strokeColor = SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+                        spriteUnwrapped.strokeColor = self.boardGuidePieceFillColor
                         spriteUnwrapped.lineWidth = 2
 
                         // Align the piece to boardView
@@ -455,12 +514,12 @@ class GameScene: SKScene, GameViewScene {
         var rectNormalized = self.screenRectFromVritualRect(rect)
 
         var rectanble = SKShapeNode(rect: rectNormalized, cornerRadius: 15)
-        rectanble.fillColor = SKColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.5)
+        rectanble.fillColor = boardPopupFillColor
         boardView.addChild(rectanble)
 
         var passLabel = SKLabelNode(text: "Pass")
         passLabel.name = "labelPass"
-        passLabel.fontColor = SKColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.0)
+        passLabel.fontColor = boardPopupFontColor
         passLabel.fontSize = 100
         passLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
         passLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
