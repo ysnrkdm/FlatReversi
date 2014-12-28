@@ -1,5 +1,5 @@
 //
-//  LevelSelectionViewControl.swift
+//  LevelSelectionViewController.swift
 //  FlatReversi
 //
 //  Created by Kodama Yoshinori on 10/25/14.

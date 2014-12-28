@@ -49,7 +49,12 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
             ]),
             ("Appearance Settings", [
                 SwitchTableCell(tableView: self.tableView, id: "", labelText: "Show Possible Moves", switchOn: gc.showPossibleMoves, targetObject: self, targetSelector: "switchShowPossibleMoves:"),
-                SwitchTableCell(tableView: self.tableView, id: "", labelText: "Show Animation", switchOn: gc.showAnimation, targetObject: self, targetSelector: "switchAnimation:")
+                SwitchTableCell(tableView: self.tableView, id: "", labelText: "Show Animation", switchOn: gc.showAnimation, targetObject: self, targetSelector: "switchAnimation:"),
+                DetailSelectorDetailTableCell(tableView: self.tableView, id: "appearance", labelText: "Appearance", detailLabeText: AppearanceManager.loadAppearanceValue().rawValue,
+                    funcWhenPressed: {() in
+                        NSLog("appearance pressed")
+                        self.performSegueWithIdentifier("appearanceDetailSegue",sender: nil)
+                })
             ]),
             // FIXME: Implement in future
 //            ("Misc", [
@@ -69,6 +74,11 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
     }
 
     override func viewWillAppear(animated: Bool) {
+        let (sectionIndex, cellIndex) = findTableViewCellById("appearance")
+        let ipath = NSIndexPath(forRow: cellIndex, inSection: sectionIndex)
+
+        tableView.deselectRowAtIndexPath(ipath, animated: false)
+
         super.viewWillAppear(animated)
 
         navbar.frame.size.width = self.view.frame.width
@@ -78,6 +88,9 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
 
         adjustBlackPlayerDifficultyAppearance()
         adjustWhitePlayerDifficultyAppearance()
+
+        AppearanceManager.load()
+        AppearanceManager.resetViews()
 
         NSLog("%f - %f", self.view.frame.width.native, navbar.frame.size.width.native)
     }
@@ -109,7 +122,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == "levelDetailSegue") {
+        if segue.identifier == "levelDetailSegue" {
             let lsvc: LevelSelectionViewController = segue.destinationViewController as LevelSelectionViewController
             lsvc.delegate = self
         }
@@ -280,15 +293,6 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
         let sw: UISwitch = sender as UISwitch
         NSLog("Switched switchShowPossibleMoves! Status: %d", sw.on)
 
-        //
-        if sw.on {
-            AppearanceManager.applyLikeDarculaTheme()
-            gc.loadFromUserDefaults()
-        } else {
-            AppearanceManager.applyWhiteGrayTheme()
-            gc.loadFromUserDefaults()
-        }
-
         gc.showPossibleMoves = sw.on
         gc.saveToUserDefaults()
     }
@@ -333,8 +337,9 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let unwrappedCells = cells {
             let cell = unwrappedCells[indexPath.section].1[indexPath.row]
-            if cell is DetailSelectorTableCell {
-                let dcell = cell as DetailSelectorTableCell
+            if let dcell = cell as? DetailSelectorTableCell {
+                dcell.funcWhenPressed()
+            } else if let dcell = cell as? DetailSelectorDetailTableCell {
                 dcell.funcWhenPressed()
             }
         }
@@ -467,8 +472,28 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
 
         override func getTableViewCell() -> UITableViewCell {
             let cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
-            cell.textLabel!.text = labelText
+            cell.textLabel?.text = labelText
+            return cell
+        }
+    }
 
+    class DetailSelectorDetailTableCell: TableCellDefinition {
+        var labelText: String
+        var funcWhenPressed: (() -> ())
+        var detailLabeText: String
+        init(tableView: UITableView, id: String, labelText: String, detailLabeText: String, funcWhenPressed: (() -> ())) {
+            self.labelText = labelText
+            self.detailLabeText = detailLabeText
+            self.funcWhenPressed = funcWhenPressed
+            super.init(reusableCellId: "kCellSelectorDetail", tableView: tableView, id: id)
+
+        }
+
+        override func getTableViewCell() -> UITableViewCell {
+            let cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
+            cell.textLabel?.text = labelText
+            cell.detailTextLabel?.text = detailLabeText
+            cell.selectionStyle = UITableViewCellSelectionStyle.Gray
             return cell
         }
     }

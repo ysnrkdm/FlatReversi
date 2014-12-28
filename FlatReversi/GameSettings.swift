@@ -38,7 +38,7 @@ class GameSettings {
 
         ud.setBool(showPossibleMoves, forKey: "showPossibleMoves")
         ud.setBool(showAnimation, forKey: "showAnimation")
-        ud.setInteger(appearance.toInteger(), forKey: "appearance")
+        ud.setObject(appearance.rawValue, forKey: "appearance")
     }
 
     func loadFromUserDefaults() {
@@ -54,7 +54,17 @@ class GameSettings {
         showPossibleMoves = ud.boolForKey("showPossibleMoves")
         showAnimation = ud.boolForKey("showAnimation")
 
-        appearance = appearance.fromInteger(ud.integerForKey("appearance"))
+        if let appeIdFromUd = ud.stringForKey("appearance") {
+            if let appeFromUd = Appearance(rawValue: appeIdFromUd) {
+                appearance = appeFromUd
+            } else {
+                appearance = .WhiteGray
+                NSLog("Renewed appearance as WhiteGray because couldn't find an object for given appearance id.")
+            }
+        } else {
+            appearance = .WhiteGray
+            NSLog("Renewed appearance as WhiteGray because couldn't find an appearance id from user-defaults.")
+        }
     }
 
     func validate() -> Bool {
