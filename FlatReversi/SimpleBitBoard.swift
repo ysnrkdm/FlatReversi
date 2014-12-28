@@ -254,10 +254,8 @@ struct BitBoard : Hashable, Equatable {
             return false
         }
 
-        var r: UInt64 = 0
         for direc in direcs {
-            r |= getBitPuttables(color, direc: direc)
-            if r > 0 {
+            if getBitPuttables(color, direc: direc) & bitWhere(x, y) > 0 {
                 return true
             }
         }

@@ -147,6 +147,7 @@ class GameManager {
             }
         }
         self.turn = nextTurn(self.turn)
+        boardMediator?.updateGuides(self.turn)
         if(isGameOver()) {
             // Game Over, show result
             NSLog("Game Over")
