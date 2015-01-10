@@ -114,9 +114,7 @@ class ClassicalEvaluator: BitBoardEvaluator {
                         ret += tmp
                     }
                     tmp = 0
-                }
-
-                if board.get(cur.0, y: cur.1) == forPlayer {
+                } else if board.isPieceAt(forPlayer, x: cur.0, y: cur.1) {
                     ++tmp
                 }
             }
