@@ -411,31 +411,6 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
         }
     }
 
-    class StepperTableCell: TableCellDefinition {
-        var labelText: String
-        var stepperValue: Double
-        var stepperMaxValue: Double
-        var stepperMinValue: Double
-        var stepperStepValue: Double
-        var funcToInvokeWhenValueChanged: (Double -> ())
-        init(tableView: UITableView, id: String, labelText: String, stepperValue: Double, stepperMaxValue: Double, stepperMinValue: Double, stepperStepValue:Double, funcToInvokeWhenValueChanged: (Double -> ())) {
-            self.labelText = labelText
-            self.stepperValue = stepperValue
-            self.stepperMaxValue = stepperMaxValue
-            self.stepperMinValue = stepperMinValue
-            self.stepperStepValue = stepperStepValue
-            self.funcToInvokeWhenValueChanged = funcToInvokeWhenValueChanged
-            super.init(reusableCellId: "stepperCell", tableView: tableView, id: id)
-        }
-
-        override func getTableViewCell() -> UITableViewCell {
-            let stepperCell:CustomStepperTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId) as CustomStepperTableViewCell
-            stepperCell.configure(labelText, stepperValue: stepperValue, stepperMaxValue: stepperMaxValue, stepperMinValue: stepperMinValue, stepperStepValue: stepperStepValue, funcToInvokeWhenValueChanged: funcToInvokeWhenValueChanged)
-
-            return stepperCell
-        }
-    }
-
     class SwitchTableCell: TableCellDefinition {
         var labelText: String
         var switchOn: Bool

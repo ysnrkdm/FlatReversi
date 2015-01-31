@@ -77,8 +77,6 @@
 		8B74E1F719F9EE6900B5E87E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1E819F9EE6900B5E87E /* Board.swift */; };
 		8B74E1F819F9EE6900B5E87E /* BoardMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1E919F9EE6900B5E87E /* BoardMediator.swift */; };
 		8B74E1F919F9EE6900B5E87E /* BoardRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1EA19F9EE6900B5E87E /* BoardRepresentation.swift */; };
-		8B74E1FA19F9EE6900B5E87E /* CustomStepperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1EB19F9EE6900B5E87E /* CustomStepperTableViewCell.swift */; };
-		8B74E1FB19F9EE6900B5E87E /* CustomStepperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B74E1EC19F9EE6900B5E87E /* CustomStepperTableViewCell.xib */; };
 		8B74E1FC19F9EE6900B5E87E /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1ED19F9EE6900B5E87E /* GameManager.swift */; };
 		8B74E1FD19F9EE6900B5E87E /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1EE19F9EE6900B5E87E /* GameSettings.swift */; };
 		8B74E1FE19F9EE6900B5E87E /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1EF19F9EE6900B5E87E /* GameViewModel.swift */; };
@@ -197,8 +195,6 @@
 		8B74E1E819F9EE6900B5E87E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		8B74E1E919F9EE6900B5E87E /* BoardMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardMediator.swift; sourceTree = "<group>"; };
 		8B74E1EA19F9EE6900B5E87E /* BoardRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardRepresentation.swift; sourceTree = "<group>"; };
-		8B74E1EB19F9EE6900B5E87E /* CustomStepperTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomStepperTableViewCell.swift; sourceTree = "<group>"; };
-		8B74E1EC19F9EE6900B5E87E /* CustomStepperTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomStepperTableViewCell.xib; sourceTree = "<group>"; };
 		8B74E1ED19F9EE6900B5E87E /* GameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		8B74E1EE19F9EE6900B5E87E /* GameSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 		8B74E1EF19F9EE6900B5E87E /* GameViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
@@ -460,8 +456,6 @@
 				8B60ED2F1A3B16C80062AACC /* Evaluation */,
 				8B60ED311A3B16F40062AACC /* ProofSolver */,
 				8B22E27119FE7A270006E39C /* Player */,
-				8B74E1EC19F9EE6900B5E87E /* CustomStepperTableViewCell.xib */,
-				8B74E1EB19F9EE6900B5E87E /* CustomStepperTableViewCell.swift */,
 				8B74E1ED19F9EE6900B5E87E /* GameManager.swift */,
 				8B74E1EE19F9EE6900B5E87E /* GameSettings.swift */,
 				8B74E1EF19F9EE6900B5E87E /* GameViewModel.swift */,
@@ -597,7 +591,6 @@
 				8B74E1D319F9ED9700B5E87E /* LaunchScreen.xib in Resources */,
 				8B74E1D019F9ED9700B5E87E /* Images.xcassets in Resources */,
 				8B74E1C719F9ED9700B5E87E /* GameScene.sks in Resources */,
-				8B74E1FB19F9EE6900B5E87E /* CustomStepperTableViewCell.xib in Resources */,
 				8B22E1ED19FD34BA0006E39C /* README.txt in Resources */,
 				8B22E1EF19FD34BA0006E39C /* README.txt in Resources */,
 				8B74E1CE19F9ED9700B5E87E /* Main.storyboard in Resources */,
@@ -651,7 +644,6 @@
 				8B22E27319FE7A450006E39C /* ComputerPlayer.swift in Sources */,
 				8B4E167E1A03BB4000BE87E2 /* GameViewScene.swift in Sources */,
 				8B74E1F819F9EE6900B5E87E /* BoardMediator.swift in Sources */,
-				8B74E1FA19F9EE6900B5E87E /* CustomStepperTableViewCell.swift in Sources */,
 				8B74E1F719F9EE6900B5E87E /* Board.swift in Sources */,
 				8B74E20119F9EE6900B5E87E /* Locking.swift in Sources */,
 				8B74E1FE19F9EE6900B5E87E /* GameViewModel.swift in Sources */,
