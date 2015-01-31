@@ -9,14 +9,6 @@
 import UIKit
 import SpriteKit
 
-enum Appearance: String {
-    case WhiteGray = "WhiteGray", LikeDarcula = "LikeDarcula", Night = "Night", Classic = "Classic", ClassicDark = "ClassicDark"
-
-    static func toList() -> [Appearance] {
-        return [.WhiteGray, .LikeDarcula, .Night, .Classic, .ClassicDark]
-    }
-}
-
 struct ColorPalette {
     var uiColorBackground: UIColor
     var uiColorBackground2: UIColor

@@ -9,7 +9,6 @@
 import Foundation
 
 class SearchEvalPlayer: ComputerPlayer {
-
     var zones: Zones? = nil
     var pnsLessThan: Int = 0
     var searchDepth: Int = 1
