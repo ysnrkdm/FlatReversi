@@ -59,11 +59,9 @@ class GameSettings {
                 appearance = appeFromUd
             } else {
                 appearance = .WhiteGray
-//                NSLog("Renewed appearance as WhiteGray because couldn't find an object for given appearance id.")
             }
         } else {
             appearance = .WhiteGray
-//            NSLog("Renewed appearance as WhiteGray because couldn't find an appearance id from user-defaults.")
         }
     }
 

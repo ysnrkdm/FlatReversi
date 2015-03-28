@@ -92,7 +92,10 @@ class GameManager {
             if let player = lc.getPlayerByLevelId(levelId, playerMediator: playerMediator, color: color) {
                 return player
             } else {
-                let computerWeakestPlayer = RandomComputerPlayer(playerMediator: playerMediator, color: color)
+                let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
+                let z = ZonesFactory().createZoneTypical4(1, bVal: 1, cVal: 1, dVal: 1)
+
+                let computerWeakestPlayer = rcp
                 return computerWeakestPlayer
             }
         } else {

@@ -31,7 +31,6 @@ class Level {
 }
 
 class LevelController {
-    //
     var levels: [Level] = [
         Level(level: 0, levelId: 0, levelTitle: "Human", levelDescr: "Human Player"),
         Level(level: 1, levelId: 1, levelTitle: "Random", levelDescr: ""),
@@ -52,7 +51,6 @@ class LevelController {
         Level(level: 16, levelId: 16, levelTitle: "DepthSearcher with Perturbation", levelDescr: ""),
         Level(level: 17, levelId: 17, levelTitle: "7 Depth Static Eval Search + 10 PNS", levelDescr: ""),
         Level(level: 100, levelId: 1000, levelTitle: "To be added in next version...", levelDescr: ""),
-//        Level(level: 0, levelId: 1001, levelTitle: "SpecialAI", levelDescr: ""),
     ]
 
     func getLevels(considerDifficultyHighestBeaten: Bool) -> [Level] {
@@ -113,7 +111,9 @@ class LevelController {
     func getPlayerByLevelId(levelId: Int, playerMediator: PlayerMediator, color: Pieces) -> Player? {
         switch(levelId) {
         case 1:
-            let rcp = RandomComputerPlayer(playerMediator: playerMediator, color: color)
+            let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
+            let z = ZonesFactory().createZoneTypical4(1, bVal: 1, cVal: 1, dVal: 1)
+            rcp.configure(z)
             return rcp
         case 2:
             let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
@@ -181,9 +181,10 @@ class LevelController {
             rcp.configure(z, pnsLessThan: 10)
             return rcp
         case 15:
-            let sssep = TranspositionedAlphaBetaSearchWithEvaluationPlayer(playerMediator: playerMediator, color: color)
+            let sssep = SearchEvalPlayer(playerMediator: playerMediator, color: color)
+            let searcher = NegaAlphaSearch()
             let z = ZonesFactory().createZoneUniform(1.0)
-            sssep.configure(z, pnsLessThan: 10, searchDepth: 3, wPossibleMoves: [0], wEdge: [0], wFixedPieces: [0], wOpenness: [1], wBoardEvaluation: [0])
+            sssep.configure(searcher, zones: z, pnsLessThan: 10, searchDepth: 3, wPossibleMoves: [0], wEdge: [0], wFixedPieces: [0], wOpenness: [1], wBoardEvaluation: [0])
             return sssep
         case 16:
             let sssep = TreeSearchWithPerturbationPlayer(playerMediator: playerMediator, color: color)
@@ -192,8 +193,8 @@ class LevelController {
             return sssep
         case 17:
             let sssep = SearchEvalPlayer(playerMediator: playerMediator, color: color)
-            let z = ZonesFactory().createZoneTypical8(99, bVal: 1.6, cVal: -5, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
             let searcher = NegaAlphaSearch()
+            let z = ZonesFactory().createZoneTypical8(99, bVal: 1.6, cVal: -5, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
             sssep.configure(searcher, zones: z, pnsLessThan: 10, searchDepth: 7, wPossibleMoves: [20.0, 15, 3.2, 1.1], wEdge: [1.0, 1.0], wFixedPieces: [2.0, 200.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0])
             return sssep
 
@@ -202,9 +203,9 @@ class LevelController {
         }
     }
 
-    func getRandomComputerPlayerConfigured(playerMediattor: PlayerMediator, color: Pieces, maxCandidates: Int, zones: [[Int]]) -> RandomComputerPlayer? {
-        return nil
-    }
+//    func getRandomComputerPlayerConfigured(playerMediattor: PlayerMediator, color: Pieces, maxCandidates: Int, zones: [[Int]]) -> RandomComputerPlayer? {
+//        return nil
+//    }
 
     func getName(classType:AnyClass) -> String {
 
