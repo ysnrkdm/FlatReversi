@@ -223,7 +223,7 @@ class SimpleProofSolver: ProofSolver {
         var ret = node
         while ( ret.expanded ) {
             var value = INF;
-            var best = ProofNode(value: .Unknown, proof: 1, disproof: 1, whosTurn: .Black, boardRepresentation: BoardRepresentation(boardMediator: BoardMediator(board: ArrayBoard())), parent: nil, children: []);
+            var best = ProofNode(value: .Unknown, proof: 1, disproof: 1, whosTurn: .Black, boardRepresentation: BoardRepresentation(boardMediator: BoardMediator(board: SimpleBitBoard())), parent: nil, children: []);
             if ( nodeType(ret, attacker: attacker) == .And ) {
                 for c in ret.children {
                     if ( value > c.disproof ) {

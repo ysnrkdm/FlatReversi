@@ -10,7 +10,7 @@ import Foundation
 
 class BoardBuilder {
     internal class func build(fromText: String) -> BoardRepresentation {
-        var board = ArrayBoard()
+        var board = SimpleBitBoard()
         board.initialize(8, height: 8)
 
         var i = 0

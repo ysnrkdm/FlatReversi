@@ -9,22 +9,36 @@
 import Foundation
 
 class GameManager {
-
+    // Basic components, meaning, 2 players and board with pieces.
     private(set) var blackPlayer: Player?
     private(set) var whitePlayer: Player?
-    private(set) var hUI: HumanUserInput?
     private(set) var boardMediator: BoardMediator?
-    private var gameViewModel: GameViewModel?
-    private var evaluator: Evaluator?
+    // Managing who's turn is GameManager's job.
+    private(set) var turn: Pieces = Pieces.None
 
-    // just for show
+    // Input control from user
+    private(set) var hUI: HumanUserInput?
+
+    // GameManager <-> GameViewModel -> GameViewScene
+    // which is in MVVM context (Mode, View, View-Model).
+    // From the deifition of MVVM, only M <-> VM -> V is allowed.
+    // (allow means the stream of the data and instruction.
+    // Source of allow can call the destionaion, to pass
+    // information and instruction.
+    // Here:
+    // GameManager represents M,
+    // GameViewModel represents MV, and 
+    // GameViewScene represents V.
+    private var gameViewModel: GameViewModel?
+
+    // Just for display evaluation
+    private var evaluator: Evaluator?
     private var blackEval: Double = 0.0
     private var whiteEval: Double = 0.0
     private var debugString: String = ""
 
+    // Misc
     var challengeLevelId: Int = -1
-
-    private(set) var turn: Pieces = Pieces.None
 
     init() {
     }

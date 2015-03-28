@@ -45,7 +45,6 @@
 		8B22E2811A0280C30006E39C /* BoardBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E2801A0280C30006E39C /* BoardBuilder.swift */; };
 		8B2517A21A13B03800B700F3 /* SimpleSearchStaticEvaluationPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2517A11A13B03800B700F3 /* SimpleSearchStaticEvaluationPlayer.swift */; };
 		8B2517A41A164E9500B700F3 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2517A31A164E9500B700F3 /* Utils.swift */; };
-		8B2D2E7B1A1B719F00658B0B /* ArrayBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2D2E7A1A1B719F00658B0B /* ArrayBoard.swift */; };
 		8B4E16791A03B8B900BE87E2 /* SimpleProofSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E27A1A011CD20006E39C /* SimpleProofSolver.swift */; };
 		8B4E167A1A03B8CF00BE87E2 /* ProofSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E2781A011C550006E39C /* ProofSolver.swift */; };
 		8B4E167B1A03B8DA00BE87E2 /* BoardRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1EA19F9EE6900B5E87E /* BoardRepresentation.swift */; };
@@ -165,7 +164,6 @@
 		8B22E2801A0280C30006E39C /* BoardBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardBuilder.swift; sourceTree = "<group>"; };
 		8B2517A11A13B03800B700F3 /* SimpleSearchStaticEvaluationPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleSearchStaticEvaluationPlayer.swift; sourceTree = "<group>"; };
 		8B2517A31A164E9500B700F3 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		8B2D2E7A1A1B719F00658B0B /* ArrayBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayBoard.swift; sourceTree = "<group>"; };
 		8B4E167D1A03BB4000BE87E2 /* GameViewScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewScene.swift; sourceTree = "<group>"; };
 		8B50B0CD1A3D3EDC0057C14A /* TreeSearchWithPerturbationPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeSearchWithPerturbationPlayer.swift; sourceTree = "<group>"; };
 		8B50B0CF1A3D41480057C14A /* LeftyPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftyPlayer.swift; sourceTree = "<group>"; };
@@ -366,7 +364,6 @@
 			isa = PBXGroup;
 			children = (
 				8B74E1E819F9EE6900B5E87E /* Board.swift */,
-				8B2D2E7A1A1B719F00658B0B /* ArrayBoard.swift */,
 				8B22E2801A0280C30006E39C /* BoardBuilder.swift */,
 				8B74E1E919F9EE6900B5E87E /* BoardMediator.swift */,
 				8B1F94411A2306D1001F42D7 /* SimpleBitBoard.swift */,
@@ -392,6 +389,7 @@
 				8B2517A31A164E9500B700F3 /* Utils.swift */,
 				8B22E1C119FC80C50006E39C /* Queue.swift */,
 				8B22E27C1A0278730006E39C /* Stack.swift */,
+				8B74E1F219F9EE6900B5E87E /* Locking.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -448,7 +446,6 @@
 				8B60ED311A3B16F40062AACC /* ProofSolver */,
 				8B22E27119FE7A270006E39C /* Player */,
 				8BD84BD11A8759500085FAFA /* Game */,
-				8B74E1F219F9EE6900B5E87E /* Locking.swift */,
 				8B74E1C419F9ED9700B5E87E /* AppDelegate.swift */,
 				8B74E1C819F9ED9700B5E87E /* GameScene.swift */,
 				8B4E167D1A03BB4000BE87E2 /* GameViewScene.swift */,
@@ -650,7 +647,6 @@
 				8B1F94421A2306D1001F42D7 /* SimpleBitBoard.swift in Sources */,
 				8B1683861A404AB600C64E93 /* FasterBitBoard.swift in Sources */,
 				8B22E27B1A011CD20006E39C /* SimpleProofSolver.swift in Sources */,
-				8B2D2E7B1A1B719F00658B0B /* ArrayBoard.swift in Sources */,
 				8B15FEB01A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift in Sources */,
 				8B74E1CB19F9ED9700B5E87E /* GameViewController.swift in Sources */,
 				8B22E27319FE7A450006E39C /* ComputerPlayer.swift in Sources */,
