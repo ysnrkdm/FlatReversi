@@ -20,7 +20,7 @@ class SearchEvalPlayer: ComputerPlayer {
     var wBoardEvaluation: [Double] = [1.0]
 
     var evaluator = ClassicalEvaluator()
-    var searcher: Search = SimpleSearchTree()
+    var searcher: Search = NegaAlphaSearch()
 
     func configure(searcher: Search, zones: Zones, pnsLessThan: Int, searchDepth: Int, wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double]) {
         self.searcher = searcher

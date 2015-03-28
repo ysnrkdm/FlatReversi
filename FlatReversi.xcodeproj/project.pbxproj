@@ -11,7 +11,6 @@
 		8B07152F1A49B0230089C25B /* SearchEvalPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B07152E1A49B0230089C25B /* SearchEvalPlayer.swift */; };
 		8B0715321A4B00440089C25B /* intrinsics.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B0715301A4B00430089C25B /* intrinsics.c */; };
 		8B15FEB01A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15FEAF1A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift */; };
-		8B15FECA1A0D12B900A8C998 /* SimpleSearchTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15FEC91A0D12B900A8C998 /* SimpleSearchTree.swift */; };
 		8B1683861A404AB600C64E93 /* FasterBitBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1683851A404AB600C64E93 /* FasterBitBoard.swift */; };
 		8B1F94421A2306D1001F42D7 /* SimpleBitBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F94411A2306D1001F42D7 /* SimpleBitBoard.swift */; };
 		8B22E1BA19FAAC0C0006E39C /* LevelSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22E1B919FAAC0C0006E39C /* LevelSelectionViewController.swift */; };
@@ -101,7 +100,6 @@
 		8B0715301A4B00430089C25B /* intrinsics.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intrinsics.c; sourceTree = "<group>"; };
 		8B0715311A4B00430089C25B /* intrinsics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = intrinsics.h; sourceTree = "<group>"; };
 		8B15FEAF1A0BBB4E00A8C998 /* RandomPlayerWithPNS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomPlayerWithPNS.swift; sourceTree = "<group>"; };
-		8B15FEC91A0D12B900A8C998 /* SimpleSearchTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleSearchTree.swift; sourceTree = "<group>"; };
 		8B1683851A404AB600C64E93 /* FasterBitBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FasterBitBoard.swift; sourceTree = "<group>"; };
 		8B1F94411A2306D1001F42D7 /* SimpleBitBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleBitBoard.swift; sourceTree = "<group>"; };
 		8B22E1B919FAAC0C0006E39C /* LevelSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelSelectionViewController.swift; sourceTree = "<group>"; };
@@ -340,7 +338,6 @@
 		8B60ED281A3AF9D20062AACC /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				8B15FEC91A0D12B900A8C998 /* SimpleSearchTree.swift */,
 				8B07152A1A46AD7D0089C25B /* NegaAlphaSearch.swift */,
 				8B60ED291A3AF9F60062AACC /* Search.swift */,
 			);
@@ -622,7 +619,6 @@
 			files = (
 				8B74E1C919F9ED9700B5E87E /* GameScene.swift in Sources */,
 				8B74E1FC19F9EE6900B5E87E /* GameManager.swift in Sources */,
-				8B15FECA1A0D12B900A8C998 /* SimpleSearchTree.swift in Sources */,
 				8B22E27019FE7A110006E39C /* GreedyPlayer.swift in Sources */,
 				8B22E27719FFE1080006E39C /* ClassicalEvaluator.swift in Sources */,
 				8B50B0D41A3D78EC0057C14A /* SimpleEvaluator.swift in Sources */,

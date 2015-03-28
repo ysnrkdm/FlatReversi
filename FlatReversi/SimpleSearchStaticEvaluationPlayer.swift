@@ -21,7 +21,7 @@ class SimpleSearchStaticEvaluationPlayer: ComputerPlayer {
     var wBoardEvaluation: [Double] = [1.0]
 
     var evaluator = ClassicalEvaluator()
-    var sst = SimpleSearchTree()
+    var sst = NegaAlphaSearch()
 
     func configure(zones: Zones, pnsLessThan: Int, searchDepth: Int, wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double]) {
         self.zones = zones
