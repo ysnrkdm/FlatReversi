@@ -61,7 +61,6 @@
 		8B50B0D41A3D78EC0057C14A /* SimpleEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B50B0D31A3D78EC0057C14A /* SimpleEvaluator.swift */; };
 		8B52D3D71A61849C0051F7D2 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B52D3D61A61849C0051F7D2 /* Appearance.swift */; };
 		8B60ED2A1A3AF9F60062AACC /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B60ED291A3AF9F60062AACC /* Search.swift */; };
-		8B60ED2C1A3B058D0062AACC /* TranspositionedAlphaBetaSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B60ED2B1A3B058D0062AACC /* TranspositionedAlphaBetaSearch.swift */; };
 		8B714E1A1A4FAF87001C2D89 /* AppearanceSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714E191A4FAF86001C2D89 /* AppearanceSelectionViewController.swift */; };
 		8B74E1C519F9ED9700B5E87E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1C419F9ED9700B5E87E /* AppDelegate.swift */; };
 		8B74E1C719F9ED9700B5E87E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B74E1C619F9ED9700B5E87E /* GameScene.sks */; };
@@ -171,7 +170,6 @@
 		8B50B0D31A3D78EC0057C14A /* SimpleEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleEvaluator.swift; sourceTree = "<group>"; };
 		8B52D3D61A61849C0051F7D2 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		8B60ED291A3AF9F60062AACC /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
-		8B60ED2B1A3B058D0062AACC /* TranspositionedAlphaBetaSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranspositionedAlphaBetaSearch.swift; sourceTree = "<group>"; };
 		8B714E191A4FAF86001C2D89 /* AppearanceSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceSelectionViewController.swift; sourceTree = "<group>"; };
 		8B74E1BF19F9ED9600B5E87E /* FlatReversi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlatReversi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B74E1C319F9ED9600B5E87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -344,7 +342,6 @@
 			children = (
 				8B15FEC91A0D12B900A8C998 /* SimpleSearchTree.swift */,
 				8B07152A1A46AD7D0089C25B /* NegaAlphaSearch.swift */,
-				8B60ED2B1A3B058D0062AACC /* TranspositionedAlphaBetaSearch.swift */,
 				8B60ED291A3AF9F60062AACC /* Search.swift */,
 			);
 			name = Search;
@@ -634,7 +631,6 @@
 				8B2517A21A13B03800B700F3 /* SimpleSearchStaticEvaluationPlayer.swift in Sources */,
 				8B22E27519FFE0890006E39C /* Evaluator.swift in Sources */,
 				8B50B0CE1A3D3EDC0057C14A /* TreeSearchWithPerturbationPlayer.swift in Sources */,
-				8B60ED2C1A3B058D0062AACC /* TranspositionedAlphaBetaSearch.swift in Sources */,
 				8B2517A41A164E9500B700F3 /* Utils.swift in Sources */,
 				8B22E1C019FC75100006E39C /* Zones.swift in Sources */,
 				8B07152B1A46AD7D0089C25B /* NegaAlphaSearch.swift in Sources */,

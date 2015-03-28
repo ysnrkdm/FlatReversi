@@ -23,7 +23,7 @@ class TreeSearchWithPerturbationPlayer: ComputerPlayer {
     var randomThreshold: Double = 0.1
 
     var evaluator = ClassicalEvaluator()
-    var sst = TranspositionedAlphaBetaSearch()
+    var sst = NegaAlphaSearch()
 
     func configure(zones: Zones, pnsLessThan: Int, searchDepth: Int, wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double], randomThreshold: Double) {
         self.zones = zones

@@ -9,29 +9,29 @@
 import Foundation
 
 class GameManager {
-    // Basic components, meaning, 2 players and board with pieces.
+    /// Basic components, meaning, 2 players and board with pieces.
     private(set) var blackPlayer: Player?
     private(set) var whitePlayer: Player?
     private(set) var boardMediator: BoardMediator?
-    // Managing who's turn is GameManager's job.
+    /// Managing who's turn is GameManager's job.
     private(set) var turn: Pieces = Pieces.None
 
-    // Input control from user
+    /// Input control from user
     private(set) var hUI: HumanUserInput?
 
-    // GameManager <-> GameViewModel -> GameViewScene
-    // which is in MVVM context (Mode, View, View-Model).
-    // From the deifition of MVVM, only M <-> VM -> V is allowed.
-    // (allow means the stream of the data and instruction.
-    // Source of allow can call the destionaion, to pass
-    // information and instruction.
-    // Here:
-    // GameManager represents M,
-    // GameViewModel represents MV, and 
-    // GameViewScene represents V.
+    /// GameManager <-> GameViewModel -> GameViewScene
+    /// which is in MVVM context (Mode, View, View-Model).
+    /// From the deifition of MVVM, only M <-> VM -> V is allowed.
+    /// (allow means the stream of the data and instruction.
+    /// Source of allow can call the destionaion, to pass
+    /// information and instruction.
+    /// Here:
+    /// GameManager represents M,
+    /// GameViewModel represents MV, and
+    /// GameViewScene represents V.
     private var gameViewModel: GameViewModel?
 
-    // Just for display evaluation
+    /// Just for display evaluation
     private var evaluator: Evaluator?
     private var blackEval: Double = 0.0
     private var whiteEval: Double = 0.0
@@ -77,6 +77,11 @@ class GameManager {
         self.evaluator = ev
     }
 
+    /**
+        Challenge is the game where either of player is human, anod other play is computer.
+    
+        :return: True if it's in challenge mode, false otherwise.
+    */
     func isChallengeMode() -> Bool {
         let blackPlayerAndHuman = blackPlayer != nil && !blackPlayer!.isComputerPlayer()
         let whitePlayerAndHuman = whitePlayer != nil && !whitePlayer!.isComputerPlayer()
@@ -98,6 +103,14 @@ class GameManager {
         }
     }
 
+    /**
+        Get player object by level.
+    
+        :param: isComputer Always returns humand player if false, otherwise returns appopriate computer player.
+        :param: levelId to look up Player for the given level
+        :param: color Black/White to set to player
+        ;return: Player object for the given level
+    */
     private func getPlayerByLevel(isComputer: Bool, levelId: Int, color: Pieces) -> Player {
         var playerMediator = PlayerMediator(gameManager: self)
         if(isComputer) {
@@ -140,6 +153,14 @@ class GameManager {
         }
     }
 
+    /**
+        Put a piece on the board.
+    
+        :param: color Color of piece to put
+        :param: x x coordination
+        :param: y y coordination
+        :return: True if succeeds, false otherwise.
+    */
     func put(color: Pieces, x: Int, y: Int) -> Bool {
         if(self.boardMediator == nil || !self.boardMediator!.canPut(color, x: x, y: y)) {
             // No valid hand
