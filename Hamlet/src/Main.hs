@@ -16,10 +16,7 @@ search black white pnsLessThan searchDepth = do
 
 main :: IO ()
 main = do
-  hSetBuffering stdin NoBuffering
-  hSetBuffering stdout NoBuffering
-  putStrLn "Usage: (not implement)"
-  subs <- words <$> getLine
-  case head subs of
-    "usi" -> putStrLn "id name hamilcar\nid author ysnrkdm\nusiok" >> EdaxProtocol.commandLoop undefined
-    otherwise -> putStrLn "not implemented"
+    hSetBuffering stdin NoBuffering
+    hSetBuffering stdout NoBuffering
+    EdaxProtocol.commandLoop undefined
+    putStrLn "sdfasdf"

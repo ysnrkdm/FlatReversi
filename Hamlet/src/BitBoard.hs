@@ -24,7 +24,8 @@ instance Show Bb where
 showBitBoards :: Bb -> String
 showBitBoards bb@(Bb _ _ turn) =
     "Turn : " ++ (if turn == Piece.B then "Black" else "White") ++
-        "\r\n   A  B  C  D  F  G  H  I " ++
+    ", Empties : " ++ (show (getNumVacant bb)) ++
+        "\r\n  A B C D E F G H" ++
         showBitBoardsHelper bb puttables (8*8-1)
         where puttables = getPuttables bb turn
 
@@ -34,12 +35,12 @@ showBitBoardsHelper bb@(Bb black white turn) puttables n =
         where
             markAtN =
                 case blackBitAtN == 0 && whiteBitAtN == 0 && puttablesBitAtN == 0 of
-                    True -> " - "
+                    True -> "- "
                     False
-                        | blackBitAtN > 0 -> " O "
-                        | whiteBitAtN > 0 -> " @ "
-                        | puttablesBitAtN > 0 && turn == Piece.B -> " b "
-                        | puttablesBitAtN > 0 && turn == Piece.W -> " w "
+                        | blackBitAtN > 0 -> "O "
+                        | whiteBitAtN > 0 -> "@ "
+                        | puttablesBitAtN > 0 && turn == Piece.B -> "b "
+                        | puttablesBitAtN > 0 && turn == Piece.W -> "w "
             blackBitAtN = (black .&. (bit (63 - n)))
             whiteBitAtN = (white .&. (bit (63 - n)))
             puttablesBitAtN = (puttables .&. (bit (63 - n)))
@@ -47,8 +48,9 @@ showBitBoardsHelper bb@(Bb black white turn) puttables n =
 
 showBitBoard :: BitBoard -> String
 showBitBoard bb =
-        "   0  1  2  3  4  5  6  7 " ++
-        showBitBoardHelper bb (8*8-1)
+    "     A  B  C  D  E  F  G  H \r\n" ++
+    "     0  1  2  3  4  5  6  7 " ++
+    showBitBoardHelper bb (8*8-1)
 
 showBitBoardHelper _ (-1) = ""
 showBitBoardHelper bb n =
@@ -57,7 +59,19 @@ showBitBoardHelper bb n =
             False -> a ++ " O " ++ (showBitBoardHelper bb (n-1))
         where
             blackBitAtN = (bb .&. (bit (63 - n)))
-            a = if (mod (n+1) 8) == 0 then "\r\n" ++ (show $ 8 - (n `div` 8) - 1) ++ " " else ""
+            a = if (mod (n+1) 8) == 0 then "\r\n" ++ (show $ 8 - (n `div` 8)) ++ " " ++ (show $ 8 - (n `div` 8) - 1) ++ " " else ""
+
+fromString :: String -> Bb
+fromString str = fromStringHelper str initialBoard 0
+fromStringHelper [] bb pos = bb
+fromStringHelper (hd:rest) bb pos =
+    case hd of
+        '@' -> fromStringHelper rest (set bb (Piece.Pc Piece.W) pos) (pos+1)
+        'O' -> fromStringHelper rest (set bb (Piece.Pc Piece.B) pos) (pos+1)
+        '-' -> fromStringHelper rest bb (pos+1)
+        'b' -> fromStringHelper rest bb (pos+1)
+        'w' -> fromStringHelper rest bb (pos+1)
+        _ -> fromStringHelper rest bb pos
 
 data Mvs = Mvs {moves :: BitBoard}
 
@@ -167,12 +181,12 @@ getBitReversibles (Bb black white turn) colour position direc =
         m7 = shiftRU m6 direcInt
         rev =
             if m1 .&. attackee > 0 then
-                if      m2 .&. attackee == 0 && m2 .&. attacker > 0 then m1
-                else if m3 .&. attackee == 0 && m3 .&. attacker > 0 then m1 .|. m2
-                else if m4 .&. attackee == 0 && m4 .&. attacker > 0 then m1 .|. m2 .|. m3
-                else if m5 .&. attackee == 0 && m5 .&. attacker > 0 then m1 .|. m2 .|. m3 .|. m4
-                else if m6 .&. attackee == 0 && m6 .&. attacker > 0 then m1 .|. m2 .|. m3 .|. m4 .|. m5
-                else if                         m7 .&. attacker > 0 then m1 .|. m2 .|. m3 .|. m4 .|. m5.|. m6
+                if      m2 .&. attackee == 0 then (if m2 .&. attacker > 0 then m1 else emptyBoard)
+                else if m3 .&. attackee == 0 then (if m3 .&. attacker > 0 then m1 .|. m2 else emptyBoard)
+                else if m4 .&. attackee == 0 then (if m4 .&. attacker > 0 then m1 .|. m2 .|. m3 else emptyBoard)
+                else if m5 .&. attackee == 0 then (if m5 .&. attacker > 0 then m1 .|. m2 .|. m3 .|. m4 else emptyBoard)
+                else if m6 .&. attackee == 0 then (if m6 .&. attacker > 0 then m1 .|. m2 .|. m3 .|. m4 .|. m5 else emptyBoard)
+                else if                              m7 .&. attacker > 0 then m1 .|. m2 .|. m3 .|. m4 .|. m5.|. m6
                 else emptyBoard
             else emptyBoard
 
@@ -293,6 +307,11 @@ numPeripherals (Bb black white _) piece pos =
 
 move :: BitBoard.Bb -> Move.Mv -> BitBoard.Bb
 move bb (Move.Mv to piece) = fst $ put bb piece to
+move bb@(Bb black white turn) Move.Nil =
+    ((Bb black white (if turn == Piece.B then Piece.W else Piece.B)))
+
+moveByPos :: BitBoard.Bb -> Piece.Pos -> BitBoard.Bb
+moveByPos bb@(Bb black white turn) to = fst $ put bb (Piece.Pc turn) to
 
 takeOneFromBitBoard :: BitBoard -> Piece.Pos
 takeOneFromBitBoard bb = rank bb - 1

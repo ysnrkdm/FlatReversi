@@ -16,9 +16,12 @@ liFirst f [a, b] = [f a, b]
 liSecond :: (t -> t) -> [t] -> [t]
 liSecond f [a, b] = [a, f b]
 
+convCh :: Char -> Char -> Char -> Char
 convCh f t c = chr $ ord c - ord f + ord t
 
+atod :: Char -> Char
 atod = convCh 'a' '1'
+dtoa :: Char -> Char
 dtoa = convCh '1' 'a'
 
 --toPos (f, r) = (13 - f) + 17 * (r + 1)
@@ -34,7 +37,7 @@ width :: Int
 width = 8
 
 --posFromCoord :: (Int, Int) -> Piece.Pos
-posFromCoord (x, y) = x + y * 8
+posFromCoord (x, y) = (x - 1) + (y - 1) * 8
 
 coordFromPos = posFile &&& posRank
 
@@ -49,5 +52,5 @@ posFromNotation = posFromCoord . liTu2 . map digitToInt
 
 posFromUSI :: String -> Int
 posFromUSI = posFromNotation . liFirst atod
-posToUSI :: Int -> String
-posToUSI = liFirst dtoa . notationFromPos
+usiFromPos :: Int -> String
+usiFromPos = liFirst dtoa . notationFromPos

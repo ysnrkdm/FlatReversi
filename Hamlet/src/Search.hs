@@ -122,4 +122,8 @@ alphabeta depth = normalizeResult . maximum . maximize' . maptree (\x -> ((Eval.
 --alphabeta depth = maximum . maximize' . maptree (Eval.eval . fst) . (prune depth) . gametree
 
 normalizeResult :: (Eval.Value, Result) -> Result
-normalizeResult (value, result) = Result value (reverse $ pv result)
+normalizeResult (value, result) =
+    Result value pvs
+    where
+        pvs = if length pvFromRes > 0 then pvFromRes else [Move.Nil]
+        pvFromRes = (reverse $ pv result)
