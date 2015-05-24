@@ -28,6 +28,9 @@ import Text.Regex.Posix
 isMove :: String -> Bool
 isMove str = (length str == 2) && (str =~ "^[a-hA-H][1-8]$" :: Bool)
 
+isPass :: String -> Bool
+isPass str = (length str == 2) && (str =~ "^[Pp][Ss]$" :: Bool)
+
 commandLoop bd = do
     sfens <- getLine
     let cmds = words sfens
@@ -53,5 +56,8 @@ commandLoop bd = do
         _   | isMove $ head cmds -> do
                 putStrLn $ "\n\nYou play " ++ (head cmds)
                 commandLoop $ BitBoard.moveByPos bd (Util.posFromUSI (head cmds))
+            | isPass $ head cmds -> do
+                putStrLn $ "\n\nYou play PS"
+                commandLoop $ BitBoard.move bd Move.Nil
             | otherwise -> putStrLn ("undefined command.." ++ sfens)
     commandLoop bd -- next
