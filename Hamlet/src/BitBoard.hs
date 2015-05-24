@@ -261,6 +261,10 @@ getNumPiecesFor bb colour =
         Piece.B -> getNumPiecesBlack bb
         Piece.W -> getNumPiecesWhite bb
 
+oppositeSide :: Piece.Co -> Piece.Co
+oppositeSide Piece.B = Piece.W
+oppositeSide Piece.W = Piece.B
+
 getNumVacant :: Bb -> Int
 getNumVacant bb = 64 - getNumPiecesBlack bb - getNumPiecesWhite bb
 

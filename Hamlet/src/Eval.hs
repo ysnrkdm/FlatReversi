@@ -6,7 +6,13 @@ module Eval (
 import qualified Piece
 import qualified BitBoard
 
-type Value = Int
+type Value = Double
+
+--fv :: Int -> Va
+--fv i = (fromIntegral :: Int8 -> Int) . (fromIntegral :: Word8 -> Int8) $ BS.index fvbin i
+
+--fvbin :: BS.ByteString
+--fvbin = unsafePerformIO $ BS.readFile "./fv.bin"
 
 eval :: BitBoard.Bb -> Value
 eval board
@@ -15,23 +21,26 @@ eval board
 
 terminalValue :: BitBoard.Bb -> Value
 terminalValue board@(BitBoard.Bb black white turn)
-    | BitBoard.isTerminal board = BitBoard.getNumPiecesFor board turn
-    | otherwise = 0
+    | BitBoard.isTerminal board = fromIntegral $ (BitBoard.getNumPiecesFor board turn) - (BitBoard.getNumPiecesFor board (BitBoard.oppositeSide turn))
+    | otherwise = 0.0
 
 staticEval :: BitBoard.Bb -> Value
-staticEval board = openness board + numPieces board + possibleMoves board
+staticEval board =
+    (openness board) +
+    (numPieces board) +
+    (possibleMoves board)
 
 openness :: BitBoard.Bb -> Value
 openness board = opennessHelper board $ BitBoard.getBoardForTurn board
 
 opennessHelper :: BitBoard.Bb -> BitBoard.BitBoard -> Value
 opennessHelper board 0 = 0
-opennessHelper board bb = (BitBoard.numPeripherals board Piece.Empty pos) + (opennessHelper board newBb)
+opennessHelper board bb = (fromIntegral $ BitBoard.numPeripherals board Piece.Empty pos) + (opennessHelper board newBb)
     where
     (pos, newBb) = BitBoard.takeOneAndSetZero bb
 
 numPieces :: BitBoard.Bb -> Value
-numPieces board = BitBoard.getNumPiecesFor board (BitBoard.turn board)
+numPieces board = fromIntegral $ BitBoard.getNumPiecesFor board (BitBoard.turn board)
 
 possibleMoves :: BitBoard.Bb -> Value
-possibleMoves board = BitBoard.getNumPuttablesFor board (BitBoard.turn board)
+possibleMoves board = fromIntegral $ BitBoard.getNumPuttablesFor board (BitBoard.turn board)

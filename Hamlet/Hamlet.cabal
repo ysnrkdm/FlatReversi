@@ -6,6 +6,15 @@ cabal-version:     >= 1.2
 executable Hamlet
   main-is:          Main.hs
   hs-source-dirs:   src
+  ghc-options:      -O2 -fllvm
+  build-depends:    base,
+                    bits,
+                    regex-base,
+                    regex-posix
+
+executable HamletProf
+  main-is:          Main.hs
+  hs-source-dirs:   src
   ghc-options:      -O2 -fprof-auto -rtsopts
   build-depends:    base,
                     bits,

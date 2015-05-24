@@ -53,8 +53,5 @@ commandLoop bd = do
         _   | isMove $ head cmds -> do
                 putStrLn $ "\n\nYou play " ++ (head cmds)
                 commandLoop $ BitBoard.moveByPos bd (Util.posFromUSI (head cmds))
---                let (bd2, mvs) = readUSIPosition sfens
---                    bd3 = Board.bdDoMvs bd2 mvs
---                commandLoop bd
             | otherwise -> putStrLn ("undefined command.." ++ sfens)
     commandLoop bd -- next

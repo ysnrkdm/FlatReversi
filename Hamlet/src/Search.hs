@@ -19,7 +19,7 @@ import Debug.Trace
 
 -- type Cnt = Int
 
-data Result = Result {va :: Int, pv :: [Move.Mv]} deriving (Eq, Ord)
+data Result = Result {va :: Eval.Value, pv :: [Move.Mv]} deriving (Eq, Ord)
 instance Show Result where
     show (Result va pv) = "va: " ++ (show va) ++ ", pv : " ++ (show pv)
 
