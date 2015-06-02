@@ -18,5 +18,5 @@ main :: IO ()
 main = do
     hSetBuffering stdin NoBuffering
     hSetBuffering stdout NoBuffering
-    EdaxProtocol.commandLoop undefined
+    EdaxProtocol.commandLoop (EdaxProtocol.Search EdaxProtocol.AlphaBeta) undefined
     putStrLn "sdfasdf"

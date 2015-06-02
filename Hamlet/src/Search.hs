@@ -1,4 +1,7 @@
-module Search where
+module Search (
+    alphabeta,
+    Result(..)
+) where
 
 -- friends
 import qualified BitBoard
@@ -14,10 +17,6 @@ import Data.Function
 import Data.List
 import Data.Ord
 import Debug.Trace
-
--- type Dep = Int
-
--- type Cnt = Int
 
 data Result = Result {va :: Eval.Value, pv :: [Move.Mv]} deriving (Eq, Ord)
 instance Show Result where
@@ -119,7 +118,6 @@ lowfirst Node {node = n, childNodes = c} = Node n (sortBy (flip $ comparing node
 -- alphabeta
 alphabeta :: (Num a, Eq a) => a -> BitBoard.Bb -> Result
 alphabeta depth = normalizeResult . maximum . maximize' . maptree (\x -> ((Eval.eval . fst) x, snd x)) . (prune depth) . gametree
---alphabeta depth = maximum . maximize' . maptree (Eval.eval . fst) . (prune depth) . gametree
 
 normalizeResult :: (Eval.Value, Result) -> Result
 normalizeResult (value, result) =

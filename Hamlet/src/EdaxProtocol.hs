@@ -1,6 +1,8 @@
 module EdaxProtocol (
     commandLoop,
---    bdFromSfen
+    SearchingMethod(..),
+    LearningMethod(..),
+    Mode(..)
 ) where
 -- friends
 --import qualified Util
@@ -31,11 +33,17 @@ isMove str = (length str == 2) && (str =~ "^[a-hA-H][1-8]$" :: Bool)
 isPass :: String -> Bool
 isPass str = (length str == 2) && (str =~ "^[Pp][Ss]$" :: Bool)
 
-commandLoop bd = do
+data SearchingMethod = AlphaBeta
+data LearningMethod = TDLambda
+data Mode =
+      Search { searchingmethod :: SearchingMethod }
+    | Learn { learningmethod :: LearningMethod }
+
+commandLoop mode bd = do
     sfens <- getLine
     let cmds = words sfens
     case head cmds of
-        "init" -> putStrLn "" >> commandLoop BitBoard.initialBoard
+        "init" -> putStrLn "" >> commandLoop mode BitBoard.initialBoard
         "quit" -> exitWith $ ExitFailure 1
         "undo" -> putStrLn "undo (Not yet implemented)"
         "redo" -> putStrLn "redo (Not yet implemented)"
@@ -45,19 +53,23 @@ commandLoop bd = do
                 "0" -> putStr ""
                 _ -> putStr ""
         "go" -> do
-            let (Search.Result _ pv) = Search.alphabeta 7 bd
-            case head pv of
-                Move.Nil -> do
-                    putStrLn $ "\n\nHamlet plays PS"
-                    commandLoop $ BitBoard.move bd (head pv)
-                _ -> do
-                    putStrLn $ "\n\nHamlet plays " ++ (show $ head pv)
-                    commandLoop $ BitBoard.move bd (head pv)
+            case mode of
+                (Search searchingmethod) -> do
+                    let (Search.Result _ pv) = Search.alphabeta 7 bd
+                    case head pv of
+                        Move.Nil -> do
+                            putStrLn $ "\n\nHamlet plays PS"
+                            commandLoop mode $ BitBoard.move bd (head pv)
+                        _ -> do
+                            putStrLn $ "\n\nHamlet plays " ++ (show $ head pv)
+                            commandLoop mode $ BitBoard.move bd (head pv)
+                (Learn learningmethod) -> do
+                    putStrLn $ "Not yet supported"
         _   | isMove $ head cmds -> do
                 putStrLn $ "\n\nYou play " ++ (head cmds)
-                commandLoop $ BitBoard.moveByPos bd (Util.posFromUSI (head cmds))
+                commandLoop mode $ BitBoard.moveByPos bd (Util.posFromUSI (head cmds))
             | isPass $ head cmds -> do
                 putStrLn $ "\n\nYou play PS"
-                commandLoop $ BitBoard.move bd Move.Nil
+                commandLoop mode $ BitBoard.move bd Move.Nil
             | otherwise -> putStrLn ("undefined command.." ++ sfens)
-    commandLoop bd -- next
+    commandLoop mode bd -- next

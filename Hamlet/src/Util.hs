@@ -1,7 +1,6 @@
 module Util where
 
 import Control.Arrow
---import Data.Array
 import Data.Char
 
 tuLi2 :: (t, t) -> [t]

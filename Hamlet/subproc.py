@@ -101,7 +101,8 @@ white_won = 0
 for i in range(0,1):
     print 'Starting engines...'
     proc_a = subprocess.Popen('/Users/yoshinori/Documents/OneDrive/projects/othello/edax/4.3.2/bin/mEdax -q -l 1', shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-    proc_b = subprocess.Popen('/Users/yoshinori/Documents/OneDrive/codes/FlatReversi/Hamlet/dist/build/Hamlet/Hamlet', shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    # proc_b = subprocess.Popen('/Users/yoshinori/Documents/OneDrive/codes/FlatReversi/Hamlet/dist/build/Hamlet/Hamlet', shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    proc_b = subprocess.Popen('/Users/yoshinori/Documents/OneDrive/codes/FlatReversi/Hamlet/dist/build/HamletProf/HamletProf +RTS -p -RTS', shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     print 'Engines started. Game starting:'
 
     won = play_a_game()

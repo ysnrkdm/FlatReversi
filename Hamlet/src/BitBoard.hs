@@ -255,6 +255,18 @@ getNumPiecesBlack (Bb black _ _) = popCount black
 getNumPiecesWhite :: Bb -> Int
 getNumPiecesWhite (Bb _ white _) = popCount white
 
+getNumPiecesBlackWithMask :: Bb -> BitBoard -> Int
+getNumPiecesBlackWithMask (Bb black _ _) mask = popCount $ black .&. mask
+
+getNumPiecesWhiteWithMask :: Bb -> BitBoard -> Int
+getNumPiecesWhiteWithMask (Bb _ white _) mask = popCount $ white .&. mask
+
+getNumPiecesWithMaskFor :: Bb -> BitBoard -> Piece.Co -> Int
+getNumPiecesWithMaskFor bb mask colour =
+    case colour of
+        Piece.B -> getNumPiecesBlackWithMask bb mask
+        Piece.W -> getNumPiecesWhiteWithMask bb mask
+
 getNumPiecesFor :: Bb -> Piece.Co -> Int
 getNumPiecesFor bb colour =
     case colour of
@@ -307,7 +319,6 @@ numPeripherals (Bb black white _) piece pos =
             5 -> 0x70 -- 0b01110000
             6 -> 0xE0 -- 0b11100000
             7 -> 0xC0 -- 0b11000000
-
 
 move :: BitBoard.Bb -> Move.Mv -> BitBoard.Bb
 move bb (Move.Mv to piece) = fst $ put bb piece to
