@@ -2,6 +2,7 @@ module Util where
 
 import Control.Arrow
 import Data.Char
+import Debug.Trace
 
 tuLi2 :: (t, t) -> [t]
 tuLi2 (a, b) = [a, b]
@@ -53,3 +54,5 @@ posFromUSI :: String -> Int
 posFromUSI = posFromNotation . liFirst atod
 usiFromPos :: Int -> String
 usiFromPos = liFirst dtoa . notationFromPos
+
+debugValue v = trace (show v) v

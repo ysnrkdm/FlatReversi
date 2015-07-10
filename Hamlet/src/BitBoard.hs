@@ -62,15 +62,27 @@ showBitBoardHelper bb n =
             a = if (mod (n+1) 8) == 0 then "\r\n" ++ (show $ 8 - (n `div` 8)) ++ " " ++ (show $ 8 - (n `div` 8) - 1) ++ " " else ""
 
 fromString :: String -> Bb
-fromString str = fromStringHelper str initialBoard 0
+fromString str =
+    Bb (black obb) (white obb) turn
+    where
+        obb = fromStringHelper str initialBoard 0
+        turn =
+            case str !! 65 of
+                '@' -> Piece.W
+                '*' -> Piece.W
+                'O' -> Piece.B
+                'X' -> Piece.W
+
 fromStringHelper [] bb pos = bb
 fromStringHelper (hd:rest) bb pos =
     case hd of
         '@' -> fromStringHelper rest (set bb (Piece.Pc Piece.W) pos) (pos+1)
+        '*' -> fromStringHelper rest (set bb (Piece.Pc Piece.W) pos) (pos+1)
         'O' -> fromStringHelper rest (set bb (Piece.Pc Piece.B) pos) (pos+1)
         '-' -> fromStringHelper rest bb (pos+1)
         'b' -> fromStringHelper rest bb (pos+1)
         'w' -> fromStringHelper rest bb (pos+1)
+        'X' -> fromStringHelper rest (set bb (Piece.Pc Piece.W) pos) (pos+1)
         _ -> fromStringHelper rest bb pos
 
 data Mvs = Mvs {moves :: BitBoard}

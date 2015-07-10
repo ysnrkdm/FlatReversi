@@ -4,6 +4,9 @@ import Control.Monad
 import Data.Word
 import qualified EdaxProtocol
 
+--import qualified ProofNumberSearch
+import qualified Dfpn
+
 import Control.Applicative
 import System.IO
 
