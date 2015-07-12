@@ -46,6 +46,20 @@ executable searchBench
                     test-framework-hunit,
                     criterion
 
+executable HamletTest
+  main-is:          Main.hs
+  hs-source-dirs:   src/test,
+                    src
+  ghc-options:      -O2 -fprof-auto -fllvm
+  build-depends:    base,
+                    bits,
+                    regex-base,
+                    regex-posix,
+                    HUnit,
+                    test-framework,
+                    test-framework-hunit,
+                    criterion
+
 Test-Suite Test
   type:             exitcode-stdio-1.0
   main-is:          Main.hs

@@ -15,17 +15,12 @@ data NodeType = Or | And deriving Show
 
 data ProofResult = BlackWin | WhiteWin | Draw | None deriving Show
 
---data Proof = Proof {result :: ProofResult, pv :: Maybe [Move.Mv]} deriving Show
-
---data ProofType = Proven | Disproven | Unknown deriving (Show, Eq, Ord)
-
 data ProofDisproofNumber = LeafProven | LeafDisproven | LeafUnknown | ProofDisproofNumber {proof :: Int, disproof :: Int} deriving (Show, Eq, Ord)
 
 data Result = Result {va :: ProofDisproofNumber, pv :: [Move.Mv]} deriving (Eq, Ord)
 instance Show Result where
     show (Result va pv) = "va: " ++ (show va) ++ ", pv : " ++ (show pv)
 
-infNum :: Int
 infNum = maxBound :: Int
 
 conv :: Move.Mv -> Result -> Result
