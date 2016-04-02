@@ -6,71 +6,74 @@ cabal-version:     >= 1.2
 executable Hamlet
   main-is:          Main.hs
   hs-source-dirs:   src
---  ghc-options:      -O2 -fllvm
+  ghc-options:      -O2 -fllvm
   ghc-options:
   build-depends:    base,
                     bits,
-                    regex-base,
-                    regex-posix
-
-executable Learn
-  main-is:          Main.hs
-  hs-source-dirs:   src/learn,
-                    src
-  ghc-options:      -O2 -fllvm
-  build-depends:    base,
-                    bits,
-                    regex-base,
-                    regex-posix
-
-executable HamletProf
-  main-is:          Main.hs
-  hs-source-dirs:   src
-  ghc-options:      -O2 -fllvm -prof -fprof-auto -rtsopts
-  build-depends:    base,
-                    bits,
-                    regex-base,
-                    regex-posix
-
-executable searchBench
-  main-is:          Main.hs
-  hs-source-dirs:   src/bench,
-                    src
-  ghc-options:      -O2 -fprof-auto -fllvm
-  build-depends:    base,
-                    bits,
+                    bytestring,
                     regex-base,
                     regex-posix,
-                    HUnit,
-                    test-framework,
-                    test-framework-hunit,
-                    criterion
+                    random
 
-executable HamletTest
-  main-is:          Main.hs
-  hs-source-dirs:   src/test,
-                    src
-  ghc-options:      -O2 -fprof-auto -fllvm
-  build-depends:    base,
-                    bits,
-                    regex-base,
-                    regex-posix,
-                    HUnit,
-                    test-framework,
-                    test-framework-hunit,
-                    criterion
-
-Test-Suite Test
-  type:             exitcode-stdio-1.0
-  main-is:          Main.hs
-  hs-source-dirs:   src/test,
-                    src
-  ghc-options:      -O2 -fprof-auto -fllvm
-  build-depends:    base,
-                    bits,
-                    regex-base,
-                    regex-posix,
-                    HUnit,
-                    test-framework,
-                    test-framework-hunit,
-                    criterion
+--executable Learn
+--  main-is:          Main.hs
+--  hs-source-dirs:   src/learn,
+--                    src
+----  ghc-options:      -O2 -fllvm
+--  build-depends:    base,
+--                    bits,
+--                    regex-base,
+--                    regex-posix,
+--                    containers
+--
+--executable HamletProf
+--  main-is:          Main.hs
+--  hs-source-dirs:   src
+--  ghc-options:      -O2 -fllvm -prof -fprof-auto -rtsopts
+--  build-depends:    base,
+--                    bits,
+--                    regex-base,
+--                    regex-posix
+--
+--executable searchBench
+--  main-is:          Main.hs
+--  hs-source-dirs:   src/bench,
+--                    src
+----  ghc-options:      -O2 -fprof-auto -fllvm
+--  build-depends:    base,
+--                    bits,
+--                    regex-base,
+--                    regex-posix,
+--                    HUnit,
+--                    test-framework,
+--                    test-framework-hunit,
+--                    criterion
+--
+--executable HamletTest
+--  main-is:          Main.hs
+--  hs-source-dirs:   src/test,
+--                    src
+----  ghc-options:      -O2 -fprof-auto -fllvm
+--  build-depends:    base,
+--                    bits,
+--                    regex-base,
+--                    regex-posix,
+--                    HUnit,
+--                    test-framework,
+--                    test-framework-hunit,
+--                    criterion
+--
+--Test-Suite Test
+--  type:             exitcode-stdio-1.0
+--  main-is:          Main.hs
+--  hs-source-dirs:   src/test,
+--                    src
+--  ghc-options:      -O2 -fprof-auto -fllvm
+--  build-depends:    base,
+--                    bits,
+--                    regex-base,
+--                    regex-posix,
+--                    HUnit,
+--                    test-framework,
+--                    test-framework-hunit,
+--                    criterion

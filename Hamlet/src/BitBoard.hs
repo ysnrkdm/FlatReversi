@@ -349,3 +349,6 @@ takeOneAndSetZero bb =
     where
         mssb = takeOneFromBitBoard bb
         newBb = bb `xor` (bitwhere mssb)
+
+hashFromBitBoard :: BitBoard.Bb -> Integer
+hashFromBitBoard bb = (fromIntegral (black bb)) * 2^64 + (fromIntegral (white bb))

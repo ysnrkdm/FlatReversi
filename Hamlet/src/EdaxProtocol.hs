@@ -11,6 +11,7 @@ import qualified BitBoard
 import qualified Move
 import qualified Search
 import qualified Util
+import qualified Eval
 
 -- GHC
 
@@ -51,6 +52,7 @@ commandLoop mode bd = do
             case cmds !! 1 of
                 "1" -> (putStrLn $ show bd) >> (putStrLn "\n\n\n")
                 "0" -> putStr ""
+                "p" -> (putStrLn $ show Eval.showFv)
                 _ -> putStr ""
         "go" -> do
             case mode of
@@ -58,10 +60,10 @@ commandLoop mode bd = do
                     let (Search.Result _ pv) = Search.alphabeta 7 bd
                     case head pv of
                         Move.Nil -> do
-                            putStrLn $ "\n\nHamlet plays PS"
+                            putStrLn $ "\n\n>Hamlet plays PS"
                             commandLoop mode $ BitBoard.move bd (head pv)
                         _ -> do
-                            putStrLn $ "\n\nHamlet plays " ++ (show $ head pv)
+                            putStrLn $ "\n\n>Hamlet plays " ++ (show $ head pv)
                             commandLoop mode $ BitBoard.move bd (head pv)
                 (Learn learningmethod) -> do
                     putStrLn $ "Not yet supported"
