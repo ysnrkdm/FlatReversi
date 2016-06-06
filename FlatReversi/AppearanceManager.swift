@@ -66,7 +66,7 @@ class AppearanceManager {
     class func getColorPalette(appearance: Appearance) -> ColorPalette {
         switch appearance {
         case .LikeDarcula:
-            var darcula = ColorPalette(
+            let darcula = ColorPalette(
                 uiColorBackground: UIColor(red: 52/255, green: 54/255, blue: 56/255, alpha: 1),
                 uiColorBackground2: UIColor(red: 73/255, green: 76/255, blue: 78/255, alpha: 1),
                 uiColorTint: UIColor(red: 216/255, green: 137/255, blue: 32/255, alpha: 1),
@@ -85,7 +85,7 @@ class AppearanceManager {
             )
             return darcula
         case .WhiteGray:
-            var whitegray = ColorPalette(
+            let whitegray = ColorPalette(
                 uiColorBackground: UIColor.whiteColor(),
                 uiColorBackground2: UIColor(red: 239/255, green: 239/255, blue: 244/255, alpha: 1),
                 uiColorTint: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),
@@ -104,7 +104,7 @@ class AppearanceManager {
             )
             return whitegray
         case .Night:
-            var night = ColorPalette(
+            let night = ColorPalette(
                 uiColorBackground: UIColor(red: 50/255, green: 54/255, blue: 59/255, alpha: 1),
                 uiColorBackground2: UIColor(red: 55/255, green: 59/255, blue: 64/255, alpha: 1),
                 uiColorTint: UIColor(red: 255/255, green: 108/255, blue: 3/255, alpha: 1),
@@ -123,7 +123,7 @@ class AppearanceManager {
             )
             return night
         case .Classic:
-            var classic = ColorPalette(
+            let classic = ColorPalette(
                 uiColorBackground: UIColor.whiteColor(),
                 uiColorBackground2: UIColor(red: 239/255, green: 239/255, blue: 244/255, alpha: 1),
                 uiColorTint: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),
@@ -142,7 +142,7 @@ class AppearanceManager {
             )
             return classic
         case .ClassicDark:
-            var cdark = ColorPalette(
+            let cdark = ColorPalette(
                 uiColorBackground: UIColor(red: 50/255, green: 54/255, blue: 59/255, alpha: 1),
                 uiColorBackground2: UIColor(red: 55/255, green: 59/255, blue: 64/255, alpha: 1),
                 uiColorTint: UIColor(red: 255/255, green: 108/255, blue: 3/255, alpha: 1),
@@ -167,7 +167,7 @@ class AppearanceManager {
         UINavigationBar.appearance().tintColor = colorPalette.uiColorTint
         UINavigationBar.appearance().backgroundColor = colorPalette.uiColorBackground
         UINavigationBar.appearance().barTintColor = colorPalette.uiColorBackground
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: colorPalette.uiColorText]
+        let titleDict: [String : AnyObject] = [NSForegroundColorAttributeName: colorPalette.uiColorText]
         UINavigationBar.appearance().titleTextAttributes = titleDict
 
         UITableView.appearance().tintColor = colorPalette.uiColorTint
@@ -183,14 +183,14 @@ class AppearanceManager {
     }
 
     class func persist(appearanceToSet: Appearance) {
-        var gc = GameSettings()
+        let gc = GameSettings()
         gc.loadFromUserDefaults()
         gc.appearance = appearanceToSet
         gc.saveToUserDefaults()
     }
 
     class func loadAppearanceValue() -> Appearance {
-        var gc = GameSettings()
+        let gc = GameSettings()
         gc.loadFromUserDefaults()
 
         return gc.appearance
@@ -209,9 +209,9 @@ class AppearanceManager {
     }
 
     class func resetViews() {
-        let windows = UIApplication.sharedApplication().windows as [UIWindow]
+        let windows = UIApplication.sharedApplication().windows
         for window in windows {
-            let subviews = window.subviews as [UIView]
+            let subviews = window.subviews
             for v in subviews {
                 v.removeFromSuperview()
                 window.addSubview(v)
