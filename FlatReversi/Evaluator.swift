@@ -14,10 +14,10 @@ protocol Evaluator {
 
 class BitBoardEvaluator : Evaluator {
     func evaluate(board: BoardRepresentation, forPlayer: Pieces) -> Double {
-        assertionFailure("Implement this function by inheriting class.")
+        fatalError("Implement this function by inheriting class.")
     }
 
     func evaluateBitBoard(board: BitBoard, forPlayer: Pieces) -> Double {
-        assertionFailure("Implement this function by inheriting class.")
+        fatalError("Implement this function by inheriting class.")
     }
 }

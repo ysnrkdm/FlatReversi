@@ -20,7 +20,7 @@ class ClassicalEvaluator: BitBoardEvaluator {
 //    var boardEvalCacheBlack: Dictionary<BoardHash, Double> = Dictionary<BoardHash, Double>()
 //    var boardEvalCacheWhite: Dictionary<BoardHash, Double> = Dictionary<BoardHash, Double>()
 
-    func configure(wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double], zones: Zones) {
+    final func configure(wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double], zones: Zones) {
         self.wPossibleMoves = wPossibleMoves
         self.wEdge = wEdge
         self.wFixedPieces = wFixedPieces
@@ -29,7 +29,7 @@ class ClassicalEvaluator: BitBoardEvaluator {
         self.zones = zones
     }
 
-    override func evaluate(boardRepresentation: BoardRepresentation, forPlayer: Pieces) -> Double {
+    final override func evaluate(boardRepresentation: BoardRepresentation, forPlayer: Pieces) -> Double {
         var bitBoard = BitBoard()
 
         for iy in 0..<bitBoard.height() {
@@ -61,7 +61,7 @@ class ClassicalEvaluator: BitBoardEvaluator {
 //        }
     }
 
-    override func evaluateBitBoard(board: BitBoard, forPlayer: Pieces) -> Double {
+    final override func evaluateBitBoard(board: BitBoard, forPlayer: Pieces) -> Double {
         let ePossibleMoves = getWeightByPhase(wPossibleMoves, board: board) * Double(possibleMoves(board, forPlayer: forPlayer))
         let eEdge =
             getWeightByPhase(wEdge, board: board) * edge(board, forPlayer: forPlayer)
@@ -79,16 +79,16 @@ class ClassicalEvaluator: BitBoardEvaluator {
 
     // MARK: Factors
 
-    func possibleMoves(board: BitBoard, forPlayer: Pieces) -> Int {
+    final func possibleMoves(board: BitBoard, forPlayer: Pieces) -> Int {
         return pop(board.getPuttables(forPlayer))
     }
 
-    func edge(board: BitBoard, forPlayer: Pieces) -> Double {
+    final func edge(board: BitBoard, forPlayer: Pieces) -> Double {
         return 0.0
     }
 
     // Currently only count at edge
-    func fixedPieces(board: BitBoard, forPlayer: Pieces) -> Int {
+    final func fixedPieces(board: BitBoard, forPlayer: Pieces) -> Int {
         let H = board.height()
         let W = board.width()
 
@@ -115,7 +115,7 @@ class ClassicalEvaluator: BitBoardEvaluator {
                     }
                     tmp = 0
                 } else if board.isPieceAt(forPlayer, x: cur.0, y: cur.1) {
-                    ++tmp
+                    tmp += 1
                 }
             }
             ret += tmp
@@ -133,7 +133,7 @@ class ClassicalEvaluator: BitBoardEvaluator {
         let (cx, cy) = corner
             var ret = 0
             if board.isPieceAt(forPlayer, x: cx, y: cy) {
-                ++ret
+                ret += 1
             }
             return ret
         }
@@ -146,13 +146,13 @@ class ClassicalEvaluator: BitBoardEvaluator {
         return ret
     }
 
-    func openness(board: BitBoard, forPlayer: Pieces) -> Int {
+    final func openness(board: BitBoard, forPlayer: Pieces) -> Int {
         var ret = 0
         var bb = board.getBoardForPlayer(forPlayer)
 
         while !isEmpty(bb) {
             let move = bitScanForward(bb)
-            bb = xOrBitWhere(bb, move)
+            bb = xOrBitWhere(bb, nthBit: move)
 
             let x = move % 8
             let y = move / 8
@@ -163,14 +163,14 @@ class ClassicalEvaluator: BitBoardEvaluator {
         return ret
     }
 
-    func boardEvaluation(board: BitBoard, forPlayer: Pieces, zones: Zones) -> Double {
+    final func boardEvaluation(board: BitBoard, forPlayer: Pieces, zones: Zones) -> Double {
         var ret = 0.0
         let z = zones.zones
         var bb = board.getBoardForPlayer(forPlayer)
 
         while !isEmpty(bb) {
             let move = bitScanForward(bb)
-            bb = xOrBitWhere(bb, move)
+            bb = xOrBitWhere(bb, nthBit: move)
 
             let x = move % 8
             let y = move / 8
@@ -182,7 +182,7 @@ class ClassicalEvaluator: BitBoardEvaluator {
     }
 
     // MARK: Private functions
-    func getWeightByPhase(weight: [Double], board: BitBoard) -> Double {
+    final func getWeightByPhase(weight: [Double], board: BitBoard) -> Double {
         let perPhase: Int = 60 / weight.count
         var phase: Int = (60 - board.getNumVacant()) / perPhase
         phase = phase >= weight.count ? phase - 1 : phase
