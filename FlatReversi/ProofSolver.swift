@@ -35,7 +35,7 @@ class ProofAnswer {
     }
 
     func toString() -> String {
-        var pf = proof.toString()
+        let pf = proof.toString()
         return pf + "\(moves)"
     }
 }

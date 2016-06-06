@@ -37,7 +37,7 @@ class ProofNode {
         var current = self
         while current.parent != nil {
             current = current.parent!
-            ++ret
+            ret += 1
         }
         return ret
     }
@@ -57,16 +57,12 @@ class ProofNode {
 
     func toString() -> String {
         var ret = ""
-        var stack = Stack<ProofNode>()
+        let stack = Stack<ProofNode>()
         stack.push(self)
         while !stack.isEmpty {
             if let current = stack.pop() {
                 // Add children to stack
-                var children = current.children
-                // Sort by proofnum
-                children.sort({$0.proof < $1.proof})
-
-                for child in children {
+                for child in current.children.sort({$0.proof < $1.proof}) {
                     stack.push(child)
                 }
 
@@ -93,7 +89,7 @@ class ProofNode {
         var ret = ""
         let showBoardRep = false
         if showBoardRep {
-            ret = spaces + "\(whosTurn.toString()) \(proof) : \(pf) -- put \(put.0), \(put.1)\n\(boardRepresentation.toString())\n"
+//            ret = spaces + "\(whosTurn.toString()) \(proof) : \(pf) -- put \(put.0), \(put.1)\n\(boardRepresentation.toString())\n"
         } else {
             ret = spaces + "\(whosTurn.toString()) \(proof) : \(pf) -- put \(put.0), \(put.1)\n"
         }
@@ -113,9 +109,6 @@ class SimpleProofSolver: ProofSolver {
         let root = ProofNode(value: .Unknown, proof: 1, disproof: 1, whosTurn: forPlayer, boardRepresentation: boardRepresentation, parent: nil)
 
         pns(root)
-
-//        println("Answer : \n" + root.toString())
-
 
         if root.proof == 0 {
             var moves: [(Int, Int)] = []
@@ -146,14 +139,9 @@ class SimpleProofSolver: ProofSolver {
         var current = root
 
         while root.proof != 0 && root.disproof != 0 && resourcesAvailable() {
-//            println("in loop")
             let mostProving = selectMostProvingNode(current, attacker: root.whosTurn)
-//            println("most proving : " + mostProving.toString())
             expandNode(mostProving, attacker: root.whosTurn)
-//            println("expanded. update ancestors")
             current = updateAncestors(mostProving, root: root)
-//            println("done. next loop...")
-//            println(current.toString())
         }
     }
 
@@ -300,12 +288,8 @@ class SimpleProofSolver: ProofSolver {
             return .Undefined
         } else {
             if boardRepresentation.getNumBlack() > boardRepresentation.getNumWhite() {
-//                println("Black Win")
-//                println(boardRepresentation.toString())
                 return .BlackWin
             } else if boardRepresentation.getNumBlack() < boardRepresentation.getNumWhite() {
-//                println("White Win")
-//                println(boardRepresentation.toString())
                 return .WhiteWin
             } else {
                 return .Draw
