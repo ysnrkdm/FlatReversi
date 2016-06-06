@@ -8,6 +8,9 @@
 
 import UIKit
 
+//@_silgen_name("hs_init")
+//    func hs_init(_: UnsafeMutablePointer<Int>, _: UnsafeMutablePointer<String>)
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -16,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+//        hs_init(nil, nil);
+//        NSLog("hs_init initialized!");
         return true
     }
 
