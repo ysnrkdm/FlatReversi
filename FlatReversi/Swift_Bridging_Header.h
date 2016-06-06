@@ -9,8 +9,4 @@
 #ifndef FlatReversi_Swift_Bridging_Header_h
 #define FlatReversi_Swift_Bridging_Header_h
 
-#import "GADBannerView.h"
-#import "GADBannerViewDelegate.h"
-#import "GADRequest.h"
-
 #endif
