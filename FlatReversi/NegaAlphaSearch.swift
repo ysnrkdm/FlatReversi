@@ -31,18 +31,18 @@ class NegaAlphaSearch : Search {
         if let bitBoardClass = boardRepresentation.boardMediator.getBoard() as? FastBitBoard {
             let bitBoard = bitBoardClass.getUnsafeBitBoard()
             if let bitBoardEvaluator = evaluator as? BitBoardEvaluator {
-                var (retVal, retPv) = recSearch(depth, board: bitBoard, forPlayer: forPlayer, currentPlayer: forPlayer, alpha: -inf, beta: inf, evaluator: bitBoardEvaluator)
+                let (retVal, retPv) = recSearch(depth, board: bitBoard, forPlayer: forPlayer, currentPlayer: forPlayer, alpha: -inf, beta: inf, evaluator: bitBoardEvaluator)
                 var ret = SearchResult(value: retVal, pv: [retPv])
                 ret.nodesSearched = nodeCount
                 ret.elapsedTimeInSec = NSDate().timeIntervalSince1970 - startTimeInSec
                 return ret
             }
         }
-        assertionFailure("TranspositionedAlphaBetaSearch needs bit board")
+        fatalError("TranspositionedAlphaBetaSearch needs bit board")
     }
 
-    func recSearch(depth: Int, board: BitBoard, forPlayer: Pieces, currentPlayer: Pieces, alpha: Double, beta: Double, evaluator: BitBoardEvaluator) -> (Double, (Int, Int)) {
-        ++nodeCount
+    private func recSearch(depth: Int, board: BitBoard, forPlayer: Pieces, currentPlayer: Pieces, alpha: Double, beta: Double, evaluator: BitBoardEvaluator) -> (Double, (Int, Int)) {
+        nodeCount += 1
         if depth <= 0 || board.isTerminal() {
             var eval = evaluator.evaluateBitBoard(board, forPlayer: forPlayer)
             if forPlayer != currentPlayer {eval = -eval}
@@ -70,7 +70,7 @@ class NegaAlphaSearch : Search {
 
             while !isEmpty(puttables) {
                 let move = bitScanForward(puttables)
-                puttables = xOrBitWhere(puttables, move)
+                puttables = xOrBitWhere(puttables, nthBit: move)
 
                 let px = move % 8
                 let py = move / 8
@@ -82,17 +82,14 @@ class NegaAlphaSearch : Search {
                 val = sign * val
 
                 if val > bestValue {
-                    var d = ""
-//                    for i in 0..<totalDepth - depth { d += " " }
-//                    println("\(d)at depth \(depth), alpha \(alpha) updated by val \(val), at \(thisPv)")
                     bestValue = val
                     thisPv = (px, py)
                 }
 
                 alpha = max(alpha, val)
 
+                // cut
                 if alpha >= beta {
-                    // cut
                     break
                 }
             }
