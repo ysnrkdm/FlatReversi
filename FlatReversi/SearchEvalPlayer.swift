@@ -8,6 +8,9 @@
 
 import Foundation
 
+//@_silgen_name("search")
+//    func search(_: UInt64,_: UInt64,_: Int,_: Int) -> Int
+
 class SearchEvalPlayer: ComputerPlayer {
     var zones: Zones? = nil
     var pnsLessThan: Int = 0
@@ -40,10 +43,15 @@ class SearchEvalPlayer: ComputerPlayer {
 
     override func think() {
         NSLog("Start thinking")
+
         var retx = 0
         var rety = 0
 
         if let br = playerMediator.getBoardRepresentation() {
+            if let bitBoardClass = br.boardMediator.getBoard() as? FastBitBoard {
+                _ = bitBoardClass.getUnsafeBitBoard()
+//                search(bitBoard.black, bitBoard.white, pnsLessThan, searchDepth)
+            }
             let puttables = br.getPuttables(color)
 
             if br.getNumVacant() < pnsLessThan {

@@ -43,7 +43,7 @@ class LeftyPlayer: ComputerPlayer {
                 if let uzones = zones {
                     var coords = uzones.getTopNByRandomInPuttables(10, puttables: puttables)
                     if coords.count > 0 {
-                        coords.sort({$0.0 < $1.0})
+                        coords = coords.sort({$0.0 < $1.0})
                         (retx, rety) = coords[0]
                     }
                 }
