@@ -23,8 +23,6 @@ enum Pieces {
             return "@"
         case .None:
             return "*"
-        default:
-            return "!"
         }
     }
 }
