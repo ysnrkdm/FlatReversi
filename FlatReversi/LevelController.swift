@@ -50,6 +50,7 @@ class LevelController {
         Level(level: 15, levelId: 15, levelTitle: "Openness only search", levelDescr: ""),
         Level(level: 16, levelId: 16, levelTitle: "DepthSearcher with Perturbation", levelDescr: ""),
         Level(level: 17, levelId: 17, levelTitle: "7 Depth Static Eval Search + 10 PNS", levelDescr: ""),
+        Level(level: 18, levelId: 18, levelTitle: "9 Depth Static Eval Search + 10 PNS", levelDescr: ""),
         Level(level: 100, levelId: 1000, levelTitle: "To be added in next version...", levelDescr: ""),
     ]
 
@@ -196,6 +197,12 @@ class LevelController {
             let searcher = NegaAlphaSearch()
             let z = ZonesFactory().createZoneTypical8(99, bVal: 1.6, cVal: -5, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
             sssep.configure(searcher, zones: z, pnsLessThan: 10, searchDepth: 7, wPossibleMoves: [20.0, 15, 3.2, 1.1], wEdge: [1.0, 1.0], wFixedPieces: [2.0, 200.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0])
+            return sssep
+        case 18:
+            let sssep = SearchEvalPlayer(playerMediator: playerMediator, color: color)
+            let searcher = NegaAlphaSearch()
+            let z = ZonesFactory().createZoneTypical8(99, bVal: 1.6, cVal: -5, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
+            sssep.configure(searcher, zones: z, pnsLessThan: 10, searchDepth: 9, wPossibleMoves: [20.0, 15, 3.2, 1.1], wEdge: [1.0, 1.0], wFixedPieces: [2.0, 200.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0])
             return sssep
 
         default:

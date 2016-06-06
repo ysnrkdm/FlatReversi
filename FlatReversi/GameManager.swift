@@ -92,7 +92,6 @@ class GameManager {
     func challengeModeComputer() -> Pieces {
         if isChallengeMode() {
             let blackPlayerAndHuman = blackPlayer != nil && !blackPlayer!.isComputerPlayer()
-            let whitePlayerAndHuman = whitePlayer != nil && !whitePlayer!.isComputerPlayer()
             if blackPlayerAndHuman {
                 return Pieces.White
             } else {
@@ -112,7 +111,7 @@ class GameManager {
         ;return: Player object for the given level
     */
     private func getPlayerByLevel(isComputer: Bool, levelId: Int, color: Pieces) -> Player {
-        var playerMediator = PlayerMediator(gameManager: self)
+        let playerMediator = PlayerMediator(gameManager: self)
         if(isComputer) {
             let lc: LevelController = LevelController()
 
@@ -120,7 +119,6 @@ class GameManager {
                 return player
             } else {
                 let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
-                let z = ZonesFactory().createZoneTypical4(1, bVal: 1, cVal: 1, dVal: 1)
 
                 let computerWeakestPlayer = rcp
                 return computerWeakestPlayer
@@ -201,14 +199,14 @@ class GameManager {
                 result = Pieces.White
             }
 
-            var message = "Black \(nBlack!) vs. White \(nWhite!)"
+            let message = "Black \(nBlack!) vs. White \(nWhite!)"
             var title = ""
             var showNext = false
             var nextExists = false
             var nextLabelText = ""
             // Is it challenge mode?
             let blackPlayerAndHuman = blackPlayer != nil && !blackPlayer!.isComputerPlayer()
-            let whitePlayerAndHuman = whitePlayer != nil && !whitePlayer!.isComputerPlayer()
+//            let whitePlayerAndHuman = whitePlayer != nil && !whitePlayer!.isComputerPlayer()
             if(isChallengeMode()) {
                 let lc: LevelController = LevelController()
                 if let nextLevel = lc.getNextLevel(challengeLevelId) {
