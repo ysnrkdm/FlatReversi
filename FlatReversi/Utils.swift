@@ -8,36 +8,36 @@
 
 import Foundation
 
-func sum (var array : [Int]) -> Int {
+func sum (array : [Int]) -> Int {
     if array.isEmpty {
         return 0
     }
-    return reduce(array, array[0]) {$0 + $1}
+    return array.reduce(array[0], combine: {$0 + $1})
 }
 
-func min (var array : [Int]) -> Int {
+func min (array : [Int]) -> Int {
     if array.isEmpty {
         return Int.max
     }
-    return reduce(array, array[0]) {$0 > $1 ? $1 : $0}
+    return array.reduce(array[0], combine: {$0 > $1 ? $1 : $0})
 }
 
 func min(a: Double, b: Double) -> Double {
     return a > b ? b : a
 }
 
-func max (var array : [Int]) -> Int {
+func max (array : [Int]) -> Int {
     if array.isEmpty {
         return Int.min
     }
-    return reduce(array, array[0]) {$0 < $1 ? $1 : $0}
+    return array.reduce(array[0], combine: {$0 < $1 ? $1 : $0})
 }
 
-func max (var array : [Double]) -> Double {
+func max (array : [Double]) -> Double {
     if array.isEmpty {
         return 0.0
     }
-    return reduce(array, array[0]) {$0 < $1 ? $1 : $0}
+    return array.reduce(array[0], combine: {$0 < $1 ? $1 : $0})
 }
 
 func max(a: Double, b: Double) -> Double {
