@@ -14,16 +14,16 @@ func isEmpty(m: Moves) -> Bool {
     return m <= 0
 }
 
-let bsfMagicTable = [
-     0, 47,  1, 56, 48, 27,  2, 60,
-    57, 49, 41, 37, 28, 16,  3, 61,
-    54, 58, 35, 52, 50, 42, 21, 44,
-    38, 32, 29, 23, 17, 11,  4, 62,
-    46, 55, 26, 59, 40, 36, 15, 53,
-    34, 51, 20, 43, 31, 22, 10, 45,
-    25, 39, 14, 33, 19, 30,  9, 24,
-    13, 18,  8, 12,  7,  6,  5, 63
-]
+//let bsfMagicTable = [
+//     0, 47,  1, 56, 48, 27,  2, 60,
+//    57, 49, 41, 37, 28, 16,  3, 61,
+//    54, 58, 35, 52, 50, 42, 21, 44,
+//    38, 32, 29, 23, 17, 11,  4, 62,
+//    46, 55, 26, 59, 40, 36, 15, 53,
+//    34, 51, 20, 43, 31, 22, 10, 45,
+//    25, 39, 14, 33, 19, 30,  9, 24,
+//    13, 18,  8, 12,  7,  6,  5, 63
+//]
 
 let magic: UInt64 = 0x03f79d71b4cb0a89
 
@@ -35,8 +35,8 @@ let magic: UInt64 = 0x03f79d71b4cb0a89
 //    return bsfMagicTable[index]
 //}
 
-@asmname("_bitScanForward")
-    func _bitScanForward(UInt64) -> UInt
+@_silgen_name("_bitScanForward")
+    func _bitScanForward(_: UInt64) -> UInt
 
 func bitScanForward(board: UInt64) -> Int {
     return Int(_bitScanForward(board))
@@ -54,8 +54,8 @@ func bitWhere(x: Int, y: Int) -> UInt64 {
     return 1 << (UInt64(x) + UInt64(y) * 8)
 }
 
-@asmname("_bitPop")
-    func _bitPop(UInt64) -> UInt
+@_silgen_name("_bitPop")
+    func _bitPop(_: UInt64) -> UInt
 
 func pop(i:UInt64) -> Int {
     return Int(_bitPop(i))
@@ -90,8 +90,8 @@ struct BitBoard : Hashable, Equatable {
 
     var hashValue: Int {
         get {
-            let b = Int(black &% UInt64(Int.max))
-            let w = Int(white &% UInt64(Int.max))
+            let b = Int(black % UInt64(Int.max))
+            let w = Int(white % UInt64(Int.max))
             let hash = b &+ w &* 17
             return hash
         }
@@ -104,7 +104,7 @@ struct BitBoard : Hashable, Equatable {
         case .White:
             return white
         default:
-            assertionFailure("Please specify black or white!")
+            fatalError("Please specify black or white!")
         }
     }
 
@@ -135,7 +135,7 @@ struct BitBoard : Hashable, Equatable {
             white = white & (~bitwhere)
             guide = guide & (~bitwhere)
         default:
-            println("Do nothing \(color.toString())")
+            print("Do nothing \(color.toString())")
         }
     }
 
@@ -149,7 +149,7 @@ struct BitBoard : Hashable, Equatable {
         let whiteExists: Bool = white & bitwhere > 0
 
         if blackExists && whiteExists {
-            assertionFailure("Should not reach this code. An cell cannot be occupied by both black and white piece!")
+            fatalError("Should not reach this code. An cell cannot be occupied by both black and white piece!")
         } else if blackExists && !whiteExists {
             return .Black
         } else if !blackExists && whiteExists {
@@ -176,7 +176,7 @@ struct BitBoard : Hashable, Equatable {
             return 0x0
         }
 
-        let putAt = bitWhere(x, y)
+        let putAt = bitWhere(x, y: y)
 
         switch color {
         case .Black:
@@ -195,20 +195,20 @@ struct BitBoard : Hashable, Equatable {
     func isPieceAt(piece: Pieces, x: Int, y: Int) -> Bool {
         switch piece {
         case .Black:
-            return bitWhere(x, y) & black > 0
+            return bitWhere(x, y: y) & black > 0
         case .White:
-            return bitWhere(x, y) & white > 0
+            return bitWhere(x, y: y) & white > 0
         case .Guide:
-            return bitWhere(x, y) & guide > 0
+            return bitWhere(x, y: y) & guide > 0
         case .Empty:
-            return bitWhere(x, y) & (black | white) > 0
+            return bitWhere(x, y: y) & (black | white) > 0
         default:
             return false
         }
     }
 
     func isEmpty(x: Int, y: Int) -> Bool {
-        return (black & white) & bitWhere(x, y) > 0
+        return (black & white) & bitWhere(x, y: y) > 0
     }
 
     func isAnyPuttable(color: Pieces) -> Bool {
@@ -250,12 +250,12 @@ struct BitBoard : Hashable, Equatable {
     }
 
     func canPut(color: Pieces, x: Int, y: Int) -> Bool {
-        if (black | white) & bitWhere(x, y) > 0 {
+        if (black | white) & bitWhere(x, y: y) > 0 {
             return false
         }
 
         for direc in direcs {
-            if getBitPuttables(color, direc: direc) & bitWhere(x, y) > 0 {
+            if getBitPuttables(color, direc: direc) & bitWhere(x, y: y) > 0 {
                 return true
             }
         }
@@ -275,7 +275,7 @@ struct BitBoard : Hashable, Equatable {
         } else if direc == 9 || direc == -7 {
             mask = 0x7e7e7e7e7e7e7e7e
         } else {
-            assertionFailure("Should not reach this code!")
+            fatalError("Should not reach this code!")
         }
 
         var attacker: UInt64
@@ -289,10 +289,9 @@ struct BitBoard : Hashable, Equatable {
             attacker = white
             attackee = black & mask
         default:
-            assertionFailure("Should not reach this code!")
+            fatalError("Should not reach this code!")
         }
 
-        var rev: UInt64 = 0
         var t: UInt64 = 0
         if direc >= 0 {
             let ui64_direc: UInt64 = UInt64(direc)
@@ -314,8 +313,8 @@ struct BitBoard : Hashable, Equatable {
             t = (t << ui64_direc)
         }
 
-        var blank: UInt64 = ~(black | white)
-        var ret = blank & t
+        let blank: UInt64 = ~(black | white)
+        let ret = blank & t
         
         return ret
     }
@@ -332,7 +331,6 @@ struct BitBoard : Hashable, Equatable {
         var attacker: UInt64
         var attackee: UInt64
 
-        var pp = 0
         var mask: UInt64
 
         if direc == 1 || direc == -1 {
@@ -344,7 +342,7 @@ struct BitBoard : Hashable, Equatable {
         } else if direc == 9 || direc == -7 {
             mask = 0x7e7e7e7e7e7e7e7e
         } else {
-            assertionFailure("Should not reach this code!")
+            fatalError("Should not reach this code!")
         }
 
         switch color {
@@ -355,7 +353,7 @@ struct BitBoard : Hashable, Equatable {
             attacker = white
             attackee = black & mask
         default:
-            assertionFailure("Should not reach this code!")
+            fatalError("Should not reach this code!")
         }
 
         var m1: UInt64
@@ -485,7 +483,7 @@ struct BitBoard : Hashable, Equatable {
             assertionFailure("Should not reach this code!")
         }
 
-        let peripherals = peripherals_xs & (bitWhere(x, y) ^ 0xFFFFFFFFFFFFFFFF)
+        let peripherals = peripherals_xs & (bitWhere(x, y: y) ^ 0xFFFFFFFFFFFFFFFF)
 
         switch color {
         case .Black:
@@ -545,7 +543,7 @@ class SimpleBitBoard: FastBitBoard {
     func boardForAll(mapfun: (Pieces -> Pieces)) {
         for y in 0..<height() {
             for x in 0..<width() {
-                var p = get(x, y: y)
+                let p = get(x, y: y)
                 set(mapfun(p), x: x, y: y)
             }
         }
@@ -554,7 +552,6 @@ class SimpleBitBoard: FastBitBoard {
     func boardForAll(mapfun: ((Int, Int) -> Pieces)) {
         for y in 0..<height() {
             for x in 0..<width() {
-                var p = get(x, y: y)
                 set(mapfun(x, y), x: x, y: y)
             }
         }
@@ -568,7 +565,7 @@ class SimpleBitBoard: FastBitBoard {
 
         var ret = 0
         boardForAll({
-            (x: Int, y: Int) -> Pieces in if(self.canPut(color, x: x, y: y)) { ++ret; return Pieces.Guide } else { return self.get(x, y: y) }
+            (x: Int, y: Int) -> Pieces in if(self.canPut(color, x: x, y: y)) { ret += 1; return Pieces.Guide } else { return self.get(x, y: y) }
         })
 
         return ret
@@ -648,7 +645,7 @@ class SimpleBitBoard: FastBitBoard {
     // MARK: Utility functions
     override func clone() -> Board {
         let bb = self.bb
-        var ret = SimpleBitBoard()
+        let ret = SimpleBitBoard()
         ret.bb = bb
         ret._height = self.height()
         ret._width = self.width()
@@ -658,7 +655,7 @@ class SimpleBitBoard: FastBitBoard {
 
     override func cloneBitBoard() -> FastBitBoard {
         let bb = self.bb
-        var ret = SimpleBitBoard()
+        let ret = SimpleBitBoard()
         ret.bb = bb
         ret._height = self.height()
         ret._width = self.width()
@@ -668,10 +665,10 @@ class SimpleBitBoard: FastBitBoard {
 
     override func toString() -> String {
         var ret = ""
-        for var y = 0; y < self.height(); ++y {
-            for var x = 0; x < self.width(); ++x {
-                var p = get(x, y: y)
-                var s = p.toString()
+        for y in 0..<self.height() {
+            for x in 0..<self.width() {
+                let p = get(x, y: y)
+                let s = p.toString()
                 ret += " " + s + " "
             }
             ret += "\n"

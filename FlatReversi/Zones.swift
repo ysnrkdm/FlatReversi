@@ -17,9 +17,9 @@ class Zones {
 
     init(width: Int, height: Int, initVal: Double) {
         zones = []
-        for y in 0..<height {
+        for _ in 0..<height {
             var row: [Double] = []
-            for x in 0..<width {
+            for _ in 0..<width {
                 row += [initVal]
             }
             self.zones += [row]
@@ -36,7 +36,7 @@ class Zones {
         }
 
         // Sort by val
-        arr.sort({
+        arr = arr.sort({
             $0.0 > $1.0
         })
 
@@ -98,7 +98,7 @@ class ZonesFactory {
     }
 
     func createZoneTypical7(aVal: Double, bVal: Double, cVal: Double, dVal: Double, eVal: Double, fVal: Double, gVal: Double) -> Zones{
-        var zones: [[Double]] = [
+        let zones: [[Double]] = [
             [aVal, bVal, cVal, dVal, dVal, cVal, bVal, aVal, ],
             [bVal, cVal, eVal, fVal, eVal, eVal, cVal, bVal, ],
             [cVal, eVal, fVal, gVal, gVal, fVal, eVal, cVal, ],
@@ -114,7 +114,7 @@ class ZonesFactory {
     }
 
     func createZoneTypical8(aVal: Double, bVal: Double, cVal: Double, dVal: Double, eVal: Double, fVal: Double, gVal: Double, hVal: Double) -> Zones{
-        var zones: [[Double]] = [
+        let zones: [[Double]] = [
             [aVal, bVal, dVal, eVal, eVal, dVal, bVal, aVal, ],
             [bVal, cVal, fVal, fVal, fVal, fVal, cVal, bVal, ],
             [dVal, fVal, gVal, hVal, hVal, gVal, fVal, dVal, ],
