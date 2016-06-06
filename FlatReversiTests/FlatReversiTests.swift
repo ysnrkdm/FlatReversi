@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 
-import FlatReversi
+@testable import FlatReversi
 
 class FlatReversiTests: XCTestCase {
     
