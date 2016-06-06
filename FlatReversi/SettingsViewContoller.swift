@@ -44,12 +44,12 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
 
         cells = [
             ("Player Settings", [
-                SegmentTableCell(tableView: self.tableView, id: "blackPlayerSegment", labelText: "Black player", segmentItems: ["Human", "Computer"], selectedSegmentIndex: blackSSI, targetObject: self, targetSelector: "changeSegmentBlackPlayer:"),
-                SegmentTableCell(tableView: self.tableView, id: "whitePlayerSegment", labelText: "White player", segmentItems: ["Human", "Computer"], selectedSegmentIndex: whiteSSI, targetObject: self, targetSelector: "changeSegmentWhitePlayer:"),
+                SegmentTableCell(tableView: self.tableView, id: "blackPlayerSegment", labelText: "Black player", segmentItems: ["Human", "Computer"], selectedSegmentIndex: blackSSI, targetObject: self, targetSelector: #selector(SettingsViewController.changeSegmentBlackPlayer(_:))),
+                SegmentTableCell(tableView: self.tableView, id: "whitePlayerSegment", labelText: "White player", segmentItems: ["Human", "Computer"], selectedSegmentIndex: whiteSSI, targetObject: self, targetSelector: #selector(SettingsViewController.changeSegmentWhitePlayer(_:))),
             ]),
             ("Appearance Settings", [
-                SwitchTableCell(tableView: self.tableView, id: "", labelText: "Show Possible Moves", switchOn: gc.showPossibleMoves, targetObject: self, targetSelector: "switchShowPossibleMoves:"),
-                SwitchTableCell(tableView: self.tableView, id: "", labelText: "Show Animation", switchOn: gc.showAnimation, targetObject: self, targetSelector: "switchAnimation:"),
+                SwitchTableCell(tableView: self.tableView, id: "", labelText: "Show Possible Moves", switchOn: gc.showPossibleMoves, targetObject: self, targetSelector: #selector(SettingsViewController.switchShowPossibleMoves(_:))),
+                SwitchTableCell(tableView: self.tableView, id: "", labelText: "Show Animation", switchOn: gc.showAnimation, targetObject: self, targetSelector: #selector(SettingsViewController.switchAnimation(_:))),
                 DetailSelectorDetailTableCell(tableView: self.tableView, id: "appearance", labelText: "Appearance", detailLabeText: AppearanceManager.loadAppearanceValue().rawValue,
                     funcWhenPressed: {() in
                         NSLog("appearance pressed")
@@ -99,11 +99,11 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
         return false
     }
 
-    override func supportedInterfaceOrientations() -> Int {
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+            return UIInterfaceOrientationMask.AllButUpsideDown
         } else {
-            return Int(UIInterfaceOrientationMask.All.rawValue)
+            return UIInterfaceOrientationMask.All
         }
     }
 
@@ -123,7 +123,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "levelDetailSegue" {
-            let lsvc: LevelSelectionViewController = segue.destinationViewController as LevelSelectionViewController
+            let lsvc: LevelSelectionViewController = segue.destinationViewController as! LevelSelectionViewController
             lsvc.delegate = self
         }
     }
@@ -143,7 +143,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
         }
 
         cells![sectionIndex].1.insert(DetailSelectorTableCell(tableView: self.tableView, id: cellId, labelText: labelText,
-            {() in
+            funcWhenPressed: {() in
                 NSLog("black level pressed")
                 self.levelSelectionFor = Pieces.Black
                 self.performSegueWithIdentifier("levelDetailSegue",sender: nil)
@@ -162,7 +162,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
         }
 
         cells![sectionIndex].1.insert(DetailSelectorTableCell(tableView: self.tableView, id: cellId, labelText: labelText,
-            {() in
+            funcWhenPressed: {() in
                 NSLog("white level pressed")
                 self.levelSelectionFor = Pieces.White
                 self.performSegueWithIdentifier("levelDetailSegue",sender: nil)
@@ -210,7 +210,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
     }
 
     func changeSegmentBlackPlayer(sender: AnyObject) {
-        let sw: UISegmentedControl = sender as UISegmentedControl
+        let sw: UISegmentedControl = sender as! UISegmentedControl
         NSLog("Switched changeSegmentBlackPlayer! Status: %d", sw.selectedSegmentIndex)
         let cellId = "blackPlayerDifficultySegment"
         switch(sw.selectedSegmentIndex) {
@@ -237,7 +237,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
     }
 
     func changeSegmentWhitePlayer(sender: AnyObject) {
-        let sw: UISegmentedControl = sender as UISegmentedControl
+        let sw: UISegmentedControl = sender as! UISegmentedControl
         NSLog("Switched changeSegmentWhitePlayer! Status: %d", sw.selectedSegmentIndex)
         let cellId = "whitePlayerDifficultySegment"
         switch(sw.selectedSegmentIndex) {
@@ -280,17 +280,17 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
                         if(cell.id == id) {
                             return (sectionIndex, cellIndex)
                         }
-                        ++cellIndex
+                        cellIndex += 1
                     }
                 }
-                ++sectionIndex
+                sectionIndex += 1
             }
         }
         return (-1, -1)
     }
 
     func switchShowPossibleMoves(sender: AnyObject) {
-        let sw: UISwitch = sender as UISwitch
+        let sw: UISwitch = sender as! UISwitch
         NSLog("Switched switchShowPossibleMoves! Status: %d", sw.on)
 
         gc.showPossibleMoves = sw.on
@@ -298,7 +298,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
     }
 
     func switchAnimation(sender: AnyObject) {
-        let sw: UISwitch = sender as UISwitch
+        let sw: UISwitch = sender as! UISwitch
         NSLog("Switched switchAnimation! Status: %d", sw.on)
         gc.showAnimation = sw.on
         gc.saveToUserDefaults()
@@ -377,7 +377,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
         }
 
         func getTableViewCell() -> UITableViewCell {
-            return tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
+            return tableView.dequeueReusableCellWithIdentifier(reusableCellId)!
         }
     }
 
@@ -397,7 +397,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
         }
 
         override func getTableViewCell() -> UITableViewCell {
-            var cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
+            let cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId)!
             cell.textLabel!.text = labelText
             let items = segmentItems
             let segmentView: UISegmentedControl = UISegmentedControl(items: items)
@@ -425,7 +425,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
         }
 
         override func getTableViewCell() -> UITableViewCell {
-            let cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
+            let cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId)!
             cell.textLabel!.text = labelText
             let switchView: UISwitch = UISwitch()
             switchView.addTarget(targetObject, action: targetSelector, forControlEvents: UIControlEvents.TouchUpInside)
@@ -446,7 +446,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
         }
 
         override func getTableViewCell() -> UITableViewCell {
-            let cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
+            let cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId)!
             cell.textLabel?.text = labelText
             return cell
         }
@@ -465,7 +465,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
         }
 
         override func getTableViewCell() -> UITableViewCell {
-            let cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
+            let cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId)!
             cell.textLabel?.text = labelText
             cell.detailTextLabel?.text = detailLabeText
             cell.selectionStyle = UITableViewCellSelectionStyle.Gray

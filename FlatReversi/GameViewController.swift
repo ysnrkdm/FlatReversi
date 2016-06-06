@@ -8,16 +8,17 @@
 
 import UIKit
 import SpriteKit
-import iAd
+import GoogleMobileAds
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
-        if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
-            var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)
-            var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData!)
-            
+        if let path = NSBundle.mainBundle().pathForResource(file as String, ofType: "sks") {
+            guard let sceneData = try? NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe) else {
+                return nil
+            }
+            let archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as GameScene
+            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
             archiver.finishDecoding()
             return scene
         } else {
@@ -26,7 +27,7 @@ extension SKNode {
     }
 }
 
-class GameViewController: UIViewController, UINavigationBarDelegate, ADBannerViewDelegate, GADBannerViewDelegate {
+class GameViewController: UIViewController, UINavigationBarDelegate {
 
     @IBOutlet weak var navbarTitle: UINavigationItem!
     @IBOutlet weak var navbar: UINavigationBar!
@@ -82,18 +83,18 @@ class GameViewController: UIViewController, UINavigationBarDelegate, ADBannerVie
         }
 
         // Ad
-        var origin = CGPointMake(0.0, self.view.frame.size.height - CGSizeFromGADAdSize(kGADAdSizeBanner).height);
+        let origin = CGPointMake(0.0, self.view.frame.size.height - CGSizeFromGADAdSize(kGADAdSizeBanner).height);
         bannerView = GADBannerView(adSize: kGADAdSizeBanner, origin: origin)
         if let uBannerView = bannerView {
             uBannerView.adUnitID = "ca-app-pub-4004659206753296/7384819767"
-            uBannerView.delegate = self
+//            uBannerView.delegate = self
             uBannerView.rootViewController = self
-            self.view.addSubview(uBannerView)
+//            self.view.addSubview(uBannerView)
             uBannerView.loadRequest(GADRequest())
         }
     }
 
-    func positionForBar(bar: UIBarPositioning!) -> UIBarPosition {
+    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
         return UIBarPosition.TopAttached
     }
 
@@ -104,7 +105,7 @@ class GameViewController: UIViewController, UINavigationBarDelegate, ADBannerVie
 
         NSLog("size %f - %f", self.view.frame.width.native, navbar.frame.size.width.native)
 
-        let sView = self.view as SKView
+        let sView = self.view as! SKView
         sView.paused = false
         skView.paused = false
         currentScene?.paused = false
@@ -116,7 +117,7 @@ class GameViewController: UIViewController, UINavigationBarDelegate, ADBannerVie
     }
 
     override func viewWillDisappear(animated: Bool) {
-        let sView = self.view as SKView
+        let sView = self.view as! SKView
         currentScene?.paused = true
         sView.paused = true
         skView.paused = true
@@ -127,11 +128,11 @@ class GameViewController: UIViewController, UINavigationBarDelegate, ADBannerVie
         return false
     }
 
-    override func supportedInterfaceOrientations() -> Int {
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+            return UIInterfaceOrientationMask.AllButUpsideDown
         } else {
-            return Int(UIInterfaceOrientationMask.All.rawValue)
+            return UIInterfaceOrientationMask.All
         }
     }
 
@@ -145,7 +146,7 @@ class GameViewController: UIViewController, UINavigationBarDelegate, ADBannerVie
     }
     
     @IBAction func push(sender: AnyObject) {
-        let sView = self.view as SKView
+        let sView = self.view as! SKView
         currentScene?.paused = true
         sView.paused = true
         skView.paused = true
@@ -164,7 +165,7 @@ class GameViewController: UIViewController, UINavigationBarDelegate, ADBannerVie
     }
 
     func popupAlert(title: String, message: String, actions: [UIAlertAction]) {
-        var alertController = UIAlertController(title: title, message: message, preferredStyle: .ActionSheet)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .ActionSheet)
         for action in actions {
             alertController.addAction(action)
         }

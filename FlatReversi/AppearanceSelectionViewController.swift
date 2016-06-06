@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol AppearanceSelectionViewDelegate: class {
     func finishSelectionAppearance(appearance: Appearance)
@@ -53,11 +54,11 @@ class AppearanceSelectionViewController: UIViewController, UINavigationBarDelega
         return false
     }
 
-    override func supportedInterfaceOrientations() -> Int {
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+            return UIInterfaceOrientationMask.AllButUpsideDown
         } else {
-            return Int(UIInterfaceOrientationMask.All.rawValue)
+            return UIInterfaceOrientationMask.All
         }
     }
 
@@ -125,7 +126,7 @@ class AppearanceSelectionViewController: UIViewController, UINavigationBarDelega
         }
 
         func getTableViewCell() -> UITableViewCell {
-            return tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
+            return tableView.dequeueReusableCellWithIdentifier(reusableCellId)!
         }
     }
 
@@ -137,7 +138,7 @@ class AppearanceSelectionViewController: UIViewController, UINavigationBarDelega
         }
 
         override func getTableViewCell() -> UITableViewCell {
-            var cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
+            let cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId)!
             cell.textLabel!.text = label
             return cell
         }

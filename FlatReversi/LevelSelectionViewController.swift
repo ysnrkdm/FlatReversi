@@ -56,7 +56,7 @@ class LevelSelectionViewController: UIViewController, UINavigationBarDelegate, U
             }
         }
 
-        var lastrow = LabelTableCell(tableView: self.tableView, label: lastRowString)
+        let lastrow = LabelTableCell(tableView: self.tableView, label: lastRowString)
         lastrow.getTableViewCell()
         cells![0].1.append(lastrow)
     }
@@ -74,11 +74,11 @@ class LevelSelectionViewController: UIViewController, UINavigationBarDelegate, U
         return false
     }
 
-    override func supportedInterfaceOrientations() -> Int {
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+            return UIInterfaceOrientationMask.AllButUpsideDown
         } else {
-            return Int(UIInterfaceOrientationMask.All.rawValue)
+            return UIInterfaceOrientationMask.All
         }
     }
 
@@ -145,7 +145,7 @@ class LevelSelectionViewController: UIViewController, UINavigationBarDelegate, U
         }
 
         func getTableViewCell() -> UITableViewCell {
-            return tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
+            return tableView.dequeueReusableCellWithIdentifier(reusableCellId)!
         }
     }
 
@@ -157,7 +157,7 @@ class LevelSelectionViewController: UIViewController, UINavigationBarDelegate, U
         }
 
         override func getTableViewCell() -> UITableViewCell {
-            var cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
+            let cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId)!
             cell.textLabel!.text = label
             return cell
         }
@@ -172,7 +172,7 @@ class LevelSelectionViewController: UIViewController, UINavigationBarDelegate, U
         }
 
         override func getTableViewCell() -> UITableViewCell {
-            var cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId) as UITableViewCell
+            let cell = self.tableView.dequeueReusableCellWithIdentifier(reusableCellId)!
             cell.textLabel!.text = level.toString()
             return cell
         }
