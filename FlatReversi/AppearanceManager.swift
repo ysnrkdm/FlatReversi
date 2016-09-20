@@ -63,14 +63,14 @@ class AppearanceManager {
 //        persist(.ClassicDark)
 //    }
 
-    class func getColorPalette(appearance: Appearance) -> ColorPalette {
+    class func getColorPalette(_ appearance: Appearance) -> ColorPalette {
         switch appearance {
         case .LikeDarcula:
             let darcula = ColorPalette(
                 uiColorBackground: UIColor(red: 52/255, green: 54/255, blue: 56/255, alpha: 1),
                 uiColorBackground2: UIColor(red: 73/255, green: 76/255, blue: 78/255, alpha: 1),
                 uiColorTint: UIColor(red: 216/255, green: 137/255, blue: 32/255, alpha: 1),
-                uiColorText: UIColor.whiteColor(),
+                uiColorText: UIColor.white,
                 boardFontColor: SKColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1),
                 boardGridColor: SKColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1),
                 boardBackgroundColor: UIColor(red: 73/255, green: 76/255, blue: 78/255, alpha: 1),
@@ -81,12 +81,12 @@ class AppearanceManager {
                 boardGuidePieceFillColor: SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5),
                 boardPopupFillColor: SKColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.5),
                 boardPopupFontColor: SKColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.0),
-                uiStatusBarStyle: UIStatusBarStyle.LightContent
+                uiStatusBarStyle: UIStatusBarStyle.lightContent
             )
             return darcula
         case .WhiteGray:
             let whitegray = ColorPalette(
-                uiColorBackground: UIColor.whiteColor(),
+                uiColorBackground: UIColor.white,
                 uiColorBackground2: UIColor(red: 239/255, green: 239/255, blue: 244/255, alpha: 1),
                 uiColorTint: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),
                 uiColorText: UIColor(red: 0.05, green: 0.05, blue: 0.05, alpha: 1),
@@ -100,7 +100,7 @@ class AppearanceManager {
                 boardGuidePieceFillColor: SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5),
                 boardPopupFillColor: SKColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.5),
                 boardPopupFontColor: SKColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.0),
-                uiStatusBarStyle: UIStatusBarStyle.Default
+                uiStatusBarStyle: UIStatusBarStyle.default
             )
             return whitegray
         case .Night:
@@ -108,7 +108,7 @@ class AppearanceManager {
                 uiColorBackground: UIColor(red: 50/255, green: 54/255, blue: 59/255, alpha: 1),
                 uiColorBackground2: UIColor(red: 55/255, green: 59/255, blue: 64/255, alpha: 1),
                 uiColorTint: UIColor(red: 255/255, green: 108/255, blue: 3/255, alpha: 1),
-                uiColorText: UIColor.whiteColor(),
+                uiColorText: UIColor.white,
                 boardFontColor: SKColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1),
                 boardGridColor: SKColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1),
                 boardBackgroundColor: UIColor(red: 55/255, green: 59/255, blue: 64/255, alpha: 1),
@@ -119,12 +119,12 @@ class AppearanceManager {
                 boardGuidePieceFillColor: SKColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5),
                 boardPopupFillColor: SKColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.5),
                 boardPopupFontColor: SKColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.0),
-                uiStatusBarStyle: UIStatusBarStyle.LightContent
+                uiStatusBarStyle: UIStatusBarStyle.lightContent
             )
             return night
         case .Classic:
             let classic = ColorPalette(
-                uiColorBackground: UIColor.whiteColor(),
+                uiColorBackground: UIColor.white,
                 uiColorBackground2: UIColor(red: 239/255, green: 239/255, blue: 244/255, alpha: 1),
                 uiColorTint: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),
                 uiColorText: UIColor(red: 0.05, green: 0.05, blue: 0.05, alpha: 1),
@@ -138,7 +138,7 @@ class AppearanceManager {
                 boardGuidePieceFillColor: SKColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1),
                 boardPopupFillColor: SKColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.5),
                 boardPopupFontColor: SKColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.0),
-                uiStatusBarStyle: UIStatusBarStyle.Default
+                uiStatusBarStyle: UIStatusBarStyle.default
             )
             return classic
         case .ClassicDark:
@@ -146,7 +146,7 @@ class AppearanceManager {
                 uiColorBackground: UIColor(red: 50/255, green: 54/255, blue: 59/255, alpha: 1),
                 uiColorBackground2: UIColor(red: 55/255, green: 59/255, blue: 64/255, alpha: 1),
                 uiColorTint: UIColor(red: 255/255, green: 108/255, blue: 3/255, alpha: 1),
-                uiColorText: UIColor.whiteColor(),
+                uiColorText: UIColor.white,
                 boardFontColor: SKColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1),
                 boardGridColor: SKColor(red: 0.05, green: 0.05, blue: 0.06, alpha: 1),
                 boardBackgroundColor: SKColor(red: 0/255, green: 148/255, blue: 61/255, alpha: 1),
@@ -157,13 +157,13 @@ class AppearanceManager {
                 boardGuidePieceFillColor: SKColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1),
                 boardPopupFillColor: SKColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.5),
                 boardPopupFontColor: SKColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.0),
-                uiStatusBarStyle: UIStatusBarStyle.LightContent
+                uiStatusBarStyle: UIStatusBarStyle.lightContent
             )
             return cdark
         }
     }
 
-    class func applyColorPalette(colorPalette: ColorPalette) {
+    class func applyColorPalette(_ colorPalette: ColorPalette) {
         UINavigationBar.appearance().tintColor = colorPalette.uiColorTint
         UINavigationBar.appearance().backgroundColor = colorPalette.uiColorBackground
         UINavigationBar.appearance().barTintColor = colorPalette.uiColorBackground
@@ -177,12 +177,12 @@ class AppearanceManager {
 
         UILabel.appearance().textColor = colorPalette.uiColorText
 
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
         
         resetViews()
     }
 
-    class func persist(appearanceToSet: Appearance) {
+    class func persist(_ appearanceToSet: Appearance) {
         let gc = GameSettings()
         gc.loadFromUserDefaults()
         gc.appearance = appearanceToSet
@@ -196,9 +196,9 @@ class AppearanceManager {
         return gc.appearance
     }
 
-    class func applyAppearance(appearance: Appearance) {
+    class func applyAppearance(_ appearance: Appearance) {
         applyColorPalette(getColorPalette(appearance))
-        UIApplication.sharedApplication().setStatusBarStyle(getColorPalette(appearance).uiStatusBarStyle, animated: true)
+        UIApplication.shared.setStatusBarStyle(getColorPalette(appearance).uiStatusBarStyle, animated: true)
         persist(appearance)
     }
 
@@ -209,7 +209,7 @@ class AppearanceManager {
     }
 
     class func resetViews() {
-        let windows = UIApplication.sharedApplication().windows
+        let windows = UIApplication.shared.windows
         for window in windows {
             let subviews = window.subviews
             for v in subviews {
