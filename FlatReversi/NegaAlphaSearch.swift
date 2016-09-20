@@ -19,10 +19,10 @@ class NegaAlphaSearch : Search {
 
     let inf = 99999999.9
 
-    func search(boardRepresentation: BoardRepresentation, forPlayer: Pieces, evaluator: Evaluator, depth: Int) -> SearchResult {
+    func search(_ boardRepresentation: BoardRepresentation, forPlayer: Pieces, evaluator: Evaluator, depth: Int) -> SearchResult {
         nodeCount = 0
 
-        let date = NSDate()
+        let date = Date()
         startTimeInSec = date.timeIntervalSince1970
         timeLimitInSec = max([minTimeLimitInSec, (Double(depth) * secPerDepth)])
 
@@ -34,14 +34,14 @@ class NegaAlphaSearch : Search {
                 let (retVal, retPv) = recSearch(depth, board: bitBoard, forPlayer: forPlayer, currentPlayer: forPlayer, alpha: -inf, beta: inf, evaluator: bitBoardEvaluator)
                 var ret = SearchResult(value: retVal, pv: [retPv])
                 ret.nodesSearched = nodeCount
-                ret.elapsedTimeInSec = NSDate().timeIntervalSince1970 - startTimeInSec
+                ret.elapsedTimeInSec = Date().timeIntervalSince1970 - startTimeInSec
                 return ret
             }
         }
         fatalError("TranspositionedAlphaBetaSearch needs bit board")
     }
 
-    private func recSearch(depth: Int, board: BitBoard, forPlayer: Pieces, currentPlayer: Pieces, alpha: Double, beta: Double, evaluator: BitBoardEvaluator) -> (Double, (Int, Int)) {
+    fileprivate func recSearch(_ depth: Int, board: BitBoard, forPlayer: Pieces, currentPlayer: Pieces, alpha: Double, beta: Double, evaluator: BitBoardEvaluator) -> (Double, (Int, Int)) {
         nodeCount += 1
         if depth <= 0 || board.isTerminal() {
             var eval = evaluator.evaluateBitBoard(board, forPlayer: forPlayer)

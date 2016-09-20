@@ -62,5 +62,5 @@ typealias BoardHash = Int
 //}
 
 protocol Search {
-    func search(boardRepresentation: BoardRepresentation, forPlayer: Pieces, evaluator: Evaluator, depth: Int) -> SearchResult
+    func search(_ boardRepresentation: BoardRepresentation, forPlayer: Pieces, evaluator: Evaluator, depth: Int) -> SearchResult
 }
