@@ -15,7 +15,7 @@ class PlayerMediator {
         self.gameManager = gameManager
     }
 
-    func put(color: Pieces, x: Int, y: Int) -> Bool {
+    func put(_ color: Pieces, x: Int, y: Int) -> Bool {
         return gameManager.put(color, x: x, y: y)
     }
 

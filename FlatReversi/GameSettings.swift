@@ -27,34 +27,34 @@ class GameSettings {
     var appearance: Appearance = .WhiteGray
 
     func saveToUserDefaults() {
-        let ud = NSUserDefaults.standardUserDefaults()
-        ud.setInteger(difficultyHighestBeaten, forKey: "difficultyHighestBeaten")
+        let ud = UserDefaults.standard
+        ud.set(difficultyHighestBeaten, forKey: "difficultyHighestBeaten")
 
-        ud.setBool(blackPlayerComputer, forKey: "blackPlayerComputer")
-        ud.setInteger(blackPlayerComputerLevelId, forKey: "blackPlayerComputerLevelId")
+        ud.set(blackPlayerComputer, forKey: "blackPlayerComputer")
+        ud.set(blackPlayerComputerLevelId, forKey: "blackPlayerComputerLevelId")
 
-        ud.setBool(whitePlayerComputer, forKey: "whitePlayerComputer")
-        ud.setInteger(whitePlayerComputerLevelId, forKey: "whitePlayerComputerLevelId")
+        ud.set(whitePlayerComputer, forKey: "whitePlayerComputer")
+        ud.set(whitePlayerComputerLevelId, forKey: "whitePlayerComputerLevelId")
 
-        ud.setBool(showPossibleMoves, forKey: "showPossibleMoves")
-        ud.setBool(showAnimation, forKey: "showAnimation")
-        ud.setObject(appearance.rawValue, forKey: "appearance")
+        ud.set(showPossibleMoves, forKey: "showPossibleMoves")
+        ud.set(showAnimation, forKey: "showAnimation")
+        ud.set(appearance.rawValue, forKey: "appearance")
     }
 
     func loadFromUserDefaults() {
-        let ud = NSUserDefaults.standardUserDefaults()
-        difficultyHighestBeaten = ud.integerForKey("difficultyHighestBeaten")
+        let ud = UserDefaults.standard
+        difficultyHighestBeaten = ud.integer(forKey: "difficultyHighestBeaten")
 
-        blackPlayerComputer = ud.boolForKey("blackPlayerComputer")
-        blackPlayerComputerLevelId = ud.integerForKey("blackPlayerComputerLevelId")
+        blackPlayerComputer = ud.bool(forKey: "blackPlayerComputer")
+        blackPlayerComputerLevelId = ud.integer(forKey: "blackPlayerComputerLevelId")
 
-        whitePlayerComputer = ud.boolForKey("whitePlayerComputer")
-        whitePlayerComputerLevelId = ud.integerForKey("whitePlayerComputerLevelId")
+        whitePlayerComputer = ud.bool(forKey: "whitePlayerComputer")
+        whitePlayerComputerLevelId = ud.integer(forKey: "whitePlayerComputerLevelId")
 
-        showPossibleMoves = ud.boolForKey("showPossibleMoves")
-        showAnimation = ud.boolForKey("showAnimation")
+        showPossibleMoves = ud.bool(forKey: "showPossibleMoves")
+        showAnimation = ud.bool(forKey: "showAnimation")
 
-        if let appeIdFromUd = ud.stringForKey("appearance") {
+        if let appeIdFromUd = ud.string(forKey: "appearance") {
             if let appeFromUd = Appearance(rawValue: appeIdFromUd) {
                 appearance = appeFromUd
             } else {

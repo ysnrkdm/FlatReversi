@@ -54,7 +54,7 @@ class LevelController {
         Level(level: 100, levelId: 1000, levelTitle: "To be added in next version...", levelDescr: ""),
     ]
 
-    func getLevels(considerDifficultyHighestBeaten: Bool) -> [Level] {
+    func getLevels(_ considerDifficultyHighestBeaten: Bool) -> [Level] {
         let gs: GameSettings = GameSettings()
         gs.loadFromUserDefaults()
 
@@ -74,7 +74,7 @@ class LevelController {
         }
     }
 
-    func getLevelByLevelId(levelId: Int) -> Level? {
+    func getLevelByLevelId(_ levelId: Int) -> Level? {
         for level in levels {
             if level.levelId == levelId {
                 return level
@@ -83,7 +83,7 @@ class LevelController {
         return nil
     }
 
-    func getLevelIdByLevel(level: Int) -> [Int] {
+    func getLevelIdByLevel(_ level: Int) -> [Int] {
         var ret: [Int] = []
         for lv in levels {
             if level == lv.level {
@@ -93,23 +93,23 @@ class LevelController {
         return ret
     }
 
-    func isAchievementAI(level: Level) -> Bool {
+    func isAchievementAI(_ level: Level) -> Bool {
         return isAchievementAILevelId(level.levelId)
     }
 
-    func isAchievementAILevelId(levelId: Int) -> Bool {
+    func isAchievementAILevelId(_ levelId: Int) -> Bool {
         return levelId > 1000
     }
 
-    func isNullAI(level: Level) -> Bool {
+    func isNullAI(_ level: Level) -> Bool {
         return isNullAILevelId(level.levelId)
     }
 
-    func isNullAILevelId(levelId: Int) -> Bool {
+    func isNullAILevelId(_ levelId: Int) -> Bool {
         return levelId == 0 || levelId == 1000
     }
 
-    func getPlayerByLevelId(levelId: Int, playerMediator: PlayerMediator, color: Pieces) -> Player? {
+    func getPlayerByLevelId(_ levelId: Int, playerMediator: PlayerMediator, color: Pieces) -> Player? {
         switch(levelId) {
         case 1:
             let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
@@ -214,14 +214,14 @@ class LevelController {
 //        return nil
 //    }
 
-    func getName(classType:AnyClass) -> String {
+    func getName(_ classType:AnyClass) -> String {
 
-        let classString = NSStringFromClass(classType.self)
-        let range = classString.rangeOfString(".", options: NSStringCompareOptions.CaseInsensitiveSearch, range: Range<String.Index>(start:classString.startIndex, end: classString.endIndex), locale: nil)
-        return classString.substringFromIndex(range!.endIndex)
+        //let classString = NSStringFromClass(classType.self)
+        //let range = classString.range(of: ".", options: NSString.CompareOptions.caseInsensitive, range: (classString.characters.indices), locale: nil)
+        return "";//classString.substring(from: range!.upperBound)
     }
 
-    func getNextLevelId(levelId: Int) -> Int {
+    func getNextLevelId(_ levelId: Int) -> Int {
         if isNullAILevelId(levelId) || isAchievementAILevelId(levelId) {
             return -1
         } else {
@@ -235,7 +235,7 @@ class LevelController {
         return -1
     }
 
-    func getNextLevel(levelId: Int) -> Level? {
+    func getNextLevel(_ levelId: Int) -> Level? {
         let nextLevelId = getNextLevelId(levelId)
         if nextLevelId > 0 {
             return getLevelByLevelId(nextLevelId)

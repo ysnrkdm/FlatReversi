@@ -15,7 +15,7 @@ class HumanUserInput {
         self.gameManager = gameManager
     }
 
-    func put(x: Int, y: Int) -> Bool {
+    func put(_ x: Int, y: Int) -> Bool {
         return gameManager.doHumanPut(x, y: y)
     }
 }

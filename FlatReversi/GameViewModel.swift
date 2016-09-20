@@ -17,7 +17,7 @@ class GameViewModel {
         self.gameManager = gameManager
     }
 
-    func update(changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double, debugString: String) {
+    func update(_ changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double, debugString: String) {
         // from GameManager
         // to GameScene
         view.updateView(gameManager.boardMediator!, changes: changes, put: put, showPuttables: showPuttables, showAnimation: showAnimation, blackEval: blackEval, whiteEval: whiteEval, debugString: debugString)
@@ -27,7 +27,7 @@ class GameViewModel {
         view.showPasses()
     }
 
-    func showGameOver(title:String, message: String, showNext: Bool, nextLabel: String) {
+    func showGameOver(_ title:String, message: String, showNext: Bool, nextLabel: String) {
         view.showGameOver(title, message: message, showNext: showNext, nextLabel: nextLabel)
     }
 

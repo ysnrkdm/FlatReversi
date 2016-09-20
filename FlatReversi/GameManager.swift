@@ -7,17 +7,37 @@
 //
 
 import Foundation
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class GameManager {
     /// Basic components, meaning, 2 players and board with pieces.
-    private(set) var blackPlayer: Player?
-    private(set) var whitePlayer: Player?
-    private(set) var boardMediator: BoardMediator?
+    fileprivate(set) var blackPlayer: Player?
+    fileprivate(set) var whitePlayer: Player?
+    fileprivate(set) var boardMediator: BoardMediator?
     /// Managing who's turn is GameManager's job.
-    private(set) var turn: Pieces = Pieces.None
+    fileprivate(set) var turn: Pieces = Pieces.none
 
     /// Input control from user
-    private(set) var hUI: HumanUserInput?
+    fileprivate(set) var hUI: HumanUserInput?
 
     /// GameManager <-> GameViewModel -> GameViewScene
     /// which is in MVVM context (Mode, View, View-Model).
@@ -29,13 +49,13 @@ class GameManager {
     /// GameManager represents M,
     /// GameViewModel represents MV, and
     /// GameViewScene represents V.
-    private var gameViewModel: GameViewModel?
+    fileprivate var gameViewModel: GameViewModel?
 
     /// Just for display evaluation
-    private var evaluator: Evaluator?
-    private var blackEval: Double = 0.0
-    private var whiteEval: Double = 0.0
-    private var debugString: String = ""
+    fileprivate var evaluator: Evaluator?
+    fileprivate var blackEval: Double = 0.0
+    fileprivate var whiteEval: Double = 0.0
+    fileprivate var debugString: String = ""
 
     // Misc
     var challengeLevelId: Int = -1
@@ -43,9 +63,9 @@ class GameManager {
     init() {
     }
 
-    func initialize(gameViewModel: GameViewModel, gameSettings: GameSettings) {
-        blackPlayer = getPlayerByLevel(gameSettings.blackPlayerComputer, levelId: gameSettings.blackPlayerComputerLevelId, color: Pieces.Black)
-        whitePlayer = getPlayerByLevel(gameSettings.whitePlayerComputer, levelId: gameSettings.whitePlayerComputerLevelId, color: Pieces.White)
+    func initialize(_ gameViewModel: GameViewModel, gameSettings: GameSettings) {
+        blackPlayer = getPlayerByLevel(gameSettings.blackPlayerComputer, levelId: gameSettings.blackPlayerComputerLevelId, color: Pieces.black)
+        whitePlayer = getPlayerByLevel(gameSettings.whitePlayerComputer, levelId: gameSettings.whitePlayerComputerLevelId, color: Pieces.white)
 
         hUI = HumanUserInput(gameManager: self)
 
@@ -59,12 +79,12 @@ class GameManager {
         blackPlayer?.initialize(gameSettings.blackPlayerComputerLevelId)
         whitePlayer?.initialize(gameSettings.whitePlayerComputerLevelId)
 
-        turn = Pieces.Black
+        turn = Pieces.black
 
         switch (challengeModeComputer()) {
-        case Pieces.Black:
+        case Pieces.black:
             challengeLevelId = gameSettings.blackPlayerComputerLevelId
-        case Pieces.White:
+        case Pieces.white:
             challengeLevelId = gameSettings.whitePlayerComputerLevelId
         default:
             NSLog("Not challenge mode")
@@ -93,12 +113,12 @@ class GameManager {
         if isChallengeMode() {
             let blackPlayerAndHuman = blackPlayer != nil && !blackPlayer!.isComputerPlayer()
             if blackPlayerAndHuman {
-                return Pieces.White
+                return Pieces.white
             } else {
-                return Pieces.Black
+                return Pieces.black
             }
         } else {
-            return Pieces.None
+            return Pieces.none
         }
     }
 
@@ -110,7 +130,7 @@ class GameManager {
         :param: color Black/White to set to player
         ;return: Player object for the given level
     */
-    private func getPlayerByLevel(isComputer: Bool, levelId: Int, color: Pieces) -> Player {
+    fileprivate func getPlayerByLevel(_ isComputer: Bool, levelId: Int, color: Pieces) -> Player {
         let playerMediator = PlayerMediator(gameManager: self)
         if(isComputer) {
             let lc: LevelController = LevelController()
@@ -140,10 +160,10 @@ class GameManager {
         NSLog("Game start -- now \(turn.toString()) s turn. Eval is \(eval!)")
         // Start
         switch (self.turn) {
-        case Pieces.Black:
+        case Pieces.black:
             blackEval = eval!
             blackPlayer?.play()
-        case Pieces.White:
+        case Pieces.white:
             whiteEval = eval!
             whitePlayer?.play()
         default:
@@ -159,7 +179,7 @@ class GameManager {
         :param: y y coordination
         :return: True if succeeds, false otherwise.
     */
-    func put(color: Pieces, x: Int, y: Int) -> Bool {
+    func put(_ color: Pieces, x: Int, y: Int) -> Bool {
         if(self.boardMediator == nil || !self.boardMediator!.canPut(color, x: x, y: y)) {
             // No valid hand
             // If returned false, not going to next turn
@@ -177,7 +197,7 @@ class GameManager {
         if let unwrappedChanges = changes {
             if let gvm = gameViewModel {
                 while(!gvm.isUpdateBoardViewQueueEmpty()) {
-                    NSThread.sleepForTimeInterval(5/1000)
+                    Thread.sleep(forTimeInterval: 5/1000)
                 }
                 gvm.update(unwrappedChanges, put: [(x, y)], showPuttables: showPuttables, showAnimation: gs.showAnimation, blackEval: blackEval, whiteEval: whiteEval, debugString: debugString)
             }
@@ -190,13 +210,13 @@ class GameManager {
             // Which side is won?
             let nBlack = boardMediator?.getNumBlack()
             let nWhite = boardMediator?.getNumWhite()
-            var result = Pieces.None
+            var result = Pieces.none
             if(nBlack == nWhite) {
-                result = Pieces.None
+                result = Pieces.none
             } else if (nBlack > nWhite) {
-                result = Pieces.Black
+                result = Pieces.black
             } else {
-                result = Pieces.White
+                result = Pieces.white
             }
 
             let message = "Black \(nBlack!) vs. White \(nWhite!)"
@@ -215,9 +235,9 @@ class GameManager {
                 }
                 // If challenge mode, human won
                 switch(result) {
-                case Pieces.None:
+                case Pieces.none:
                     title = "Draw."
-                case Pieces.Black:
+                case Pieces.black:
                     if(blackPlayerAndHuman) {
                         title = "You won."
                         openNextLevel()
@@ -225,7 +245,7 @@ class GameManager {
                     } else {
                         title = "You lose."
                     }
-                case Pieces.White:
+                case Pieces.white:
                     if(blackPlayerAndHuman) {
                         title = "You lose."
                     } else {
@@ -238,11 +258,11 @@ class GameManager {
                 }
             } else {
                 switch(result) {
-                case Pieces.Black:
+                case Pieces.black:
                     title = "Black won."
-                case Pieces.White:
+                case Pieces.white:
                     title = "White won."
-                case Pieces.None:
+                case Pieces.none:
                     title = "Draw."
                 default:
                     assertionFailure("Should not reach this code!")
@@ -280,7 +300,7 @@ class GameManager {
         return false
     }
 
-    private func openNextLevel() {
+    fileprivate func openNextLevel() {
         let lc: LevelController = LevelController()
         let nextChallengeLevel = lc.getNextLevel(challengeLevelId)
         if let uNCL = nextChallengeLevel {
@@ -291,7 +311,7 @@ class GameManager {
         }
     }
 
-    private func isCurrentTurnDoablePut() -> Bool {
+    fileprivate func isCurrentTurnDoablePut() -> Bool {
         if let unwrappedBoardMediator = boardMediator {
             // If can puttable position is more than 0, doable action
             let puttablesFromCurrentTurn = unwrappedBoardMediator.getPuttables(turn)
@@ -314,16 +334,16 @@ class GameManager {
         return hUI
     }
 
-    func doHumanPut(x: Int, y: Int) -> Bool {
+    func doHumanPut(_ x: Int, y: Int) -> Bool {
         if(!isCurrentTurnHuman()) {
             NSLog("Not human turn currently. Ignoring")
             return false
         }
 
         switch (turn) {
-        case .Black:
+        case .black:
             blackPlayer?.put(x, y: y)
-        case .White:
+        case .white:
             whitePlayer?.put(x, y: y)
         default:
             // Game not yet started
@@ -344,27 +364,27 @@ class GameManager {
         return isHumanTurn(self.turn)
     }
 
-    func isHumanTurn(turn: Pieces) -> Bool {
-        let blackPlayerAndHuman = turn == Pieces.Black && blackPlayer != nil && !blackPlayer!.isComputerPlayer()
-        let whitePlayerAndHuman = turn == Pieces.White && whitePlayer != nil && !whitePlayer!.isComputerPlayer()
+    func isHumanTurn(_ turn: Pieces) -> Bool {
+        let blackPlayerAndHuman = turn == Pieces.black && blackPlayer != nil && !blackPlayer!.isComputerPlayer()
+        let whitePlayerAndHuman = turn == Pieces.white && whitePlayer != nil && !whitePlayer!.isComputerPlayer()
         return (blackPlayerAndHuman) || (whitePlayerAndHuman)
     }
 
-    func setDebugString(string: String) {
+    func setDebugString(_ string: String) {
         self.debugString = string
     }
 
-    private func nextTurn(color: Pieces) -> Pieces {
-        var s : Pieces = .Black
+    fileprivate func nextTurn(_ color: Pieces) -> Pieces {
+        var s : Pieces = .black
         switch color {
-        case .Black:
-            s = .White
-        case .White:
-            s = .Black
-        case .None:
-            s = .Black
+        case .black:
+            s = .white
+        case .white:
+            s = .black
+        case .none:
+            s = .black
         default:
-            s = .Black
+            s = .black
         }
         return s
     }
