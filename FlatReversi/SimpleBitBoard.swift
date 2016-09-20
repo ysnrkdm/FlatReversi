@@ -10,7 +10,7 @@ import Foundation
 
 typealias Moves = UInt64
 
-func isEmpty(m: Moves) -> Bool {
+func isEmpty(_ m: Moves) -> Bool {
     return m <= 0
 }
 
@@ -38,30 +38,30 @@ let magic: UInt64 = 0x03f79d71b4cb0a89
 @_silgen_name("_bitScanForward")
     func _bitScanForward(_: UInt64) -> UInt
 
-func bitScanForward(board: UInt64) -> Int {
+func bitScanForward(_ board: UInt64) -> Int {
     return Int(_bitScanForward(board))
 }
 
-func xOrBitWhere(b: Moves, nthBit: Int) -> UInt64 {
+func xOrBitWhere(_ b: Moves, nthBit: Int) -> UInt64 {
     return b ^ bitWhere(nthBit)
 }
 
-func bitWhere(x: Int) -> UInt64 {
+func bitWhere(_ x: Int) -> UInt64 {
     return 1 << UInt64(x)
 }
 
-func bitWhere(x: Int, y: Int) -> UInt64 {
+func bitWhere(_ x: Int, y: Int) -> UInt64 {
     return 1 << (UInt64(x) + UInt64(y) * 8)
 }
 
 @_silgen_name("_bitPop")
     func _bitPop(_: UInt64) -> UInt
 
-func pop(i:UInt64) -> Int {
+func pop(_ i:UInt64) -> Int {
     return Int(_bitPop(i))
 }
 
-func stringFromBitBoard(x: UInt64) -> String {
+func stringFromBitBoard(_ x: UInt64) -> String {
     var ret = ""
     for iy in 0..<8 {
         for ix in 0..<8 {
@@ -97,11 +97,11 @@ struct BitBoard : Hashable, Equatable {
         }
     }
 
-    func getBoardForPlayer(forPlayer: Pieces) -> UInt64 {
+    func getBoardForPlayer(_ forPlayer: Pieces) -> UInt64 {
         switch forPlayer {
-        case .Black:
+        case .black:
             return black
-        case .White:
+        case .white:
             return white
         default:
             fatalError("Please specify black or white!")
@@ -115,22 +115,22 @@ struct BitBoard : Hashable, Equatable {
         return 8
     }
 
-    func withinBoard(x: Int, y: Int) -> Bool {
+    func withinBoard(_ x: Int, y: Int) -> Bool {
         return (0 <= x && x < height() && 0 <= y && y < width())
     }
 
-    mutating func set(color: Pieces, x: Int, y: Int) {
+    mutating func set(_ color: Pieces, x: Int, y: Int) {
         let bitwhere: UInt64 = 1 << (UInt64(x) + UInt64(y) * 8)
         switch color {
-        case .Black:
+        case .black:
             black = black | bitwhere
             white = white & (~bitwhere)
-        case .White:
+        case .white:
             white = white | bitwhere
             black = black & (~bitwhere)
-        case .Guide:
+        case .guide:
             guide = guide | bitwhere
-        case .Empty:
+        case .empty:
             black = black & (~bitwhere)
             white = white & (~bitwhere)
             guide = guide & (~bitwhere)
@@ -139,9 +139,9 @@ struct BitBoard : Hashable, Equatable {
         }
     }
 
-    func get(x: Int, y: Int) -> Pieces {
+    func get(_ x: Int, y: Int) -> Pieces {
         if !withinBoard(x, y: y) {
-            return .None
+            return .none
         }
 
         let bitwhere: UInt64 = 1 << (UInt64(x) + UInt64(y) * 8)
@@ -151,17 +151,17 @@ struct BitBoard : Hashable, Equatable {
         if blackExists && whiteExists {
             fatalError("Should not reach this code. An cell cannot be occupied by both black and white piece!")
         } else if blackExists && !whiteExists {
-            return .Black
+            return .black
         } else if !blackExists && whiteExists {
-            return .White
+            return .white
         } else if guide & bitwhere > 0 {
-            return .Guide
+            return .guide
         } else {
-            return .Empty
+            return .empty
         }
     }
 
-    mutating func put(color: Pieces, x: Int, y: Int, guides: Bool) -> Moves {
+    mutating func put(_ color: Pieces, x: Int, y: Int, guides: Bool) -> Moves {
         if !withinBoard(x, y: y) {
             return 0x0
         }
@@ -179,10 +179,10 @@ struct BitBoard : Hashable, Equatable {
         let putAt = bitWhere(x, y: y)
 
         switch color {
-        case .Black:
+        case .black:
             black = black ^ (putAt | r)
             white = white ^ r
-        case .White:
+        case .white:
             black = black ^ r
             white = white ^ (putAt | r)
         default:
@@ -192,26 +192,26 @@ struct BitBoard : Hashable, Equatable {
         return r
     }
 
-    func isPieceAt(piece: Pieces, x: Int, y: Int) -> Bool {
+    func isPieceAt(_ piece: Pieces, x: Int, y: Int) -> Bool {
         switch piece {
-        case .Black:
+        case .black:
             return bitWhere(x, y: y) & black > 0
-        case .White:
+        case .white:
             return bitWhere(x, y: y) & white > 0
-        case .Guide:
+        case .guide:
             return bitWhere(x, y: y) & guide > 0
-        case .Empty:
+        case .empty:
             return bitWhere(x, y: y) & (black | white) > 0
         default:
             return false
         }
     }
 
-    func isEmpty(x: Int, y: Int) -> Bool {
+    func isEmpty(_ x: Int, y: Int) -> Bool {
         return (black & white) & bitWhere(x, y: y) > 0
     }
 
-    func isAnyPuttable(color: Pieces) -> Bool {
+    func isAnyPuttable(_ color: Pieces) -> Bool {
         for direc in direcs {
             if getBitPuttables(color, direc: direc) > 0 {
                 return true
@@ -238,18 +238,18 @@ struct BitBoard : Hashable, Equatable {
             return true
         }
 
-        if isAnyPuttable(.Black) {
+        if isAnyPuttable(.black) {
             return false
         }
 
-        if isAnyPuttable(.White) {
+        if isAnyPuttable(.white) {
             return false
         }
 
         return true
     }
 
-    func canPut(color: Pieces, x: Int, y: Int) -> Bool {
+    func canPut(_ color: Pieces, x: Int, y: Int) -> Bool {
         if (black | white) & bitWhere(x, y: y) > 0 {
             return false
         }
@@ -263,7 +263,7 @@ struct BitBoard : Hashable, Equatable {
         return false
     }
 
-    func getBitPuttables(color: Pieces, direc: Int) -> UInt64 {
+    func getBitPuttables(_ color: Pieces, direc: Int) -> UInt64 {
         var mask: UInt64
 
         if direc == 1 || direc == -1 {
@@ -282,10 +282,10 @@ struct BitBoard : Hashable, Equatable {
         var attackee: UInt64
 
         switch color {
-        case .Black:
+        case .black:
             attacker = black
             attackee = white & mask
-        case .White:
+        case .white:
             attacker = white
             attackee = black & mask
         default:
@@ -319,7 +319,7 @@ struct BitBoard : Hashable, Equatable {
         return ret
     }
 
-    func getPuttables(color: Pieces) -> Moves {
+    func getPuttables(_ color: Pieces) -> Moves {
         var r: UInt64 = 0
         for direc in direcs {
             r |= getBitPuttables(color, direc: direc)
@@ -327,7 +327,7 @@ struct BitBoard : Hashable, Equatable {
         return r
     }
 
-    func getBitReversible(color: Pieces, x: Int, y: Int, direc: Int) -> UInt64 {
+    func getBitReversible(_ color: Pieces, x: Int, y: Int, direc: Int) -> UInt64 {
         var attacker: UInt64
         var attackee: UInt64
 
@@ -346,10 +346,10 @@ struct BitBoard : Hashable, Equatable {
         }
 
         switch color {
-        case .Black:
+        case .black:
             attacker = black
             attackee = white & mask
-        case .White:
+        case .white:
             attacker = white
             attackee = black & mask
         default:
@@ -420,7 +420,7 @@ struct BitBoard : Hashable, Equatable {
         return rev
     }
 
-    func getReversible(color: Pieces, x: Int, y: Int) -> Moves {
+    func getReversible(_ color: Pieces, x: Int, y: Int) -> Moves {
         var r: UInt64 = 0
         for direc in direcs {
             let pd = getBitReversible(color, x: x, y: y, direc: direc)
@@ -430,7 +430,7 @@ struct BitBoard : Hashable, Equatable {
         return r
     }
 
-    func numPeripherals(color: Pieces, x: Int, y: Int) -> Int {
+    func numPeripherals(_ color: Pieces, x: Int, y: Int) -> Int {
         var peripherals_x: UInt64 = 0
         var peripherals_xs : UInt64 = 0
         switch x {
@@ -486,11 +486,11 @@ struct BitBoard : Hashable, Equatable {
         let peripherals = peripherals_xs & (bitWhere(x, y: y) ^ 0xFFFFFFFFFFFFFFFF)
 
         switch color {
-        case .Black:
+        case .black:
             return pop(black & peripherals)
-        case .White:
+        case .white:
             return pop(white & peripherals)
-        case .Empty:
+        case .empty:
             let empty_cells = (black | white) ^ 0xFFFFFFFFFFFFFFFF
             return pop(empty_cells & peripherals)
         default:
@@ -524,23 +524,23 @@ class SimpleBitBoard: FastBitBoard {
         return _width
     }
 
-    override func initialize(width: Int, height: Int) {
+    override func initialize(_ width: Int, height: Int) {
         // ignors width and height
     }
 
-    override func withinBoard(x: Int, y: Int) -> Bool {
+    override func withinBoard(_ x: Int, y: Int) -> Bool {
         return (0 <= x && x < width() && 0 <= y && y < height())
     }
 
-    override func set(color: Pieces, x: Int, y: Int) {
+    override func set(_ color: Pieces, x: Int, y: Int) {
         bb.set(color, x: x, y: y)
     }
 
-    override func get(x: Int, y: Int) -> Pieces {
+    override func get(_ x: Int, y: Int) -> Pieces {
         return bb.get(x, y: y)
     }
 
-    func boardForAll(mapfun: (Pieces -> Pieces)) {
+    func boardForAll(_ mapfun: ((Pieces) -> Pieces)) {
         for y in 0..<height() {
             for x in 0..<width() {
                 let p = get(x, y: y)
@@ -549,7 +549,7 @@ class SimpleBitBoard: FastBitBoard {
         }
     }
 
-    func boardForAll(mapfun: ((Int, Int) -> Pieces)) {
+    func boardForAll(_ mapfun: ((Int, Int) -> Pieces)) {
         for y in 0..<height() {
             for x in 0..<width() {
                 set(mapfun(x, y), x: x, y: y)
@@ -557,21 +557,21 @@ class SimpleBitBoard: FastBitBoard {
         }
     }
 
-    override func updateGuides(color: Pieces) -> Int {
+    override func updateGuides(_ color: Pieces) -> Int {
         // Clear exising guides first
         boardForAll({
-            (x: Pieces) -> Pieces in if(x == Pieces.Guide) { return Pieces.Empty } else { return x }
+            (x: Pieces) -> Pieces in if(x == Pieces.guide) { return Pieces.empty } else { return x }
         })
 
         var ret = 0
         boardForAll({
-            (x: Int, y: Int) -> Pieces in if(self.canPut(color, x: x, y: y)) { ret += 1; return Pieces.Guide } else { return self.get(x, y: y) }
+            (x: Int, y: Int) -> Pieces in if(self.canPut(color, x: x, y: y)) { ret += 1; return Pieces.guide } else { return self.get(x, y: y) }
         })
 
         return ret
     }
 
-    override func put(color: Pieces, x: Int, y: Int, guides: Bool, returnChanges: Bool) -> [(Int, Int)] {
+    override func put(_ color: Pieces, x: Int, y: Int, guides: Bool, returnChanges: Bool) -> [(Int, Int)] {
         if !withinBoard(x, y: y) {
             return []
         }
@@ -581,7 +581,7 @@ class SimpleBitBoard: FastBitBoard {
         return returnChanges ? listFromBitBoard(retMoves) : []
     }
 
-    override func isPieceAt(piece: Pieces, x: Int, y: Int) -> Bool {
+    override func isPieceAt(_ piece: Pieces, x: Int, y: Int) -> Bool {
         return bb.isPieceAt(piece, x: x, y: y)
     }
 
@@ -594,19 +594,19 @@ class SimpleBitBoard: FastBitBoard {
         return bb.getNumWhite()
     }
 
-    override func canPut(color: Pieces, x: Int, y: Int) -> Bool {
+    override func canPut(_ color: Pieces, x: Int, y: Int) -> Bool {
         return bb.canPut(color, x: x, y: y)
     }
 
-    override func getPuttables(color: Pieces) -> [(Int, Int)] {
+    override func getPuttables(_ color: Pieces) -> [(Int, Int)] {
         return listFromBitBoard(bb.getPuttables(color))
     }
 
-    override func isAnyPuttable(color: Pieces) -> Bool {
+    override func isAnyPuttable(_ color: Pieces) -> Bool {
         return bb.isAnyPuttable(color)
     }
 
-    private func listFromBitBoard(bits: UInt64) -> [(Int, Int)] {
+    fileprivate func listFromBitBoard(_ bits: UInt64) -> [(Int, Int)] {
         var ret: [(Int, Int)] = []
         for iy in 0..<height() {
             for ix in 0..<width() {
@@ -619,15 +619,15 @@ class SimpleBitBoard: FastBitBoard {
         return ret
     }
 
-    override func getReversible(color: Pieces, x: Int, y: Int) -> [(Int, Int)] {
+    override func getReversible(_ color: Pieces, x: Int, y: Int) -> [(Int, Int)] {
         return listFromBitBoard(bb.getReversible(color, x: x, y: y))
     }
 
-    override func isEmpty(x: Int, y: Int) -> Bool {
+    override func isEmpty(_ x: Int, y: Int) -> Bool {
         return bb.isEmpty(x, y: y)
     }
 
-    override func numPeripherals(color: Pieces, x: Int, y: Int) -> Int {
+    override func numPeripherals(_ color: Pieces, x: Int, y: Int) -> Int {
         return bb.numPeripherals(color, x: x, y: y)
     }
 

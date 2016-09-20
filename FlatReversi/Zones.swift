@@ -26,7 +26,7 @@ class Zones {
         }
     }
 
-    func getTopNByRandomInPuttables(n: Int, puttables: [(Int, Int)]) -> [(Int, Int)] {
+    func getTopNByRandomInPuttables(_ n: Int, puttables: [(Int, Int)]) -> [(Int, Int)] {
         var arr: [(Double, (Int, Int))] = []
         let n = n > puttables.count ? puttables.count : n
         for (x, y) in puttables {
@@ -36,7 +36,7 @@ class Zones {
         }
 
         // Sort by val
-        arr = arr.sort({
+        arr = arr.sorted(by: {
             $0.0 > $1.0
         })
 
@@ -66,7 +66,7 @@ class Zones {
 }
 
 class ZonesFactory {
-    func createZoneUniform(uniformVal: Double) -> Zones {
+    func createZoneUniform(_ uniformVal: Double) -> Zones {
         let z = Zones(width: 8, height: 8, initVal: uniformVal)
         return z
     }
@@ -76,7 +76,7 @@ class ZonesFactory {
     // B = Neightbor of Corner
     // C = Edge 8 zones
     // D = Center 4 x 4 zones
-    func createZoneTypical4(aVal: Double, bVal: Double, cVal: Double, dVal: Double) -> Zones {
+    func createZoneTypical4(_ aVal: Double, bVal: Double, cVal: Double, dVal: Double) -> Zones {
         let z = Zones(width: 8, height: 8, initVal: dVal)
         for y in 0..<8 {
             for x in 0..<8 {
@@ -97,7 +97,7 @@ class ZonesFactory {
         return z
     }
 
-    func createZoneTypical7(aVal: Double, bVal: Double, cVal: Double, dVal: Double, eVal: Double, fVal: Double, gVal: Double) -> Zones{
+    func createZoneTypical7(_ aVal: Double, bVal: Double, cVal: Double, dVal: Double, eVal: Double, fVal: Double, gVal: Double) -> Zones{
         let zones: [[Double]] = [
             [aVal, bVal, cVal, dVal, dVal, cVal, bVal, aVal, ],
             [bVal, cVal, eVal, fVal, eVal, eVal, cVal, bVal, ],
@@ -113,7 +113,7 @@ class ZonesFactory {
         return z
     }
 
-    func createZoneTypical8(aVal: Double, bVal: Double, cVal: Double, dVal: Double, eVal: Double, fVal: Double, gVal: Double, hVal: Double) -> Zones{
+    func createZoneTypical8(_ aVal: Double, bVal: Double, cVal: Double, dVal: Double, eVal: Double, fVal: Double, gVal: Double, hVal: Double) -> Zones{
         let zones: [[Double]] = [
             [aVal, bVal, dVal, eVal, eVal, dVal, bVal, aVal, ],
             [bVal, cVal, fVal, fVal, fVal, fVal, cVal, bVal, ],

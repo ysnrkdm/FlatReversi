@@ -9,7 +9,7 @@
 import Foundation
 
 class BoardBuilder {
-    internal class func build(fromText: String) -> BoardRepresentation {
+    internal class func build(_ fromText: String) -> BoardRepresentation {
         let board = SimpleBitBoard()
         board.initialize(8, height: 8)
 
@@ -17,11 +17,11 @@ class BoardBuilder {
         for c in fromText.characters {
             switch(c) {
             case "B":
-                board.set(.Black, x: i % 8, y: i / 8)
+                board.set(.black, x: i % 8, y: i / 8)
             case "W":
-                board.set(.White, x: i % 8, y: i / 8)
+                board.set(.white, x: i % 8, y: i / 8)
             case ".":
-                board.set(.Empty, x: i % 8, y: i / 8)
+                board.set(.empty, x: i % 8, y: i / 8)
             default:
                 assertionFailure("")
             }
@@ -33,7 +33,7 @@ class BoardBuilder {
         return ret
     }
 
-    internal class func buildBitBoard(fromText: String) -> BoardRepresentation {
+    internal class func buildBitBoard(_ fromText: String) -> BoardRepresentation {
         let board = SimpleBitBoard()
         board.initialize(8, height: 8)
 
@@ -41,11 +41,11 @@ class BoardBuilder {
         for c in fromText.characters {
             switch(c) {
             case "B":
-                board.set(.Black, x: i % 8, y: i / 8)
+                board.set(.black, x: i % 8, y: i / 8)
             case "W":
-                board.set(.White, x: i % 8, y: i / 8)
+                board.set(.white, x: i % 8, y: i / 8)
             case ".":
-                board.set(.Empty, x: i % 8, y: i / 8)
+                board.set(.empty, x: i % 8, y: i / 8)
             default:
                 assertionFailure("")
             }

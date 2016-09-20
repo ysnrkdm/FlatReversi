@@ -9,34 +9,34 @@
 import Foundation
 
 enum Pieces {
-    case Black, White, Empty, Guide, None
+    case black, white, empty, guide, none
 
     func toString() -> String {
         switch self {
-        case .Black:
+        case .black:
             return "B"
-        case .White:
+        case .white:
             return "W"
-        case .Empty:
+        case .empty:
             return "."
-        case .Guide:
+        case .guide:
             return "@"
-        case .None:
+        case .none:
             return "*"
         }
     }
 }
 
 protocol Board {
-    func initialize(width: Int, height: Int)
+    func initialize(_ width: Int, height: Int)
 
     // MARK: Basic functions
-    func withinBoard(x: Int, y: Int) -> Bool
+    func withinBoard(_ x: Int, y: Int) -> Bool
 
-    func set(color: Pieces, x: Int, y: Int)
-    func get(x: Int, y: Int) -> Pieces
-    func isPieceAt(piece: Pieces, x: Int, y: Int) -> Bool
-    func put(color: Pieces, x: Int, y: Int, guides: Bool, returnChanges: Bool) -> [(Int, Int)]
+    func set(_ color: Pieces, x: Int, y: Int)
+    func get(_ x: Int, y: Int) -> Pieces
+    func isPieceAt(_ piece: Pieces, x: Int, y: Int) -> Bool
+    func put(_ color: Pieces, x: Int, y: Int, guides: Bool, returnChanges: Bool) -> [(Int, Int)]
 
     func width() -> Int
     func height() -> Int
@@ -45,18 +45,18 @@ protocol Board {
     func getNumBlack() -> Int
     func getNumWhite() -> Int
 
-    func canPut(color: Pieces, x: Int, y: Int) -> Bool
-    func getPuttables(color: Pieces) -> [(Int, Int)]
-    func isAnyPuttable(color: Pieces) -> Bool
-    func getReversible(color: Pieces, x: Int, y: Int) -> [(Int, Int)]
-    func isEmpty(x: Int, y: Int) -> Bool
+    func canPut(_ color: Pieces, x: Int, y: Int) -> Bool
+    func getPuttables(_ color: Pieces) -> [(Int, Int)]
+    func isAnyPuttable(_ color: Pieces) -> Bool
+    func getReversible(_ color: Pieces, x: Int, y: Int) -> [(Int, Int)]
+    func isEmpty(_ x: Int, y: Int) -> Bool
 
-    func numPeripherals(color: Pieces, x: Int, y: Int) -> Int
+    func numPeripherals(_ color: Pieces, x: Int, y: Int) -> Int
 
     func hashValue() -> Int
 
     // MARK: Update functions
-    func updateGuides(color: Pieces) -> Int
+    func updateGuides(_ color: Pieces) -> Int
 
     // MARK: Utility functions
     func clone() -> Board

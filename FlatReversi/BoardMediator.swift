@@ -9,7 +9,7 @@
 import Foundation
 
 class BoardMediator {
-    private var board: Board
+    fileprivate var board: Board
 
     // MARK: Initialization
     init(board:Board) {
@@ -19,7 +19,7 @@ class BoardMediator {
     func initializeBoard() {
         // FIXME: This assumes 8x8
         board.initialize(8, height: 8)
-        updateGuides(.Black)
+        updateGuides(.black)
     }
 
     // MARK: Direct access to Board
@@ -32,19 +32,19 @@ class BoardMediator {
         return self.board.width()
     }
 
-    func withinBoard(x: Int, y: Int) -> Bool {
+    func withinBoard(_ x: Int, y: Int) -> Bool {
         return self.board.withinBoard(x, y: y)
     }
 
-    func set(color: Pieces, x: Int, y: Int) {
+    func set(_ color: Pieces, x: Int, y: Int) {
         self.board.set(color, x: x, y: y)
     }
 
-    func get(x: Int, y: Int) -> Pieces {
+    func get(_ x: Int, y: Int) -> Pieces {
         return self.board.get(x, y: y)
     }
 
-    func isPieceAt(piece: Pieces, x: Int, y: Int) -> Bool {
+    func isPieceAt(_ piece: Pieces, x: Int, y: Int) -> Bool {
         return self.board.isPieceAt(piece, x: x, y: y)
     }
 
@@ -57,23 +57,23 @@ class BoardMediator {
         return self.board.getNumWhite()
     }
 
-    func canPut(color: Pieces, x: Int, y: Int) -> Bool {
+    func canPut(_ color: Pieces, x: Int, y: Int) -> Bool {
         return self.board.canPut(color, x: x, y: y)
     }
 
-    func getPuttables(color: Pieces) -> [(Int, Int)] {
+    func getPuttables(_ color: Pieces) -> [(Int, Int)] {
         return self.board.getPuttables(color)
     }
 
-    func isAnyPuttable(color: Pieces) -> Bool {
+    func isAnyPuttable(_ color: Pieces) -> Bool {
         return self.board.isAnyPuttable(color)
     }
 
-    func isEmpty(x: Int, y: Int) -> Bool {
+    func isEmpty(_ x: Int, y: Int) -> Bool {
         return self.board.isEmpty(x, y: y)
     }
 
-    func numPeripherals(color: Pieces, x: Int, y: Int) -> Int {
+    func numPeripherals(_ color: Pieces, x: Int, y: Int) -> Int {
         return self.board.numPeripherals(color, x: x, y: y)
     }
 
@@ -82,19 +82,19 @@ class BoardMediator {
     }
 
     // Only diag or horizontal/vertical lines can change by putting piece at x,y
-    func getReversible(color: Pieces, x: Int, y: Int) -> [(Int, Int)] {
+    func getReversible(_ color: Pieces, x: Int, y: Int) -> [(Int, Int)] {
         return self.board.getReversible(color, x: x, y: y)
     }
 
     // MARK: Board update functions
 
-    func updateGuides(color: Pieces) -> Int {
+    func updateGuides(_ color: Pieces) -> Int {
         return self.board.updateGuides(color)
     }
 
     // Does set and reverse pieces
     // Returns [x,y] of changes (except put piece)
-    func put(color: Pieces, x: Int, y: Int, guides: Bool = true, returnChanges: Bool = true) -> [(Int, Int)] {
+    func put(_ color: Pieces, x: Int, y: Int, guides: Bool = true, returnChanges: Bool = true) -> [(Int, Int)] {
         return self.board.put(color, x: x, y: y, guides: guides, returnChanges: returnChanges)
     }
 
@@ -114,15 +114,15 @@ class BoardMediator {
         return self.board
     }
 
-    func nextTurn(color: Pieces) -> Pieces {
-        var s : Pieces = .Black
+    func nextTurn(_ color: Pieces) -> Pieces {
+        var s : Pieces = .black
         switch color {
-        case .Black:
-            s = .White
-        case .White:
-            s = .Black
+        case .black:
+            s = .white
+        case .white:
+            s = .black
         default:
-            s = .Black
+            s = .black
         }
         return s
     }

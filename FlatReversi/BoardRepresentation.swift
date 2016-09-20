@@ -23,36 +23,36 @@ class BoardRepresentation {
         return self.boardMediator.width()
     }
 
-    func withinBoard(x: Int, y: Int) -> Bool {
+    func withinBoard(_ x: Int, y: Int) -> Bool {
         return self.boardMediator.withinBoard(x, y: y)
     }
 
-    func get(x: Int, y: Int) -> Pieces {
+    func get(_ x: Int, y: Int) -> Pieces {
         return self.boardMediator.get(x, y: y)
     }
 
-    func isPieceAt(piece: Pieces, x: Int, y: Int) -> Bool {
+    func isPieceAt(_ piece: Pieces, x: Int, y: Int) -> Bool {
         return self.boardMediator.isPieceAt(piece, x: x, y: y)
     }
 
-    func isEmpty(x: Int, y: Int) -> Bool {
+    func isEmpty(_ x: Int, y: Int) -> Bool {
         return self.boardMediator.isEmpty(x, y: y)
     }
 
-    func canPut(color: Pieces, x: Int, y: Int) -> Bool {
-        return (get(x, y: y) != .White && get(x, y: y) != .Black) && getReversible(color, x: x, y: y).count > 0;
+    func canPut(_ color: Pieces, x: Int, y: Int) -> Bool {
+        return (get(x, y: y) != .white && get(x, y: y) != .black) && getReversible(color, x: x, y: y).count > 0;
     }
 
-    func getPuttables(color: Pieces) -> [(Int, Int)] {
+    func getPuttables(_ color: Pieces) -> [(Int, Int)] {
         return self.boardMediator.getPuttables(color)
     }
 
     // Only diag or horizontal/vertical lines can change by putting piece at x,y
-    func getReversible(color: Pieces, x: Int, y: Int) -> [(Int, Int)] {
+    func getReversible(_ color: Pieces, x: Int, y: Int) -> [(Int, Int)] {
         return boardMediator.getReversible(color, x: x, y: y)
     }
 
-    func isAnyPuttable(color: Pieces) -> Bool {
+    func isAnyPuttable(_ color: Pieces) -> Bool {
         return boardMediator.isAnyPuttable(color)
     }
 
@@ -73,18 +73,18 @@ class BoardRepresentation {
             return true
         }
 
-        if isAnyPuttable(.Black) {
+        if isAnyPuttable(.black) {
             return false
         }
 
-        if isAnyPuttable(.White) {
+        if isAnyPuttable(.white) {
             return false
         }
 
         return true
     }
 
-    func numPeripherals(color: Pieces, x: Int, y: Int) -> Int {
+    func numPeripherals(_ color: Pieces, x: Int, y: Int) -> Int {
         return self.boardMediator.numPeripherals(color, x: x, y: y)
     }
 

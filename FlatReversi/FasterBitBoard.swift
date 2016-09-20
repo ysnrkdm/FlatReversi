@@ -12,15 +12,15 @@ class FastBitBoard : Board {
     func getUnsafeBitBoard() -> BitBoard { fatalError("Implement actual class by inheriting this class.") }
 
     // MARK: Board functions
-    func initialize(width: Int, height: Int) { fatalError("Implement actual class by inheriting this class.") }
+    func initialize(_ width: Int, height: Int) { fatalError("Implement actual class by inheriting this class.") }
 
     // MARK: Basic functions
-    func withinBoard(x: Int, y: Int) -> Bool { fatalError("Implement actual class by inheriting this class.") }
+    func withinBoard(_ x: Int, y: Int) -> Bool { fatalError("Implement actual class by inheriting this class.") }
 
-    func set(color: Pieces, x: Int, y: Int) { fatalError("Implement actual class by inheriting this class.") }
-    func get(x: Int, y: Int) -> Pieces { fatalError("Implement actual class by inheriting this class.") }
-    func isPieceAt(piece: Pieces, x: Int, y: Int) -> Bool { fatalError("Implement actual class by inheriting this class.") }
-    func put(color: Pieces, x: Int, y: Int, guides: Bool, returnChanges: Bool) -> [(Int, Int)] { fatalError("Implement actual class by inheriting this class.") }
+    func set(_ color: Pieces, x: Int, y: Int) { fatalError("Implement actual class by inheriting this class.") }
+    func get(_ x: Int, y: Int) -> Pieces { fatalError("Implement actual class by inheriting this class.") }
+    func isPieceAt(_ piece: Pieces, x: Int, y: Int) -> Bool { fatalError("Implement actual class by inheriting this class.") }
+    func put(_ color: Pieces, x: Int, y: Int, guides: Bool, returnChanges: Bool) -> [(Int, Int)] { fatalError("Implement actual class by inheriting this class.") }
 
     func width() -> Int { fatalError("Implement actual class by inheriting this class.") }
     func height() -> Int { fatalError("Implement actual class by inheriting this class.") }
@@ -29,18 +29,18 @@ class FastBitBoard : Board {
     func getNumBlack() -> Int { fatalError("Implement actual class by inheriting this class.") }
     func getNumWhite() -> Int { fatalError("Implement actual class by inheriting this class.") }
 
-    func canPut(color: Pieces, x: Int, y: Int) -> Bool { fatalError("Implement actual class by inheriting this class.") }
-    func getPuttables(color: Pieces) -> [(Int, Int)] { fatalError("Implement actual class by inheriting this class.") }
-    func isAnyPuttable(color: Pieces) -> Bool { fatalError("Implement actual class by inheriting this class.") }
-    func getReversible(color: Pieces, x: Int, y: Int) -> [(Int, Int)] { fatalError("Implement actual class by inheriting this class.") }
-    func isEmpty(x: Int, y: Int) -> Bool { fatalError("Implement actual class by inheriting this class.") }
+    func canPut(_ color: Pieces, x: Int, y: Int) -> Bool { fatalError("Implement actual class by inheriting this class.") }
+    func getPuttables(_ color: Pieces) -> [(Int, Int)] { fatalError("Implement actual class by inheriting this class.") }
+    func isAnyPuttable(_ color: Pieces) -> Bool { fatalError("Implement actual class by inheriting this class.") }
+    func getReversible(_ color: Pieces, x: Int, y: Int) -> [(Int, Int)] { fatalError("Implement actual class by inheriting this class.") }
+    func isEmpty(_ x: Int, y: Int) -> Bool { fatalError("Implement actual class by inheriting this class.") }
 
-    func numPeripherals(color: Pieces, x: Int, y: Int) -> Int { fatalError("Implement actual class by inheriting this class.") }
+    func numPeripherals(_ color: Pieces, x: Int, y: Int) -> Int { fatalError("Implement actual class by inheriting this class.") }
 
     func hashValue() -> Int { fatalError("Implement actual class by inheriting this class.") }
 
     // MARK: Update functions
-    func updateGuides(color: Pieces) -> Int { fatalError("Implement actual class by inheriting this class.") }
+    func updateGuides(_ color: Pieces) -> Int { fatalError("Implement actual class by inheriting this class.") }
 
     // MARK: Utility functions
     func clone() -> Board { fatalError("Implement actual class by inheriting this class.") }
@@ -50,15 +50,15 @@ class FastBitBoard : Board {
 
     func isTerminal() -> Bool { fatalError("Implement actual class by inheriting this class.") }
 
-    func nextTurn(color: Pieces) -> Pieces {
-        var s : Pieces = .Black
+    func nextTurn(_ color: Pieces) -> Pieces {
+        var s : Pieces = .black
         switch color {
-        case .Black:
-            s = .White
-        case .White:
-            s = .Black
+        case .black:
+            s = .white
+        case .white:
+            s = .black
         default:
-            s = .Black
+            s = .black
         }
         return s
     }
