@@ -12,7 +12,7 @@ class Stack<T> {
 
     var elements = [T]()
 
-    func push(elem: T) {
+    func push(_ elem: T) {
         elements.append(elem)
     }
 

@@ -9,12 +9,12 @@
 import Foundation
 
 // MARK: Multi-thread utility functions
-func dispatch_async_main(block: () -> ()) {
-    dispatch_async(dispatch_get_main_queue(), block)
+func dispatch_async_main(_ block: @escaping () -> ()) {
+    DispatchQueue.main.async(execute: block)
 }
 
-func dispatch_async_global(block: () -> ()) {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block)
+func dispatch_async_global(_ block: @escaping () -> ()) {
+    DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: block)
 }
 
 /// Protocol for NSLocking objects that also provide tryLock()
@@ -30,7 +30,7 @@ extension NSConditionLock: TryLockable {}
 
 /// Protocol for NSLocking objects that also provide lockBeforeDate()
 public protocol BeforeDateLockable: NSLocking {
-    func lockBeforeDate(limit: NSDate) -> Bool
+    func lockBeforeDate(_ limit: Date) -> Bool
 }
 
 // These Cocoa classes have lockBeforeDate()
@@ -40,14 +40,14 @@ extension NSConditionLock: BeforeDateLockable {}
 
 
 /// Use an NSLocking object as a mutex for a critical section of code
-public func synchronized<L: NSLocking>(lockable: L, criticalSection: () -> ()) {
+public func synchronized<L: NSLocking>(_ lockable: L, criticalSection: () -> ()) {
     lockable.lock()
     criticalSection()
     lockable.unlock()
 }
 
 /// Use an NSLocking object as a mutex for a critical section of code that returns a result
-public func synchronizedResult<L: NSLocking, T>(lockable: L, criticalSection: () -> T) -> T {
+public func synchronizedResult<L: NSLocking, T>(_ lockable: L, criticalSection: () -> T) -> T {
     lockable.lock()
     let result = criticalSection()
     lockable.unlock()
@@ -57,7 +57,7 @@ public func synchronizedResult<L: NSLocking, T>(lockable: L, criticalSection: ()
 /// Use a TryLockable object as a mutex for a critical section of code
 ///
 /// Return true if the critical section was executed, or false if tryLock() failed
-public func trySynchronized<L: TryLockable>(lockable: L, criticalSection: () -> ()) -> Bool {
+public func trySynchronized<L: TryLockable>(_ lockable: L, criticalSection: () -> ()) -> Bool {
     if !lockable.tryLock() {
         return false
     }
@@ -69,7 +69,7 @@ public func trySynchronized<L: TryLockable>(lockable: L, criticalSection: () -> 
 /// Use a BeforeDateLockable object as a mutex for a critical section of code
 ///
 /// Return true if the critical section was executed, or false if lockBeforeDate() failed
-public func synchronizedBeforeDate<L: BeforeDateLockable>(limit: NSDate, lockable: L, criticalSection: () -> ()) -> Bool {
+public func synchronizedBeforeDate<L: BeforeDateLockable>(_ limit: Date, lockable: L, criticalSection: () -> ()) -> Bool {
     if !lockable.lockBeforeDate(limit) {
         return false
     }

@@ -8,51 +8,59 @@
 
 import Foundation
 
-func sum (array : [Int]) -> Int {
+func sum (_ array : [Int]) -> Int {
     if array.isEmpty {
         return 0
     }
-    return array.reduce(array[0], combine: {$0 + $1})
+    return array.reduce(array[0], {$0 + $1})
 }
 
-func min (array : [Int]) -> Int {
+func min (_ array : [Int]) -> Int {
     if array.isEmpty {
         return Int.max
     }
-    return array.reduce(array[0], combine: {$0 > $1 ? $1 : $0})
+    return array.reduce(array[0], {$0 > $1 ? $1 : $0})
 }
 
-func min(a: Double, b: Double) -> Double {
+func min(_ a: Double, b: Double) -> Double {
     return a > b ? b : a
 }
 
-func max (array : [Int]) -> Int {
+func max (_ array : [Int]) -> Int {
     if array.isEmpty {
         return Int.min
     }
-    return array.reduce(array[0], combine: {$0 < $1 ? $1 : $0})
+    return array.reduce(array[0], {$0 < $1 ? $1 : $0})
 }
 
-func max (array : [Double]) -> Double {
+func max (_ array : [Double]) -> Double {
     if array.isEmpty {
         return 0.0
     }
-    return array.reduce(array[0], combine: {$0 < $1 ? $1 : $0})
+    return array.reduce(array[0], {$0 < $1 ? $1 : $0})
 }
 
-func max(a: Double, b: Double) -> Double {
+func max(_ a: Double, b: Double) -> Double {
     return a > b ? a : b
 }
 
-func nextTurn(color: Pieces) -> Pieces {
-    var s : Pieces = .Black
+func nextTurn(_ color: Pieces) -> Pieces {
+    var s : Pieces = .black
     switch color {
-    case .Black:
-        s = .White
-    case .White:
-        s = .Black
+    case .black:
+        s = .white
+    case .white:
+        s = .black
     default:
-        s = .Black
+        s = .black
     }
     return s
+}
+
+func LOG(    body: String!,
+             function: String = #function,
+             line: Int = #line)
+{
+    let datestr = String(NSDate().description);
+    print("[\(datestr) : \(function) @ \(line)] \(body)")
 }

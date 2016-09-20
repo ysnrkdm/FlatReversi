@@ -68,8 +68,8 @@ import Foundation
 class Queue<T> {
     var elements = [T]()
 
-    func enqueue(element: T){
-        elements.insert(element, atIndex: 0)
+    func enqueue(_ element: T){
+        elements.insert(element, at: 0)
     }
 
     func dequeue() -> T? {
