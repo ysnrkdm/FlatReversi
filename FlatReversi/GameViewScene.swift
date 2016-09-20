@@ -9,11 +9,11 @@
 import Foundation
 
 protocol GameViewScene {
-    func updateView(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double, debugString: String)
+    func updateView(_ bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double, debugString: String)
 
     func showPasses()
 
-    func showGameOver(title:String, message: String, showNext: Bool, nextLabel: String)
+    func showGameOver(_ title:String, message: String, showNext: Bool, nextLabel: String)
 
     func isUpdateBoardViewQueueEmpty() -> Bool
 }

@@ -7,6 +7,17 @@
 //
 
 import SpriteKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class UpdateBoardViewContext {
     var boardMediator : BoardMediator
@@ -123,7 +134,7 @@ class GameScene: SKScene, GameViewScene {
         for shape in boardDots { shape.removeFromParent() }
 
         /* Setup your scene here */
-        let boardView = self.childNodeWithName("Board") as! SKSpriteNode
+        let boardView = self.childNode(withName: "Board") as! SKSpriteNode
         boardView.color = boardBackgroundColor
         let width : CGFloat = boardView.size.width
         let piece_width = width / 8
@@ -131,16 +142,16 @@ class GameScene: SKScene, GameViewScene {
         let color = boardGridColor
 
         // Horizontal lines
-        for var by : CGFloat = 0; by <= width; by += piece_width {
-            let sprite = SKShapeNode(rect: screenRectFromVritualRect(CGRectMake(0, by, width, line_width)))
+        for by in stride(from: 0, through: width, by: piece_width) {
+            let sprite = SKShapeNode(rect: screenRectFromVritualRect(CGRect(x: 0, y: by, width: width, height: line_width)))
             sprite.fillColor = color
             sprite.strokeColor = SKColor(white: 0, alpha: 0)
             boardView.addChild(sprite)
             boardLinesH.append(sprite)
         }
         // Vertical lines
-        for var bx : CGFloat = 0; bx <= width; bx += piece_width {
-            let rect = screenRectFromVritualRect(CGRectMake(bx, 0, line_width, width))
+        for bx in stride(from: 0, through: width, by: piece_width) {
+            let rect = screenRectFromVritualRect(CGRect(x: bx, y: 0, width: line_width, height: width))
             let sprite = SKShapeNode(rect: rect)
             sprite.fillColor = color
             sprite.strokeColor = SKColor(white: 0, alpha: 0)
@@ -150,29 +161,29 @@ class GameScene: SKScene, GameViewScene {
 
         // 4 dots
         let dotsUL = SKShapeNode(circleOfRadius: line_width * 3)
-        dotsUL.position = self.screenPointFromVirtualPoint(CGPointMake(piece_width * 2, piece_width * 2))
+        dotsUL.position = self.screenPointFromVirtualPoint(CGPoint(x: piece_width * 2, y: piece_width * 2))
         dotsUL.fillColor = color
         boardView.addChild(dotsUL)
         boardDots.append(dotsUL)
         let dotsUR = SKShapeNode(circleOfRadius: line_width * 3)
-        dotsUR.position = self.screenPointFromVirtualPoint(CGPointMake(piece_width * 2, piece_width * 6))
+        dotsUR.position = self.screenPointFromVirtualPoint(CGPoint(x: piece_width * 2, y: piece_width * 6))
         dotsUR.fillColor = color
         boardView.addChild(dotsUR)
         boardDots.append(dotsUR)
         let dotsDL = SKShapeNode(circleOfRadius: line_width * 3)
-        dotsDL.position = self.screenPointFromVirtualPoint(CGPointMake(piece_width * 6, piece_width * 2))
+        dotsDL.position = self.screenPointFromVirtualPoint(CGPoint(x: piece_width * 6, y: piece_width * 2))
         dotsDL.fillColor = color
         boardView.addChild(dotsDL)
         boardDots.append(dotsDL)
         let dotsDR = SKShapeNode(circleOfRadius: line_width * 3)
-        dotsDR.position = self.screenPointFromVirtualPoint(CGPointMake(piece_width * 6, piece_width * 6))
+        dotsDR.position = self.screenPointFromVirtualPoint(CGPoint(x: piece_width * 6, y: piece_width * 6))
         dotsDR.fillColor = color
         boardView.addChild(dotsDR)
         boardDots.append(dotsDR)
     }
 
-    override func didMoveToView(view: SKView) {
-        let boardView = self.childNodeWithName("Board") as! SKSpriteNode
+    override func didMove(to view: SKView) {
+        let boardView = self.childNode(withName: "Board") as! SKSpriteNode
         let width : CGFloat = boardView.size.width
         let piece_width = width / 8
         topYOffset += piece_width / 2
@@ -186,7 +197,7 @@ class GameScene: SKScene, GameViewScene {
         NSLog("\n" + gameManager.toString())
     }
 
-    private func clearPieces() {
+    fileprivate func clearPieces() {
         for row in boardSprites {
             for cell in row {
                 cell?.removeAllActions()
@@ -197,17 +208,19 @@ class GameScene: SKScene, GameViewScene {
         drawCount = 0
 
         boardSprites = []
-        for var y = 0; y < gameManager.boardMediator?.height(); y += 1 {
-            boardSprites.append([nil, nil, nil, nil, nil, nil, nil, nil])
+        if let height = gameManager.boardMediator?.height() {
+            for _ in 0..<height {
+                boardSprites.append([nil, nil, nil, nil, nil, nil, nil, nil])
+            }
         }
-
+        
         lastPut?.removeFromParent()
         lastPut = nil
     }
 
-    private func showNumPieces(black: Int, white: Int, blackEval: Double, whiteEval: Double, debugString: String) {
+    fileprivate func showNumPieces(_ black: Int, white: Int, blackEval: Double, whiteEval: Double, debugString: String) {
         let debug = true
-        let boardView = self.childNodeWithName("Board") as! SKSpriteNode
+        let boardView = self.childNode(withName: "Board") as! SKSpriteNode
         let width : CGFloat = boardView.size.width
 //        var height : CGFloat = boardView.size.height
         let piece_width = width / 8
@@ -223,18 +236,18 @@ class GameScene: SKScene, GameViewScene {
         numPiecesBlack?.name = "blackNum"
         numPiecesBlack?.fontColor = boardFontColor
         numPiecesBlack?.fontSize = 50
-        numPiecesBlack?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
-        numPiecesBlack?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
-        numPiecesBlack?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 - piece_width - 20, yPosOffset))
+        numPiecesBlack?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
+        numPiecesBlack?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+        numPiecesBlack?.position = self.screenPointFromVirtualPoint(CGPoint(x: width / 2 - piece_width - 20, y: yPosOffset))
         boardView.addChild(numPiecesBlack!)
 
         numPiecesWhite = SKLabelNode(text: "\(white)")
         numPiecesBlack?.name = "whiteNum"
         numPiecesWhite?.fontColor = boardFontColor
         numPiecesWhite?.fontSize = 50
-        numPiecesWhite?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
-        numPiecesWhite?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
-        numPiecesWhite?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 + piece_width + 20, yPosOffset))
+        numPiecesWhite?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        numPiecesWhite?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+        numPiecesWhite?.position = self.screenPointFromVirtualPoint(CGPoint(x: width / 2 + piece_width + 20, y: yPosOffset))
         boardView.addChild(numPiecesWhite!)
 
         // Evaluation
@@ -245,18 +258,18 @@ class GameScene: SKScene, GameViewScene {
             numBlackEval?.name = "blackEval"
             numBlackEval?.fontColor = boardFontColor
             numBlackEval?.fontSize = 30
-            numBlackEval?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
-            numBlackEval?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
-            numBlackEval?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 - piece_width - 20 - 80, yPosOffset))
+            numBlackEval?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
+            numBlackEval?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+            numBlackEval?.position = self.screenPointFromVirtualPoint(CGPoint(x: width / 2 - piece_width - 20 - 80, y: yPosOffset))
             boardView.addChild(numBlackEval!)
 
             numWhiteEval = SKLabelNode(text: "\(whiteEval)")
             numWhiteEval?.name = "blackEval"
             numWhiteEval?.fontColor = boardFontColor
             numWhiteEval?.fontSize = 30
-            numWhiteEval?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
-            numWhiteEval?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
-            numWhiteEval?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 + piece_width + 20 + 80, yPosOffset))
+            numWhiteEval?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+            numWhiteEval?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+            numWhiteEval?.position = self.screenPointFromVirtualPoint(CGPoint(x: width / 2 + piece_width + 20 + 80, y: yPosOffset))
             boardView.addChild(numWhiteEval!)
         }
 
@@ -267,9 +280,9 @@ class GameScene: SKScene, GameViewScene {
             debugLabel?.name = "blackEval"
             debugLabel?.fontColor = boardFontColor
             debugLabel?.fontSize = 30
-            debugLabel?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
-            debugLabel?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
-            debugLabel?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2, yPosOffset + piece_width))
+            debugLabel?.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
+            debugLabel?.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+            debugLabel?.position = self.screenPointFromVirtualPoint(CGPoint(x: width / 2, y: yPosOffset + piece_width))
             boardView.addChild(debugLabel!)
         }
 
@@ -281,14 +294,14 @@ class GameScene: SKScene, GameViewScene {
 
         numPiecesBlackCircle = SKShapeNode(circleOfRadius: radius)
         numPiecesBlackCircle?.fillColor = boardBlackPieceFillColor
-        numPiecesBlackCircle?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 - piece_width / 2 - 5, yPosOffset))
+        numPiecesBlackCircle?.position = self.screenPointFromVirtualPoint(CGPoint(x: width / 2 - piece_width / 2 - 5, y: yPosOffset))
         numPiecesBlackCircle?.strokeColor = boardBlackPieceStrokeColor
         numPiecesBlackCircle?.lineWidth = 2
         boardView.addChild(numPiecesBlackCircle!)
 
         numPiecesWhiteCircle = SKShapeNode(circleOfRadius: radius)
         numPiecesWhiteCircle?.fillColor = boardWhitePieceFillColor
-        numPiecesWhiteCircle?.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2 + piece_width / 2 + 5, yPosOffset))
+        numPiecesWhiteCircle?.position = self.screenPointFromVirtualPoint(CGPoint(x: width / 2 + piece_width / 2 + 5, y: yPosOffset))
         numPiecesWhiteCircle?.strokeColor = boardWhitePieceStrokeColor
         numPiecesWhiteCircle?.lineWidth = 2
         boardView.addChild(numPiecesWhiteCircle!)
@@ -310,13 +323,13 @@ class GameScene: SKScene, GameViewScene {
         dispatch_async_global({self.gameManager.startGame()})
     }
 
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         /* Called when a touch begins */
 
         for touch: AnyObject in touches {
-            let boardView = self.childNodeWithName("Board") as! SKSpriteNode
+            let boardView = self.childNode(withName: "Board") as! SKSpriteNode
             let width : CGFloat = boardView.size.width
-            let location_boardView = touch.locationInNode(boardView)
+            let location_boardView = touch.location(in: boardView)
             let piece_width = width / 8
             let (ex, ey) = coordFromTouch(location_boardView.x, y: location_boardView.y, piece_width: piece_width)
             NSLog("Touched \(ex), \(ey)")
@@ -327,7 +340,7 @@ class GameScene: SKScene, GameViewScene {
         }
     }
 
-    private func coordFromTouch(x: CGFloat, y: CGFloat, piece_width: CGFloat) -> (Int, Int) {
+    fileprivate func coordFromTouch(_ x: CGFloat, y: CGFloat, piece_width: CGFloat) -> (Int, Int) {
         let pos_x = Int(floor(virtualXFromScreenX(x) / piece_width))
         let pos_y = Int(floor(virtualYFromScreenY(y) / piece_width))
         NSLog("%f, %f -> %f, %f", x.native, y.native, virtualXFromScreenX(x).native, virtualYFromScreenY(y).native)
@@ -335,7 +348,7 @@ class GameScene: SKScene, GameViewScene {
         return (pos_x, pos_y)
     }
 
-    func updateView(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double, debugString: String) {
+    func updateView(_ bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double, debugString: String) {
         if let q = updateBoardViewQueue {
             let ubvc = UpdateBoardViewContext(boardMediator: bd, changes: changes, put: put, showPuttables: showPuttables, showAnimation: showAnimation, blackEval: blackEval, whiteEval: whiteEval, debugString: debugString)
             q.enqueue(ubvc)
@@ -361,11 +374,11 @@ class GameScene: SKScene, GameViewScene {
 
     }
 
-    func processUpdateBoardViewContext(context: UpdateBoardViewContext) -> Bool {
+    func processUpdateBoardViewContext(_ context: UpdateBoardViewContext) -> Bool {
         return addChildrenFromBoard(context.boardMediator, changes: context.changes, put: context.put, showPuttables: context.showPuttables, showAnimation: context.showAnimation, blackEval: context.blackEval, whiteEval: context.whiteEval, debugString: context.debugString)
     }
 
-    func addChildrenFromBoard(bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double, debugString: String) -> Bool {
+    func addChildrenFromBoard(_ bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double, debugString: String) -> Bool {
         if(self.drawCount > 0) {
             return false
         }
@@ -374,7 +387,7 @@ class GameScene: SKScene, GameViewScene {
                 for x in 0..<bd.width() {
                     let turn = bd.get(x, y: y)
 
-                    if(turn == Pieces.Empty) {
+                    if(turn == Pieces.empty) {
                         let sp = self.boardSprites[y][x]
                         sp?.removeAllActions()
                         sp?.removeFromParent()
@@ -382,17 +395,17 @@ class GameScene: SKScene, GameViewScene {
                         continue
                     }
 
-                    let boardView = self.childNodeWithName("Board") as! SKSpriteNode
+                    let boardView = self.childNode(withName: "Board") as! SKSpriteNode
                     let width : CGFloat = boardView.size.width
                     let radius = width / 8 / 2 * 0.8
 
                     var flipAnimation = false
                     var putAnimation = false
                     var sprite = self.boardSprites[y][x]
-                    if(sprite == nil && (turn == Pieces.Black || turn == Pieces.White)) {
+                    if(sprite == nil && (turn == Pieces.black || turn == Pieces.white)) {
                         sprite = SKShapeNode(circleOfRadius: radius)
                         boardView.addChild(sprite!)
-                    } else if(turn == Pieces.Guide) {
+                    } else if(turn == Pieces.guide) {
                         // Erase current sprite
                         sprite?.removeAllActions()
                         sprite?.removeFromParent()
@@ -405,7 +418,7 @@ class GameScene: SKScene, GameViewScene {
                         } else {
                             continue
                         }
-                    } else if(turn == Pieces.Black || turn == Pieces.White) {
+                    } else if(turn == Pieces.black || turn == Pieces.white) {
                         for (cx, cy) in changes {
                             if(cx == x && cy == y) {
                                 flipAnimation = true
@@ -426,11 +439,11 @@ class GameScene: SKScene, GameViewScene {
 
                     if let spriteUnwrapped = sprite {
                         var colorTo = self.boardGuidePieceFillColor
-                        if(turn == Pieces.White) {
+                        if(turn == Pieces.white) {
                             colorTo = self.boardWhitePieceFillColor
-                        } else if (turn == Pieces.Black) {
+                        } else if (turn == Pieces.black) {
                             colorTo = self.boardBlackPieceFillColor
-                        } else if (turn == Pieces.Guide && self.showGuides) {
+                        } else if (turn == Pieces.guide && self.showGuides) {
                             colorTo = self.boardGuidePieceFillColor
                         } else {
                             assertionFailure("Should not reach this code!")
@@ -438,12 +451,12 @@ class GameScene: SKScene, GameViewScene {
 
                         self.drawCount+=1
                         if(putAnimation && showAnimation) {
-                            let fadeOut = SKAction.fadeAlphaTo(1.0, duration: 0.05)
-                            let colorChange = SKAction.runBlock({() in spriteUnwrapped.strokeColor = self.tintColor})
-                            let fadeIn = SKAction.fadeAlphaTo(1.0, duration: 0.05)
-                            let fadeOut2 = SKAction.fadeAlphaTo(0.0, duration: 0.1)
-                            let colorChange2 = SKAction.runBlock({() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.strokeColor = self.boardGuidePieceFillColor})
-                            let fadeIn2 = SKAction.fadeAlphaTo(1.0, duration: 0.1)
+                            let fadeOut = SKAction.fadeAlpha(to: 1.0, duration: 0.05)
+                            let colorChange = SKAction.run({() in spriteUnwrapped.strokeColor = self.tintColor})
+                            let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: 0.05)
+                            let fadeOut2 = SKAction.fadeAlpha(to: 0.0, duration: 0.1)
+                            let colorChange2 = SKAction.run({() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.strokeColor = self.boardGuidePieceFillColor})
+                            let fadeIn2 = SKAction.fadeAlpha(to: 1.0, duration: 0.1)
 
 
                             let sequenceActions = SKAction.sequence([
@@ -451,15 +464,15 @@ class GameScene: SKScene, GameViewScene {
                                 fadeOut2, colorChange2, fadeIn2,
                                 ])
 
-                            spriteUnwrapped.runAction(sequenceActions, completion: {() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.alpha = 1.0; self.drawCount-=1})
+                            spriteUnwrapped.run(sequenceActions, completion: {() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.alpha = 1.0; self.drawCount-=1})
                         } else if(flipAnimation && showAnimation) {
-                            let fadeOut = SKAction.fadeAlphaTo(0.0, duration: 0.2)
-                            let colorChange = SKAction.runBlock({() in spriteUnwrapped.fillColor = colorTo})
-                            let fadeIn = SKAction.fadeAlphaTo(1.0, duration: 0.2)
+                            let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 0.2)
+                            let colorChange = SKAction.run({() in spriteUnwrapped.fillColor = colorTo})
+                            let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: 0.2)
 
                             let sequenceActions = SKAction.sequence([fadeOut, colorChange, fadeIn])
 
-                            spriteUnwrapped.runAction(sequenceActions, completion: {() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.alpha = 1.0; self.drawCount-=1})
+                            spriteUnwrapped.run(sequenceActions, completion: {() in spriteUnwrapped.fillColor = colorTo; spriteUnwrapped.alpha = 1.0; self.drawCount-=1})
                         } else {
                             spriteUnwrapped.fillColor = colorTo
                             self.drawCount-=1
@@ -471,7 +484,7 @@ class GameScene: SKScene, GameViewScene {
                         let piece_width = width / 8
                         let px = CGFloat(x) * piece_width + piece_width / 2
                         let py = (CGFloat(y) * piece_width) + piece_width / 2
-                        spriteUnwrapped.position = self.screenPointFromVirtualPoint(CGPointMake(px, py))
+                        spriteUnwrapped.position = self.screenPointFromVirtualPoint(CGPoint(x: px, y: py))
 
                         // Add
                         self.boardSprites[y][x] = spriteUnwrapped
@@ -483,10 +496,10 @@ class GameScene: SKScene, GameViewScene {
             // Hilight put position
             if(put.count > 0) {
                 let (x, y) = put[0]
-                let boardView = self.childNodeWithName("Board") as! SKSpriteNode
+                let boardView = self.childNode(withName: "Board") as! SKSpriteNode
                 let piece_width = boardView.size.width / 8
                 self.lastPut?.removeFromParent()
-                self.lastPut = SKShapeNode(rect: self.screenRectFromVritualRect(CGRectMake(CGFloat(x) * piece_width, CGFloat(y) * piece_width, piece_width, piece_width)))
+                self.lastPut = SKShapeNode(rect: self.screenRectFromVritualRect(CGRect(x: CGFloat(x) * piece_width, y: CGFloat(y) * piece_width, width: piece_width, height: piece_width)))
                 self.lastPut?.strokeColor = self.tintColor
                 boardView.addChild(self.lastPut!)
             }
@@ -500,7 +513,7 @@ class GameScene: SKScene, GameViewScene {
     }
 
     func showPasses() {
-        let boardView = self.childNodeWithName("Board") as! SKSpriteNode
+        let boardView = self.childNode(withName: "Board") as! SKSpriteNode
         let width : CGFloat = boardView.size.width
 //        var piece_width = width / 8
 
@@ -509,7 +522,7 @@ class GameScene: SKScene, GameViewScene {
         let ox = width / 2 - rectWidth / 2
         let oy = width / 2 - rectHeight / 2
 
-        let rect = CGRectMake(ox, oy, rectWidth, rectHeight)
+        let rect = CGRect(x: ox, y: oy, width: rectWidth, height: rectHeight)
         let rectNormalized = self.screenRectFromVritualRect(rect)
 
         let rectanble = SKShapeNode(rect: rectNormalized, cornerRadius: 15)
@@ -520,38 +533,38 @@ class GameScene: SKScene, GameViewScene {
         passLabel.name = "labelPass"
         passLabel.fontColor = boardPopupFontColor
         passLabel.fontSize = 100
-        passLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
-        passLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
-        passLabel.position = self.screenPointFromVirtualPoint(CGPointMake(width / 2, width / 2))
+        passLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
+        passLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+        passLabel.position = self.screenPointFromVirtualPoint(CGPoint(x: width / 2, y: width / 2))
         boardView.addChild(passLabel)
 
-        let fadeInFrame = SKAction.fadeAlphaTo(0.5, duration: 0.3)
-        let fadeInLabel = SKAction.fadeAlphaTo(1, duration: 0.3)
-        let fadeOut = SKAction.fadeAlphaTo(0.0, duration: 0.6)
-        passLabel.runAction(SKAction.sequence([fadeInLabel, fadeOut]), completion: {() in passLabel.removeFromParent()})
-        rectanble.runAction(SKAction.sequence([fadeInFrame, fadeOut]), completion: {() in rectanble.removeFromParent()})
+        let fadeInFrame = SKAction.fadeAlpha(to: 0.5, duration: 0.3)
+        let fadeInLabel = SKAction.fadeAlpha(to: 1, duration: 0.3)
+        let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 0.6)
+        passLabel.run(SKAction.sequence([fadeInLabel, fadeOut]), completion: {() in passLabel.removeFromParent()})
+        rectanble.run(SKAction.sequence([fadeInFrame, fadeOut]), completion: {() in rectanble.removeFromParent()})
     }
 
-    func showGameOver(title: String, message: String, showNext: Bool, nextLabel: String) {
+    func showGameOver(_ title: String, message: String, showNext: Bool, nextLabel: String) {
         //
         let viewController = self.view?.window?.rootViewController as! GameViewController
         var actions: [UIAlertAction] = []
 
-        actions.append(UIAlertAction(title: "Again", style: .Default, handler: {
+        actions.append(UIAlertAction(title: "Again", style: .default, handler: {
             action in NSLog("Retry!")
         }))
 
         if(showNext) {
-            actions.append(UIAlertAction(title: nextLabel, style: .Default, handler: {
+            actions.append(UIAlertAction(title: nextLabel, style: .default, handler: {
                 action in
                 self.gameSettings.loadFromUserDefaults()
                 let lc: LevelController = LevelController()
                 if let nextChallengeLevel = lc.getNextLevel(self.gameManager.challengeLevelId) {
                     switch (self.gameManager.challengeModeComputer()) {
-                    case Pieces.Black:
+                    case Pieces.black:
                         self.gameSettings.blackPlayerComputerLevelId = nextChallengeLevel.levelId
                         self.gameSettings.saveToUserDefaults()
-                    case Pieces.White:
+                    case Pieces.white:
                         self.gameSettings.whitePlayerComputerLevelId = nextChallengeLevel.levelId
                         self.gameSettings.saveToUserDefaults()
                     default:
@@ -565,32 +578,32 @@ class GameScene: SKScene, GameViewScene {
         viewController.popupAlert(title, message: message, actions: actions)
     }
 
-    private func screenXFromVirtualX(x: CGFloat) -> CGFloat {
+    fileprivate func screenXFromVirtualX(_ x: CGFloat) -> CGFloat {
         return x - 320
     }
 
-    private func screenYFromVirtualY(y: CGFloat) -> CGFloat {
+    fileprivate func screenYFromVirtualY(_ y: CGFloat) -> CGFloat {
         return 1136 - y - topYOffset
     }
 
-    private func virtualXFromScreenX(x: CGFloat) -> CGFloat {
+    fileprivate func virtualXFromScreenX(_ x: CGFloat) -> CGFloat {
         return x + 320
     }
 
-    private func virtualYFromScreenY(y: CGFloat) -> CGFloat {
+    fileprivate func virtualYFromScreenY(_ y: CGFloat) -> CGFloat {
         return 1136 - y - topYOffset
     }
 
-    private func screenPointFromVirtualPoint(point: CGPoint) -> CGPoint {
-        return CGPointMake(screenXFromVirtualX(point.x), screenYFromVirtualY(point.y))
+    fileprivate func screenPointFromVirtualPoint(_ point: CGPoint) -> CGPoint {
+        return CGPoint(x: screenXFromVirtualX(point.x), y: screenYFromVirtualY(point.y))
     }
 
-    private func screenRectFromVritualRect(rect: CGRect) -> CGRect {
-        return CGRectMake(screenXFromVirtualX(rect.origin.x), screenYFromVirtualY(rect.origin.y), rect.width, -rect.height)
+    fileprivate func screenRectFromVritualRect(_ rect: CGRect) -> CGRect {
+        return CGRect(x: screenXFromVirtualX(rect.origin.x), y: screenYFromVirtualY(rect.origin.y), width: rect.width, height: -rect.height)
     }
     
-    override func update(currentTime: CFTimeInterval) {
-        if(!self.paused) {
+    override func update(_ currentTime: TimeInterval) {
+        if(!self.isPaused) {
             processUpdateBoardViewQueue()
 
             /* Called before each frame is rendered */
