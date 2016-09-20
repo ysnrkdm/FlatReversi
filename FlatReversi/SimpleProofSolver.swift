@@ -9,21 +9,21 @@
 import Foundation
 
 enum NodeType {
-    case And, Or
+    case and, or
 }
 
 enum ProofType {
-    case Proven, Disproven, Unknown
+    case proven, disproven, unknown
 }
 
 class ProofNode {
-    var value: ProofType = .Unknown
+    var value: ProofType = .unknown
     var proof: Int = 1
     var disproof : Int = 1
 
     var expanded : Bool = false
 
-    var whosTurn: Pieces = .None
+    var whosTurn: Pieces = .none
 
     var parent: ProofNode?
     var children: [ProofNode] = []
@@ -62,7 +62,7 @@ class ProofNode {
         while !stack.isEmpty {
             if let current = stack.pop() {
                 // Add children to stack
-                for child in current.children.sort({$0.proof < $1.proof}) {
+                for child in current.children.sorted(by: {$0.proof < $1.proof}) {
                     stack.push(child)
                 }
 
@@ -105,8 +105,8 @@ class BoardCache {
 class SimpleProofSolver: ProofSolver {
     let INF = Int.max / 10
 
-    override func solve(boardRepresentation: BoardRepresentation, forPlayer: Pieces) -> ProofAnswer {
-        let root = ProofNode(value: .Unknown, proof: 1, disproof: 1, whosTurn: forPlayer, boardRepresentation: boardRepresentation, parent: nil)
+    override func solve(_ boardRepresentation: BoardRepresentation, forPlayer: Pieces) -> ProofAnswer {
+        let root = ProofNode(value: .unknown, proof: 1, disproof: 1, whosTurn: forPlayer, boardRepresentation: boardRepresentation, parent: nil)
 
         pns(root)
 
@@ -120,19 +120,19 @@ class SimpleProofSolver: ProofSolver {
             }
 
             switch forPlayer {
-            case .Black:
-                return ProofAnswer(proof: .BlackWin, moves: moves)
-            case .White:
-                return ProofAnswer(proof: .WhiteWin, moves: moves)
+            case .black:
+                return ProofAnswer(proof: .blackWin, moves: moves)
+            case .white:
+                return ProofAnswer(proof: .whiteWin, moves: moves)
             default:
-                return ProofAnswer(proof: .Undefined, moves: [])
+                return ProofAnswer(proof: .undefined, moves: [])
             }
         } else {
-            return ProofAnswer(proof: .Undefined, moves: [])
+            return ProofAnswer(proof: .undefined, moves: [])
         }
     }
 
-    func pns(root: ProofNode) {
+    func pns(_ root: ProofNode) {
         evaluate(root, attacker: root.whosTurn)
         setProofAndDisproofNumbers(root, attacker: root.whosTurn)
 
@@ -145,28 +145,28 @@ class SimpleProofSolver: ProofSolver {
         }
     }
 
-    func evaluate(node: ProofNode, attacker: Pieces) {
-        node.value = .Unknown
+    func evaluate(_ node: ProofNode, attacker: Pieces) {
+        node.value = .unknown
         let a = isTerminal(node.boardRepresentation)
-        if a == .BlackWin {
-            if attacker == .Black {
-                node.value = .Proven
+        if a == .blackWin {
+            if attacker == .black {
+                node.value = .proven
             } else {
-                node.value = .Disproven
+                node.value = .disproven
             }
-        } else if a == .WhiteWin {
-            if attacker == .White {
-                node.value = .Proven
+        } else if a == .whiteWin {
+            if attacker == .white {
+                node.value = .proven
             } else {
-                node.value = .Disproven
+                node.value = .disproven
             }
         }
     }
 
-    func setProofAndDisproofNumbers(node: ProofNode, attacker: Pieces) {
+    func setProofAndDisproofNumbers(_ node: ProofNode, attacker: Pieces) {
         if ( node.expanded ) {
             // Interior node
-            if ( nodeType(node, attacker: attacker) == .And ) {
+            if ( nodeType(node, attacker: attacker) == .and ) {
                 // AND node
                 node.proof = 0
                 node.disproof = INF
@@ -185,21 +185,21 @@ class SimpleProofSolver: ProofSolver {
         } else {
             // Terminal node or none terminal leaf
             switch( node.value ) {
-            case .Disproven:
+            case .disproven:
                 node.proof = INF; node.disproof = 0
-            case .Proven:
+            case .proven:
                 node.proof = 0; node.disproof = INF
-            case .Unknown:
+            case .unknown:
                 node.proof = 1; node.disproof = 1
             }
         }
     }
 
-    func nodeType(node: ProofNode, attacker: Pieces) -> NodeType {
+    func nodeType(_ node: ProofNode, attacker: Pieces) -> NodeType {
         if node.whosTurn == attacker {
-            return .Or
+            return .or
         } else {
-            return .And
+            return .and
         }
     }
 
@@ -207,12 +207,12 @@ class SimpleProofSolver: ProofSolver {
         return true
     }
 
-    func selectMostProvingNode(node: ProofNode, attacker: Pieces) -> ProofNode {
+    func selectMostProvingNode(_ node: ProofNode, attacker: Pieces) -> ProofNode {
         var ret = node
         while ( ret.expanded ) {
             var value = INF;
-            var best = ProofNode(value: .Unknown, proof: 1, disproof: 1, whosTurn: .Black, boardRepresentation: BoardRepresentation(boardMediator: BoardMediator(board: SimpleBitBoard())), parent: nil, children: []);
-            if ( nodeType(ret, attacker: attacker) == .And ) {
+            var best = ProofNode(value: .unknown, proof: 1, disproof: 1, whosTurn: .black, boardRepresentation: BoardRepresentation(boardMediator: BoardMediator(board: SimpleBitBoard())), parent: nil, children: []);
+            if ( nodeType(ret, attacker: attacker) == .and ) {
                 for c in ret.children {
                     if ( value > c.disproof ) {
                         best = c;
@@ -232,7 +232,7 @@ class SimpleProofSolver: ProofSolver {
         return ret;
     }
 
-    func expandNode(node: ProofNode, attacker: Pieces) {
+    func expandNode(_ node: ProofNode, attacker: Pieces) {
         // Generate children
         let children = getChildren(node)
         node.children = children
@@ -240,7 +240,7 @@ class SimpleProofSolver: ProofSolver {
         for c in node.children {
             evaluate(c, attacker: attacker)
             setProofAndDisproofNumbers(c, attacker: attacker)
-            if nodeType(node, attacker: attacker) == NodeType.And {
+            if nodeType(node, attacker: attacker) == NodeType.and {
                 // And node
                 if c.disproof == 0 { break }
             } else {
@@ -251,7 +251,7 @@ class SimpleProofSolver: ProofSolver {
         node.expanded = true
     }
 
-    func updateAncestors(from: ProofNode, root: ProofNode) -> ProofNode {
+    func updateAncestors(_ from: ProofNode, root: ProofNode) -> ProofNode {
         var node: ProofNode = from
 
         while node !== root {
@@ -269,13 +269,13 @@ class SimpleProofSolver: ProofSolver {
         return root
     }
 
-    func getChildren(node: ProofNode) -> [ProofNode] {
+    func getChildren(_ node: ProofNode) -> [ProofNode] {
         var ret: [ProofNode] = []
 
         for (px, py) in node.boardRepresentation.getPuttables(node.whosTurn) {
             let newBR = node.boardRepresentation.clone()
             newBR.boardMediator.put(node.whosTurn, x: px, y: py)
-            let newNode = ProofNode(value: .Unknown, proof: 1, disproof: 1, whosTurn: node.boardRepresentation.boardMediator.nextTurn(node.whosTurn), boardRepresentation: newBR, parent: node, children: [])
+            let newNode = ProofNode(value: .unknown, proof: 1, disproof: 1, whosTurn: node.boardRepresentation.boardMediator.nextTurn(node.whosTurn), boardRepresentation: newBR, parent: node, children: [])
             newNode.put = (px, py)
             ret.append(newNode)
         }
@@ -283,16 +283,16 @@ class SimpleProofSolver: ProofSolver {
         return ret
     }
 
-    func isTerminal(boardRepresentation: BoardRepresentation) -> Proofs {
-        if boardRepresentation.getNumVacant() > 0 || boardRepresentation.getPuttables(Pieces.Black).count > 0 || boardRepresentation.getPuttables(Pieces.White).count > 0 {
-            return .Undefined
+    func isTerminal(_ boardRepresentation: BoardRepresentation) -> Proofs {
+        if boardRepresentation.getNumVacant() > 0 || boardRepresentation.getPuttables(Pieces.black).count > 0 || boardRepresentation.getPuttables(Pieces.white).count > 0 {
+            return .undefined
         } else {
             if boardRepresentation.getNumBlack() > boardRepresentation.getNumWhite() {
-                return .BlackWin
+                return .blackWin
             } else if boardRepresentation.getNumBlack() < boardRepresentation.getNumWhite() {
-                return .WhiteWin
+                return .whiteWin
             } else {
-                return .Draw
+                return .draw
             }
         }
     }

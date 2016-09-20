@@ -9,17 +9,17 @@
 import Foundation
 
 enum Proofs {
-    case BlackWin, WhiteWin, Draw, Undefined
+    case blackWin, whiteWin, draw, undefined
 
     func toString() -> String {
         switch self {
-        case BlackWin:
+        case .blackWin:
             return "Black Win"
-        case WhiteWin:
+        case .whiteWin:
             return "White Win"
-        case Draw:
+        case .draw:
             return "Draw"
-        case Undefined:
+        case .undefined:
             return "Undefined"
         }
     }
@@ -41,8 +41,8 @@ class ProofAnswer {
 }
 
 class ProofSolver {
-    func solve(boardRepresentation: BoardRepresentation, forPlayer: Pieces) -> ProofAnswer {
-        return ProofAnswer(proof: .Undefined, moves: [])
+    func solve(_ boardRepresentation: BoardRepresentation, forPlayer: Pieces) -> ProofAnswer {
+        return ProofAnswer(proof: .undefined, moves: [])
     }
 
 }
