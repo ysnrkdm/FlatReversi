@@ -17,7 +17,7 @@ class SimpleEvaluator: BitBoardEvaluator {
 
     var zones: Zones = Zones(width: 8, height: 8, initVal: 1)
 
-    func configure(wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double], zones: Zones) {
+    func configure(_ wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double], zones: Zones) {
         self.wPossibleMoves = wPossibleMoves
         self.wEdge = wEdge
         self.wFixedPieces = wFixedPieces
@@ -26,25 +26,25 @@ class SimpleEvaluator: BitBoardEvaluator {
         self.zones = zones
     }
 
-    override func evaluate(boardRepresentation: BoardRepresentation, forPlayer: Pieces) -> Double {
+    override func evaluate(_ boardRepresentation: BoardRepresentation, forPlayer: Pieces) -> Double {
         let ePossibleMoves = Double(arc4random()) / Double(UINT32_MAX)
 
         return ePossibleMoves
     }
 
-    override func evaluateBitBoard(board: BitBoard, forPlayer: Pieces) -> Double {
+    override func evaluateBitBoard(_ board: BitBoard, forPlayer: Pieces) -> Double {
         let ePossibleMoves = Double(arc4random()) / Double(UINT32_MAX)
 
         return ePossibleMoves
     }
 
     // MARK: Factors
-    func possibleMoves(board: BoardRepresentation, forPlayer: Pieces) -> Int {
+    func possibleMoves(_ board: BoardRepresentation, forPlayer: Pieces) -> Int {
         return board.getPuttables(forPlayer).count
     }
 
     // MARK: Private functions
-    func getWeightByPhase(weight: [Double], board: BoardRepresentation) -> Double {
+    func getWeightByPhase(_ weight: [Double], board: BoardRepresentation) -> Double {
         let perPhase: Int = 60 / weight.count
         var phase: Int = (60 - board.getNumVacant()) / perPhase
         phase = phase >= weight.count ? phase - 1 : phase

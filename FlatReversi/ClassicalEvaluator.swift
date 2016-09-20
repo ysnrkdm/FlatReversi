@@ -20,7 +20,7 @@ class ClassicalEvaluator: BitBoardEvaluator {
 //    var boardEvalCacheBlack: Dictionary<BoardHash, Double> = Dictionary<BoardHash, Double>()
 //    var boardEvalCacheWhite: Dictionary<BoardHash, Double> = Dictionary<BoardHash, Double>()
 
-    final func configure(wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double], zones: Zones) {
+    final func configure(_ wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double], zones: Zones) {
         self.wPossibleMoves = wPossibleMoves
         self.wEdge = wEdge
         self.wFixedPieces = wFixedPieces
@@ -29,7 +29,7 @@ class ClassicalEvaluator: BitBoardEvaluator {
         self.zones = zones
     }
 
-    final override func evaluate(boardRepresentation: BoardRepresentation, forPlayer: Pieces) -> Double {
+    final override func evaluate(_ boardRepresentation: BoardRepresentation, forPlayer: Pieces) -> Double {
         var bitBoard = BitBoard()
 
         for iy in 0..<bitBoard.height() {
@@ -61,7 +61,7 @@ class ClassicalEvaluator: BitBoardEvaluator {
 //        }
     }
 
-    final override func evaluateBitBoard(board: BitBoard, forPlayer: Pieces) -> Double {
+    final override func evaluateBitBoard(_ board: BitBoard, forPlayer: Pieces) -> Double {
         let ePossibleMoves = getWeightByPhase(wPossibleMoves, board: board) * Double(possibleMoves(board, forPlayer: forPlayer))
         let eEdge =
             getWeightByPhase(wEdge, board: board) * edge(board, forPlayer: forPlayer)
@@ -79,16 +79,16 @@ class ClassicalEvaluator: BitBoardEvaluator {
 
     // MARK: Factors
 
-    final func possibleMoves(board: BitBoard, forPlayer: Pieces) -> Int {
+    final func possibleMoves(_ board: BitBoard, forPlayer: Pieces) -> Int {
         return pop(board.getPuttables(forPlayer))
     }
 
-    final func edge(board: BitBoard, forPlayer: Pieces) -> Double {
+    final func edge(_ board: BitBoard, forPlayer: Pieces) -> Double {
         return 0.0
     }
 
     // Currently only count at edge
-    final func fixedPieces(board: BitBoard, forPlayer: Pieces) -> Int {
+    final func fixedPieces(_ board: BitBoard, forPlayer: Pieces) -> Int {
         let H = board.height()
         let W = board.width()
 
@@ -146,7 +146,7 @@ class ClassicalEvaluator: BitBoardEvaluator {
         return ret
     }
 
-    final func openness(board: BitBoard, forPlayer: Pieces) -> Int {
+    final func openness(_ board: BitBoard, forPlayer: Pieces) -> Int {
         var ret = 0
         var bb = board.getBoardForPlayer(forPlayer)
 
@@ -157,13 +157,13 @@ class ClassicalEvaluator: BitBoardEvaluator {
             let x = move % 8
             let y = move / 8
 
-            ret += board.numPeripherals(.Empty, x: x, y: y)
+            ret += board.numPeripherals(.empty, x: x, y: y)
         }
 
         return ret
     }
 
-    final func boardEvaluation(board: BitBoard, forPlayer: Pieces, zones: Zones) -> Double {
+    final func boardEvaluation(_ board: BitBoard, forPlayer: Pieces, zones: Zones) -> Double {
         var ret = 0.0
         let z = zones.zones
         var bb = board.getBoardForPlayer(forPlayer)
@@ -182,7 +182,7 @@ class ClassicalEvaluator: BitBoardEvaluator {
     }
 
     // MARK: Private functions
-    final func getWeightByPhase(weight: [Double], board: BitBoard) -> Double {
+    final func getWeightByPhase(_ weight: [Double], board: BitBoard) -> Double {
         let perPhase: Int = 60 / weight.count
         var phase: Int = (60 - board.getNumVacant()) / perPhase
         phase = phase >= weight.count ? phase - 1 : phase

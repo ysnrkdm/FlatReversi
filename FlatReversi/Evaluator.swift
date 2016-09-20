@@ -9,15 +9,15 @@
 import Foundation
 
 protocol Evaluator {
-    func evaluate(board: BoardRepresentation, forPlayer: Pieces) -> Double
+    func evaluate(_ board: BoardRepresentation, forPlayer: Pieces) -> Double
 }
 
 class BitBoardEvaluator : Evaluator {
-    func evaluate(board: BoardRepresentation, forPlayer: Pieces) -> Double {
+    func evaluate(_ board: BoardRepresentation, forPlayer: Pieces) -> Double {
         fatalError("Implement this function by inheriting class.")
     }
 
-    func evaluateBitBoard(board: BitBoard, forPlayer: Pieces) -> Double {
+    func evaluateBitBoard(_ board: BitBoard, forPlayer: Pieces) -> Double {
         fatalError("Implement this function by inheriting class.")
     }
 }
