@@ -25,7 +25,7 @@ class SearchEvalPlayer: ComputerPlayer {
     var evaluator = ClassicalEvaluator()
     var searcher: Search = NegaAlphaSearch()
 
-    func configure(searcher: Search, zones: Zones, pnsLessThan: Int, searchDepth: Int, wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double]) {
+    func configure(_ searcher: Search, zones: Zones, pnsLessThan: Int, searchDepth: Int, wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double]) {
         self.searcher = searcher
 
         self.zones = zones
@@ -58,7 +58,7 @@ class SearchEvalPlayer: ComputerPlayer {
                 let solver = SimpleProofSolver()
                 let answer = solver.solve(br.clone(), forPlayer: color)
                 NSLog("Solving by PNS search...")
-                if ((answer.proof == .BlackWin && color == .Black) || (answer.proof == .WhiteWin && color == .White)) && answer.moves.count > 0 {
+                if ((answer.proof == .blackWin && color == .black) || (answer.proof == .whiteWin && color == .white)) && answer.moves.count > 0 {
                     (retx, rety) = answer.moves[0]
                     NSLog("Found PV! Answer is \(retx), \(rety)")
                     playerMediator.put(self.color, x: retx, y: rety)

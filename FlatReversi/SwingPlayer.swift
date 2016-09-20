@@ -15,7 +15,7 @@ class SwingPlayer: ComputerPlayer {
 
     var swing = 0       // odd to right, even to left
 
-    func configure(zones: Zones, pnsLessThan: Int) {
+    func configure(_ zones: Zones, pnsLessThan: Int) {
         self.zones = zones
         self.pnsLessThan = pnsLessThan
     }
@@ -32,7 +32,7 @@ class SwingPlayer: ComputerPlayer {
                 let solver = SimpleProofSolver()
                 let answer = solver.solve(br.clone(), forPlayer: color)
                 NSLog("Solving by PNS search...")
-                if ((answer.proof == .BlackWin && color == .Black) || (answer.proof == .WhiteWin && color == .White)) && answer.moves.count > 0 {
+                if ((answer.proof == .blackWin && color == .black) || (answer.proof == .whiteWin && color == .white)) && answer.moves.count > 0 {
                     (retx, rety) = answer.moves[0]
                     NSLog("Found PV! Answer is \(retx), \(rety)")
                     playerMediator.put(self.color, x: retx, y: rety)
@@ -46,9 +46,9 @@ class SwingPlayer: ComputerPlayer {
                     var coords = uzones.getTopNByRandomInPuttables(10, puttables: puttables)
                     if coords.count > 0 {
                         if swing % 2 == 0{
-                            coords = coords.sort({$0.0 < $1.0})
+                            coords = coords.sorted(by: {$0.0 < $1.0})
                         } else {
-                            coords = coords.sort({$0.0 > $1.0})
+                            coords = coords.sorted(by: {$0.0 > $1.0})
                         }
                         swing += 1
                         (retx, rety) = coords[0]

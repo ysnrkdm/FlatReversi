@@ -25,7 +25,7 @@ class TreeSearchWithPerturbationPlayer: ComputerPlayer {
     var evaluator = ClassicalEvaluator()
     var sst = NegaAlphaSearch()
 
-    func configure(zones: Zones, pnsLessThan: Int, searchDepth: Int, wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double], randomThreshold: Double) {
+    func configure(_ zones: Zones, pnsLessThan: Int, searchDepth: Int, wPossibleMoves: [Double], wEdge: [Double], wFixedPieces: [Double], wOpenness: [Double], wBoardEvaluation: [Double], randomThreshold: Double) {
         self.zones = zones
         self.pnsLessThan = pnsLessThan
         self.searchDepth = searchDepth
@@ -53,7 +53,7 @@ class TreeSearchWithPerturbationPlayer: ComputerPlayer {
                 let solver = SimpleProofSolver()
                 let answer = solver.solve(br.clone(), forPlayer: color)
                 NSLog("Solving by PNS search...")
-                if ((answer.proof == .BlackWin && color == .Black) || (answer.proof == .WhiteWin && color == .White)) && answer.moves.count > 0 {
+                if ((answer.proof == .blackWin && color == .black) || (answer.proof == .whiteWin && color == .white)) && answer.moves.count > 0 {
                     (retx, rety) = answer.moves[0]
                     NSLog("Found PV! Answer is \(retx), \(rety)")
                     playerMediator.put(self.color, x: retx, y: rety)

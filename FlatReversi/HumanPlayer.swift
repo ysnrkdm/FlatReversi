@@ -10,9 +10,9 @@ import Foundation
 
 class HumanPlayer: Player {
 
-    override func initialize(level: Int) {
-        changeStateTo(PlayerStates.Initialized)
-        changeStateTo(PlayerStates.Ready)
+    override func initialize(_ level: Int) {
+        changeStateTo(PlayerStates.initialized)
+        changeStateTo(PlayerStates.ready)
     }
     override func play() {
     }

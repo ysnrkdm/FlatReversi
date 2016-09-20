@@ -12,7 +12,7 @@ class RandomPlayerWithEvaluation: ComputerPlayer {
 
     var zones: Zones? = nil
 
-    func configure(zones: Zones) {
+    func configure(_ zones: Zones) {
         self.zones = zones
     }
 

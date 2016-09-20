@@ -12,7 +12,7 @@ class ComputerPlayer: Player {
 
     var level: Int = 0
 
-    override func initialize(level: Int) {
+    override func initialize(_ level: Int) {
         self.level = level
     }
 

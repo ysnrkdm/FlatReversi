@@ -9,63 +9,63 @@
 import Foundation
 
 enum PlayerStates {
-    case Created, Initialized, Ready, Playing, Error
+    case created, initialized, ready, playing, error
 }
 
 class Player {
     var playerMediator: PlayerMediator
-    private(set) var color: Pieces
-    private(set) var state: PlayerStates
+    fileprivate(set) var color: Pieces
+    fileprivate(set) var state: PlayerStates
 
     // MARK: Initializer
 
     init(playerMediator: PlayerMediator, color: Pieces) {
         self.playerMediator = playerMediator
         self.color = color
-        self.state = PlayerStates.Created
+        self.state = PlayerStates.created
     }
 
     // MARK: Methods cannot be overridden in sub classes
 
     final func isReady() -> Bool {
-        return self.state == PlayerStates.Ready
+        return self.state == PlayerStates.ready
     }
 
     final func isError() -> Bool {
-        return self.state == PlayerStates.Error
+        return self.state == PlayerStates.error
     }
 
-    final func put(x: Int, y: Int) -> Bool {
+    final func put(_ x: Int, y: Int) -> Bool {
         return self.playerMediator.put(color, x: x, y: y)
     }
 
-    final func canChangeState(from: PlayerStates, to: PlayerStates) -> Bool {
+    final func canChangeState(_ from: PlayerStates, to: PlayerStates) -> Bool {
         // Catch all
 
         // From any states to error is allowed
-        if(to == PlayerStates.Error && from != PlayerStates.Error) {
+        if(to == PlayerStates.error && from != PlayerStates.error) {
             return true
         }
         // From any states to initialized is allowed
-        if(to == PlayerStates.Initialized && from != PlayerStates.Initialized) {
+        if(to == PlayerStates.initialized && from != PlayerStates.initialized) {
             return true
         }
 
         switch(from) {
-        case PlayerStates.Created:
-            return to == PlayerStates.Initialized
-        case PlayerStates.Initialized:
-            return to == PlayerStates.Ready
-        case PlayerStates.Ready:
-            return to == PlayerStates.Playing
-        case PlayerStates.Playing:
-            return to == PlayerStates.Ready
-        case PlayerStates.Error:
-            return to == PlayerStates.Ready
+        case PlayerStates.created:
+            return to == PlayerStates.initialized
+        case PlayerStates.initialized:
+            return to == PlayerStates.ready
+        case PlayerStates.ready:
+            return to == PlayerStates.playing
+        case PlayerStates.playing:
+            return to == PlayerStates.ready
+        case PlayerStates.error:
+            return to == PlayerStates.ready
         }
     }
 
-    final func changeStateTo(to: PlayerStates) -> Bool {
+    final func changeStateTo(_ to: PlayerStates) -> Bool {
         if(canChangeState(self.state, to: to)) {
             self.state = to
             return true
@@ -76,7 +76,7 @@ class Player {
 
     // MARK: Override below methods in sub classes
 
-    func initialize(level: Int) {
+    func initialize(_ level: Int) {
 
     }
 
