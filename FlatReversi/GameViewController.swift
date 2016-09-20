@@ -11,14 +11,14 @@ import SpriteKit
 import GoogleMobileAds
 
 extension SKNode {
-    class func unarchiveFromFile(file : NSString) -> SKNode? {
-        if let path = NSBundle.mainBundle().pathForResource(file as String, ofType: "sks") {
-            guard let sceneData = try? NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe) else {
+    class func unarchiveFromFile(_ file : NSString) -> SKNode? {
+        if let path = Bundle.main.path(forResource: file as String, ofType: "sks") {
+            guard let sceneData = try? Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe) else {
                 return nil
             }
-            let archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
+            let archiver = NSKeyedUnarchiver(forReadingWith: sceneData)
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
+            let scene = archiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as! GameScene
             archiver.finishDecoding()
             return scene
         } else {
@@ -37,7 +37,7 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
 
     var currentScene: SKScene? = nil
 
-    var bannerView: GADBannerView?
+    @IBOutlet weak var bannerView: GADBannerView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +45,6 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
         self.view.sizeToFit()
 
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
-            // Configure the view.
-
             currentScene = scene
             scene.tintColor = self.view.tintColor
             skView.showsFPS = false
@@ -56,14 +54,15 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
             skView.ignoresSiblingOrder = true
             
             /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
-            NSLog("UIApplication().statusBarFrame origin y = \(UIApplication.sharedApplication().statusBarFrame.origin.y)")
-            NSLog("UIApplication().statusBarFrame size y = \(UIApplication.sharedApplication().statusBarFrame.size.height)")
+            scene.scaleMode = .aspectFill
+            NSLog("UIApplication().statusBarFrame origin y = \(UIApplication.shared.statusBarFrame.origin.y)")
+            NSLog("UIApplication().statusBarFrame size y = \(UIApplication.shared.statusBarFrame.size.height)")
             NSLog("skView.bounds.origin.y = \(skView.bounds.origin.y)")
             NSLog("navbar.bounds.origin.y = \(navbar.bounds.origin.y)")
             NSLog("navbar.bounds.height = \(navbar.bounds.height)")
-            scene.topYOffset = UIApplication.sharedApplication().statusBarFrame.origin.y + UIApplication.sharedApplication().statusBarFrame.size.height + navbar.bounds.origin.y + navbar.bounds.height
-            scene.statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
+            scene.topYOffset = UIApplication.shared.statusBarFrame.origin.y + UIApplication.shared.statusBarFrame.size.height + navbar.bounds.origin.y + navbar.bounds.height
+            scene.topYOffset = 100
+            scene.statusBarHeight = UIApplication.shared.statusBarFrame.size.height
             
             skView.presentScene(scene)
             thisScene = scene
@@ -73,7 +72,7 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
 
         navbar.delegate = self;
         if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
-            navbar.barTintColor = UIColor.whiteColor();
+            navbar.barTintColor = UIColor.white;
         }
 
         let gs: GameSettings = GameSettings()
@@ -83,56 +82,48 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
         }
 
         // Ad
-        let origin = CGPointMake(0.0, self.view.frame.size.height - CGSizeFromGADAdSize(kGADAdSizeBanner).height);
-        bannerView = GADBannerView(adSize: kGADAdSizeBanner, origin: origin)
         if let uBannerView = bannerView {
             uBannerView.adUnitID = "ca-app-pub-4004659206753296/7384819767"
-//            uBannerView.delegate = self
             uBannerView.rootViewController = self
-//            self.view.addSubview(uBannerView)
-            uBannerView.loadRequest(GADRequest())
+            uBannerView.load(GADRequest())
         }
     }
 
-    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
-        return UIBarPosition.TopAttached
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return UIBarPosition.topAttached
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         NSLog("size before %f - %f", self.view.frame.width.native, navbar.frame.size.width.native)
-
         NSLog("size %f - %f", self.view.frame.width.native, navbar.frame.size.width.native)
 
         let sView = self.view as! SKView
-        sView.paused = false
-        skView.paused = false
-        currentScene?.paused = false
-
-//        AppearanceManager.load()
-//        AppearanceManager.resetViews()
+        sView.isPaused = false
+        skView.isPaused = false
+        currentScene?.isPaused = false
 
         thisScene?.loadColors()
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         let sView = self.view as! SKView
-        currentScene?.paused = true
-        sView.paused = true
-        skView.paused = true
+        currentScene?.isPaused = true
+        sView.isPaused = true
+        skView.isPaused = true
 
     }
 
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return false
     }
 
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return UIInterfaceOrientationMask.AllButUpsideDown
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return UIInterfaceOrientationMask.allButUpsideDown
         } else {
-            return UIInterfaceOrientationMask.All
+            return UIInterfaceOrientationMask.all
         }
     }
 
@@ -141,34 +132,34 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
         // Release any cached data, images, etc that aren't in use.
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return false
     }
     
-    @IBAction func push(sender: AnyObject) {
+    @IBAction func push(_ sender: AnyObject) {
         let sView = self.view as! SKView
-        currentScene?.paused = true
-        sView.paused = true
-        skView.paused = true
+        currentScene?.isPaused = true
+        sView.isPaused = true
+        skView.isPaused = true
         NSLog("pressed Settings")
 
-        performSegueWithIdentifier("settings",sender: nil)
+        performSegue(withIdentifier: "settings",sender: nil)
     }
 
-    @IBAction func playNewGame(sender: AnyObject) {
+    @IBAction func playNewGame(_ sender: AnyObject) {
         NSLog("play new game!")
         thisScene?.startGame()
     }
 
-    func updateNavBarTitle(str: String) {
+    func updateNavBarTitle(_ str: String) {
         navbarTitle.title = str
     }
 
-    func popupAlert(title: String, message: String, actions: [UIAlertAction]) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .ActionSheet)
+    func popupAlert(_ title: String, message: String, actions: [UIAlertAction]) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         for action in actions {
             alertController.addAction(action)
         }
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 }
