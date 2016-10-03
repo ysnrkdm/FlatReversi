@@ -7,6 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B39A1EB1DA137B40000A8DA /* ClassicalEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B39A1E21DA137B40000A8DA /* ClassicalEvaluator.swift */; };
+		8B39A1EC1DA137B40000A8DA /* Evaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B39A1E31DA137B40000A8DA /* Evaluator.swift */; };
+		8B39A1ED1DA137B40000A8DA /* SimpleEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B39A1E41DA137B40000A8DA /* SimpleEvaluator.swift */; };
+		8B39A1EE1DA137B40000A8DA /* ProofSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B39A1E61DA137B40000A8DA /* ProofSolver.swift */; };
+		8B39A1EF1DA137B40000A8DA /* SimpleProofSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B39A1E71DA137B40000A8DA /* SimpleProofSolver.swift */; };
+		8B39A1F01DA137B40000A8DA /* NegaAlphaSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B39A1E91DA137B40000A8DA /* NegaAlphaSearch.swift */; };
+		8B39A1F11DA137B40000A8DA /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B39A1EA1DA137B40000A8DA /* Search.swift */; };
+		8B39A1F41DA138180000A8DA /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B39A1F31DA138180000A8DA /* Stack.swift */; };
+		8B39A1F61DA1388A0000A8DA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B39A1F51DA1388A0000A8DA /* Utils.swift */; };
+		8B3FE00A1DA0BD2E005863E6 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3FE0031DA0BD2E005863E6 /* Board.swift */; };
+		8B3FE00B1DA0BD2E005863E6 /* BoardBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3FE0041DA0BD2E005863E6 /* BoardBuilder.swift */; };
+		8B3FE00C1DA0BD2E005863E6 /* BoardMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3FE0051DA0BD2E005863E6 /* BoardMediator.swift */; };
+		8B3FE00D1DA0BD2E005863E6 /* BoardRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3FE0061DA0BD2E005863E6 /* BoardRepresentation.swift */; };
+		8B3FE00E1DA0BD2E005863E6 /* FasterBitBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3FE0071DA0BD2E005863E6 /* FasterBitBoard.swift */; };
+		8B3FE00F1DA0BD2E005863E6 /* SimpleBitBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3FE0081DA0BD2E005863E6 /* SimpleBitBoard.swift */; };
+		8B3FE0101DA0BD2E005863E6 /* Zones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3FE0091DA0BD2E005863E6 /* Zones.swift */; };
+		8B3FE0121DA0BDC3005863E6 /* Swift_Bridging_Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3FE0111DA0BDC0005863E6 /* Swift_Bridging_Header.h */; };
+		8B3FE0161DA0BE38005863E6 /* intrinsics.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B3FE0141DA0BE38005863E6 /* intrinsics.c */; };
+		8B3FE0171DA0BE38005863E6 /* intrinsics.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3FE0151DA0BE38005863E6 /* intrinsics.h */; };
+		8B3FE0191DA0BE48005863E6 /* Graphite-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3FE0181DA0BE48005863E6 /* Graphite-Bridging-Header.h */; };
 		8B88FF591D9692D500378455 /* Graphite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B88FF4F1D9692D500378455 /* Graphite.framework */; };
 		8B88FF5E1D9692D500378455 /* GraphiteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B88FF5D1D9692D500378455 /* GraphiteTests.swift */; };
 		8B88FF601D9692D500378455 /* Graphite.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B88FF521D9692D500378455 /* Graphite.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -23,6 +43,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B39A1E21DA137B40000A8DA /* ClassicalEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicalEvaluator.swift; sourceTree = "<group>"; };
+		8B39A1E31DA137B40000A8DA /* Evaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Evaluator.swift; sourceTree = "<group>"; };
+		8B39A1E41DA137B40000A8DA /* SimpleEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleEvaluator.swift; sourceTree = "<group>"; };
+		8B39A1E61DA137B40000A8DA /* ProofSolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProofSolver.swift; sourceTree = "<group>"; };
+		8B39A1E71DA137B40000A8DA /* SimpleProofSolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleProofSolver.swift; sourceTree = "<group>"; };
+		8B39A1E91DA137B40000A8DA /* NegaAlphaSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NegaAlphaSearch.swift; sourceTree = "<group>"; };
+		8B39A1EA1DA137B40000A8DA /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
+		8B39A1F31DA138180000A8DA /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		8B39A1F51DA1388A0000A8DA /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		8B3FE0031DA0BD2E005863E6 /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		8B3FE0041DA0BD2E005863E6 /* BoardBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardBuilder.swift; sourceTree = "<group>"; };
+		8B3FE0051DA0BD2E005863E6 /* BoardMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardMediator.swift; sourceTree = "<group>"; };
+		8B3FE0061DA0BD2E005863E6 /* BoardRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardRepresentation.swift; sourceTree = "<group>"; };
+		8B3FE0071DA0BD2E005863E6 /* FasterBitBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FasterBitBoard.swift; sourceTree = "<group>"; };
+		8B3FE0081DA0BD2E005863E6 /* SimpleBitBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleBitBoard.swift; sourceTree = "<group>"; };
+		8B3FE0091DA0BD2E005863E6 /* Zones.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zones.swift; sourceTree = "<group>"; };
+		8B3FE0111DA0BDC0005863E6 /* Swift_Bridging_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Swift_Bridging_Header.h; sourceTree = "<group>"; };
+		8B3FE0141DA0BE38005863E6 /* intrinsics.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intrinsics.c; sourceTree = "<group>"; };
+		8B3FE0151DA0BE38005863E6 /* intrinsics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = intrinsics.h; sourceTree = "<group>"; };
+		8B3FE0181DA0BE48005863E6 /* Graphite-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Graphite-Bridging-Header.h"; sourceTree = "<group>"; };
 		8B88FF4F1D9692D500378455 /* Graphite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Graphite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B88FF521D9692D500378455 /* Graphite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Graphite.h; sourceTree = "<group>"; };
 		8B88FF531D9692D500378455 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -50,6 +90,67 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8B39A1E11DA137B40000A8DA /* Evaluator */ = {
+			isa = PBXGroup;
+			children = (
+				8B39A1E21DA137B40000A8DA /* ClassicalEvaluator.swift */,
+				8B39A1E31DA137B40000A8DA /* Evaluator.swift */,
+				8B39A1E41DA137B40000A8DA /* SimpleEvaluator.swift */,
+			);
+			path = Evaluator;
+			sourceTree = "<group>";
+		};
+		8B39A1E51DA137B40000A8DA /* ProofSolver */ = {
+			isa = PBXGroup;
+			children = (
+				8B39A1E61DA137B40000A8DA /* ProofSolver.swift */,
+				8B39A1E71DA137B40000A8DA /* SimpleProofSolver.swift */,
+			);
+			path = ProofSolver;
+			sourceTree = "<group>";
+		};
+		8B39A1E81DA137B40000A8DA /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				8B39A1E91DA137B40000A8DA /* NegaAlphaSearch.swift */,
+				8B39A1EA1DA137B40000A8DA /* Search.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		8B39A1F21DA138180000A8DA /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8B39A1F31DA138180000A8DA /* Stack.swift */,
+				8B39A1F51DA1388A0000A8DA /* Utils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		8B3FE0021DA0BD2E005863E6 /* Board */ = {
+			isa = PBXGroup;
+			children = (
+				8B3FE0031DA0BD2E005863E6 /* Board.swift */,
+				8B3FE0041DA0BD2E005863E6 /* BoardBuilder.swift */,
+				8B3FE0051DA0BD2E005863E6 /* BoardMediator.swift */,
+				8B3FE0061DA0BD2E005863E6 /* BoardRepresentation.swift */,
+				8B3FE0071DA0BD2E005863E6 /* FasterBitBoard.swift */,
+				8B3FE0081DA0BD2E005863E6 /* SimpleBitBoard.swift */,
+				8B3FE0091DA0BD2E005863E6 /* Zones.swift */,
+			);
+			path = Board;
+			sourceTree = "<group>";
+		};
+		8B3FE0131DA0BE38005863E6 /* Intrinsics */ = {
+			isa = PBXGroup;
+			children = (
+				8B3FE0141DA0BE38005863E6 /* intrinsics.c */,
+				8B3FE0151DA0BE38005863E6 /* intrinsics.h */,
+				8B3FE0181DA0BE48005863E6 /* Graphite-Bridging-Header.h */,
+			);
+			path = Intrinsics;
+			sourceTree = "<group>";
+		};
 		8B88FF451D9692D500378455 = {
 			isa = PBXGroup;
 			children = (
@@ -71,8 +172,15 @@
 		8B88FF511D9692D500378455 /* Graphite */ = {
 			isa = PBXGroup;
 			children = (
+				8B39A1F21DA138180000A8DA /* Utils */,
+				8B39A1E11DA137B40000A8DA /* Evaluator */,
+				8B39A1E51DA137B40000A8DA /* ProofSolver */,
+				8B39A1E81DA137B40000A8DA /* Search */,
+				8B3FE0131DA0BE38005863E6 /* Intrinsics */,
+				8B3FE0021DA0BD2E005863E6 /* Board */,
 				8B88FF521D9692D500378455 /* Graphite.h */,
 				8B88FF531D9692D500378455 /* Info.plist */,
+				8B3FE0111DA0BDC0005863E6 /* Swift_Bridging_Header.h */,
 			);
 			path = Graphite;
 			sourceTree = "<group>";
@@ -94,6 +202,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B88FF601D9692D500378455 /* Graphite.h in Headers */,
+				8B3FE0191DA0BE48005863E6 /* Graphite-Bridging-Header.h in Headers */,
+				8B3FE0171DA0BE38005863E6 /* intrinsics.h in Headers */,
+				8B3FE0121DA0BDC3005863E6 /* Swift_Bridging_Header.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,6 +309,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B3FE00F1DA0BD2E005863E6 /* SimpleBitBoard.swift in Sources */,
+				8B39A1EE1DA137B40000A8DA /* ProofSolver.swift in Sources */,
+				8B3FE00C1DA0BD2E005863E6 /* BoardMediator.swift in Sources */,
+				8B3FE00B1DA0BD2E005863E6 /* BoardBuilder.swift in Sources */,
+				8B3FE0161DA0BE38005863E6 /* intrinsics.c in Sources */,
+				8B3FE0101DA0BD2E005863E6 /* Zones.swift in Sources */,
+				8B39A1ED1DA137B40000A8DA /* SimpleEvaluator.swift in Sources */,
+				8B39A1F01DA137B40000A8DA /* NegaAlphaSearch.swift in Sources */,
+				8B39A1EC1DA137B40000A8DA /* Evaluator.swift in Sources */,
+				8B39A1F61DA1388A0000A8DA /* Utils.swift in Sources */,
+				8B3FE00A1DA0BD2E005863E6 /* Board.swift in Sources */,
+				8B39A1EB1DA137B40000A8DA /* ClassicalEvaluator.swift in Sources */,
+				8B39A1EF1DA137B40000A8DA /* SimpleProofSolver.swift in Sources */,
+				8B39A1F41DA138180000A8DA /* Stack.swift in Sources */,
+				8B39A1F11DA137B40000A8DA /* Search.swift in Sources */,
+				8B3FE00E1DA0BD2E005863E6 /* FasterBitBoard.swift in Sources */,
+				8B3FE00D1DA0BD2E005863E6 /* BoardRepresentation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,10 +389,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -308,9 +435,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -360,6 +486,7 @@
 		8B88FF671D9692D500378455 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = X946KV89SN;
 				INFOPLIST_FILE = GraphiteTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -372,6 +499,7 @@
 		8B88FF681D9692D500378455 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = X946KV89SN;
 				INFOPLIST_FILE = GraphiteTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
