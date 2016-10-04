@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Graphite
 
 //@_silgen_name("search")
 //    func search(_: UInt64,_: UInt64,_: Int,_: Int) -> Int
