@@ -7,6 +7,12 @@
 //
 
 import UIKit
+import Graphite
+
+func LOG(body: String!, function: String = #function, line: Int = #line) {
+    let datestr = String(NSDate().description);
+    print("[\(datestr) : \(function) @ \(line)] \(body)")
+}
 
 class SettingsViewController: UIViewController, UINavigationBarDelegate, UITableViewDataSource, UITableViewDelegate, LevelSelectionViewDelegate {
 
