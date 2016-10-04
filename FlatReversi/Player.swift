@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Graphite
 
 enum PlayerStates {
     case created, initialized, ready, playing, error
