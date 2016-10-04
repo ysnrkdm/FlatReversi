@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import Graphite
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -91,7 +93,7 @@ class GameManager {
         }
 
 
-        let z = ZonesFactory().createZoneTypical7(99, bVal: 0.6, cVal: 3, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
+        let z = ZonesFactory.createZoneTypical7(99, bVal: 0.6, cVal: 3, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
         let ev = ClassicalEvaluator()
         ev.configure([3.0, 0.5], wEdge: [1.0, 1.0], wFixedPieces: [5.0, 3.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0], zones: z)
         self.evaluator = ev

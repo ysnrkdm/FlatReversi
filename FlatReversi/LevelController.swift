@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Graphite
 
 class Level {
     var level: Int
@@ -113,95 +114,95 @@ class LevelController {
         switch(levelId) {
         case 1:
             let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
-            let z = ZonesFactory().createZoneTypical4(1, bVal: 1, cVal: 1, dVal: 1)
+            let z = ZonesFactory.createZoneTypical4(1, bVal: 1, cVal: 1, dVal: 1)
             rcp.configure(z)
             return rcp
         case 2:
             let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
-            let z = ZonesFactory().createZoneTypical4(2, bVal: 1.1, cVal: 1.4, dVal: 1.7)
+            let z = ZonesFactory.createZoneTypical4(2, bVal: 1.1, cVal: 1.4, dVal: 1.7)
             rcp.configure(z)
             return rcp
         case 3:
             let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
-            let z = ZonesFactory().createZoneTypical4(9, bVal: 1, cVal: 1.5, dVal: 2)
+            let z = ZonesFactory.createZoneTypical4(9, bVal: 1, cVal: 1.5, dVal: 2)
             rcp.configure(z)
             return rcp
         case 4:
             let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
-            let z = ZonesFactory().createZoneTypical4(99, bVal: 1, cVal: 8, dVal: 16)
+            let z = ZonesFactory.createZoneTypical4(99, bVal: 1, cVal: 8, dVal: 16)
             rcp.configure(z)
             return rcp
         case 5:
             return GreedyPlayer(playerMediator: playerMediator, color: color)
         case 6:
             let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
-            let z = ZonesFactory().createZoneTypical7(99, bVal: 1, cVal: 3, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
+            let z = ZonesFactory.createZoneTypical7(99, bVal: 1, cVal: 3, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
             rcp.configure(z)
             return rcp
         case 7:
             let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
-            let z = ZonesFactory().createZoneTypical7(99, bVal: 1, cVal: 1, dVal: 3.5, eVal: 3.85, fVal: 4.1, gVal: 4.8)
+            let z = ZonesFactory.createZoneTypical7(99, bVal: 1, cVal: 1, dVal: 3.5, eVal: 3.85, fVal: 4.1, gVal: 4.8)
             rcp.configure(z)
             return rcp
         case 8:
             let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
-            let z = ZonesFactory().createZoneTypical7(99, bVal: 0.6, cVal: -3, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
+            let z = ZonesFactory.createZoneTypical7(99, bVal: 0.6, cVal: -3, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
             rcp.configure(z)
             return rcp
         case 9:
             let rcp = RandomPlayerWithPNS(playerMediator: playerMediator, color: color)
-            let z = ZonesFactory().createZoneTypical7(99, bVal: 0.6, cVal: 1, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
+            let z = ZonesFactory.createZoneTypical7(99, bVal: 0.6, cVal: 1, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
             rcp.configure(z, pnsLessThan: 6)
             return rcp
         case 10:
             let sssep = SearchEvalPlayer(playerMediator: playerMediator, color: color)
             let searcher = NegaAlphaSearch()
-            let z = ZonesFactory().createZoneTypical8(99, bVal: 1.6, cVal: 1, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
+            let z = ZonesFactory.createZoneTypical8(99, bVal: 1.6, cVal: 1, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
             sssep.configure(searcher, zones: z, pnsLessThan: 10, searchDepth: 1, wPossibleMoves: [20.0, 15, 3.2, 1.1], wEdge: [1.0, 1.0], wFixedPieces: [2.0, 20.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0])
             return sssep
         case 11:
             let sssep = SearchEvalPlayer(playerMediator: playerMediator, color: color)
             let searcher = NegaAlphaSearch()
-            let z = ZonesFactory().createZoneTypical8(99, bVal: 1.6, cVal: 1, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
+            let z = ZonesFactory.createZoneTypical8(99, bVal: 1.6, cVal: 1, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
             sssep.configure(searcher, zones: z, pnsLessThan: 10, searchDepth: 3, wPossibleMoves: [20.0, 15, 3.2, 1.1], wEdge: [1.0, 1.0], wFixedPieces: [2.0, 20.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0])
             return sssep
         case 12:
             let sssep = SearchEvalPlayer(playerMediator: playerMediator, color: color)
             let searcher = NegaAlphaSearch()
-            let z = ZonesFactory().createZoneTypical8(99, bVal: 1.6, cVal: -5, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
+            let z = ZonesFactory.createZoneTypical8(99, bVal: 1.6, cVal: -5, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
             sssep.configure(searcher, zones: z, pnsLessThan: 10, searchDepth: 5, wPossibleMoves: [20.0, 15, 3.2, 1.1], wEdge: [1.0, 1.0], wFixedPieces: [2.0, 400.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0])
             return sssep
         case 13:
             let rcp = LeftyPlayer(playerMediator: playerMediator, color: color)
-            let z = ZonesFactory().createZoneTypical7(99, bVal: 0.6, cVal: 1, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
+            let z = ZonesFactory.createZoneTypical7(99, bVal: 0.6, cVal: 1, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
             rcp.configure(z, pnsLessThan: 10)
             return rcp
         case 14:
             let rcp = SwingPlayer(playerMediator: playerMediator, color: color)
-            let z = ZonesFactory().createZoneTypical7(99, bVal: 0.6, cVal: 1, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
+            let z = ZonesFactory.createZoneTypical7(99, bVal: 0.6, cVal: 1, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
             rcp.configure(z, pnsLessThan: 10)
             return rcp
         case 15:
             let sssep = SearchEvalPlayer(playerMediator: playerMediator, color: color)
             let searcher = NegaAlphaSearch()
-            let z = ZonesFactory().createZoneUniform(1.0)
+            let z = ZonesFactory.createZoneUniform(1.0)
             sssep.configure(searcher, zones: z, pnsLessThan: 10, searchDepth: 3, wPossibleMoves: [0], wEdge: [0], wFixedPieces: [0], wOpenness: [1], wBoardEvaluation: [0])
             return sssep
         case 16:
             let sssep = TreeSearchWithPerturbationPlayer(playerMediator: playerMediator, color: color)
-            let z = ZonesFactory().createZoneTypical8(99, bVal: 1.6, cVal: -5, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
+            let z = ZonesFactory.createZoneTypical8(99, bVal: 1.6, cVal: -5, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
             sssep.configure(z, pnsLessThan: 10, searchDepth: 3, wPossibleMoves: [20.0, 15, 3.2, 1.1], wEdge: [1.0, 1.0], wFixedPieces: [2.0, 20.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0], randomThreshold: 0.1)
             return sssep
         case 17:
             let sssep = SearchEvalPlayer(playerMediator: playerMediator, color: color)
             let searcher = NegaAlphaSearch()
-            let z = ZonesFactory().createZoneTypical8(99, bVal: 1.6, cVal: -5, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
+            let z = ZonesFactory.createZoneTypical8(99, bVal: 1.6, cVal: -5, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
             sssep.configure(searcher, zones: z, pnsLessThan: 10, searchDepth: 7, wPossibleMoves: [20.0, 15, 3.2, 1.1], wEdge: [1.0, 1.0], wFixedPieces: [2.0, 200.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0])
             return sssep
         case 18:
             let sssep = SearchEvalPlayer(playerMediator: playerMediator, color: color)
             let searcher = NegaAlphaSearch()
-            let z = ZonesFactory().createZoneTypical8(99, bVal: 1.6, cVal: -5, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
+            let z = ZonesFactory.createZoneTypical8(99, bVal: 1.6, cVal: -5, dVal: 7.5, eVal: 6.1, fVal: 4.3, gVal: 4.8, hVal: 5)
             sssep.configure(searcher, zones: z, pnsLessThan: 10, searchDepth: 9, wPossibleMoves: [20.0, 15, 3.2, 1.1], wEdge: [1.0, 1.0], wFixedPieces: [2.0, 200.0], wOpenness: [2.5, 3.5], wBoardEvaluation: [2.5, 5.0])
             return sssep
 
