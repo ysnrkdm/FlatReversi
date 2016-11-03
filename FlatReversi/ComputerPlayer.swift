@@ -7,10 +7,12 @@
 //
 
 import Foundation
+import Graphene
 
 class ComputerPlayer: Player {
-
     var level: Int = 0
+    var info: Info = SimpleLogInfo()
+    var thinker: Think? = nil
 
     override func initialize(_ level: Int) {
         self.level = level
@@ -21,10 +23,19 @@ class ComputerPlayer: Player {
     }
 
     override func play() {
-        dispatch_async_global({self.think()})
+        dispatch_async_global({self.thinkAndPlay()})
     }
 
-    func think() {
-        assertionFailure("Override this method and implement at child class.")
+    func thinkAndPlay() {
+        if let board = playerMediator.getBoardRepresentation(), let thinker = self.thinker {
+            let hand = think(board: board, thinker: thinker)
+            playerMediator.put(self.color, x: hand.col, y: hand.row)
+        } else {
+            assertionFailure("Should not reach this code!")
+        }
+    }
+    
+    func think(board: BoardRepresentation, thinker: Think) -> Hand {
+        return thinker.think(self.color, board: board, info: self.info)
     }
 }
