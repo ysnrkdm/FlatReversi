@@ -8,6 +8,7 @@
 
 import UIKit
 import XCTest
+import Graphene
 
 @testable import FlatReversi
 
