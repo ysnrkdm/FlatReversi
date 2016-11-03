@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Graphite
+import Graphene
 
 class PlayerMediator {
     var gameManager: GameManager

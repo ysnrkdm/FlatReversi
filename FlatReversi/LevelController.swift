@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Graphite
+import Graphene
 
 class Level {
     var level: Int
@@ -133,7 +133,9 @@ class LevelController {
             rcp.configure(z)
             return rcp
         case 5:
-            return GreedyPlayer(playerMediator: playerMediator, color: color)
+            let gp = GreedyPlayer(playerMediator: playerMediator, color: color)
+            gp.configure()
+            return gp
         case 6:
             let rcp = RandomPlayerWithEvaluation(playerMediator: playerMediator, color: color)
             let z = ZonesFactory.createZoneTypical7(99, bVal: 1, cVal: 3, dVal: 3.5, eVal: 3.9, fVal: 4.3, gVal: 4.8)
