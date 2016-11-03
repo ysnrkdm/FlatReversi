@@ -56,7 +56,6 @@
 		8BA555381DCAE90600EC3CCA /* Graphene.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B54AB301DC62ED1006A222F /* Graphene.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8BF2C4AB1A4D860000F22AB4 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF2C4AA1A4D860000F22AB4 /* AppearanceManager.swift */; };
 		8BF717FD1D901CD400D46ED8 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF717FC1D901CD400D46ED8 /* GoogleMobileAds.framework */; };
-		8BF718301D90278F00D46ED8 /* FlatReversiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1DE19F9ED9700B5E87E /* FlatReversiTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -510,7 +509,6 @@
 				8B74E1CB19F9ED9700B5E87E /* GameViewController.swift in Sources */,
 				8B22E27319FE7A450006E39C /* ComputerPlayer.swift in Sources */,
 				8B4E167E1A03BB4000BE87E2 /* GameViewScene.swift in Sources */,
-				8BF718301D90278F00D46ED8 /* FlatReversiTests.swift in Sources */,
 				8B74E20119F9EE6900B5E87E /* Locking.swift in Sources */,
 				8B74E1FE19F9EE6900B5E87E /* GameViewModel.swift in Sources */,
 				8B50B0D21A3D48C80057C14A /* SwingPlayer.swift in Sources */,
