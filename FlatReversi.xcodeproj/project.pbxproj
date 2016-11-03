@@ -106,30 +106,6 @@
 		8B22E26F19FE7A110006E39C /* GreedyPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreedyPlayer.swift; sourceTree = "<group>"; };
 		8B22E27219FE7A450006E39C /* ComputerPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComputerPlayer.swift; sourceTree = "<group>"; };
 		8B2517A11A13B03800B700F3 /* SimpleSearchStaticEvaluationPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleSearchStaticEvaluationPlayer.swift; sourceTree = "<group>"; };
-		8B39A2091DA294FB0000A8DA /* Graphite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Graphite.h; sourceTree = "<group>"; };
-		8B39A20A1DA294FB0000A8DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8B39A2161DA294FB0000A8DA /* GraphiteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphiteTests.swift; sourceTree = "<group>"; };
-		8B39A2181DA294FB0000A8DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8B39A2261DA2958D0000A8DA /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
-		8B39A2271DA2958D0000A8DA /* BoardBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardBuilder.swift; sourceTree = "<group>"; };
-		8B39A2281DA2958D0000A8DA /* BoardMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardMediator.swift; sourceTree = "<group>"; };
-		8B39A2291DA2958D0000A8DA /* BoardRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardRepresentation.swift; sourceTree = "<group>"; };
-		8B39A22A1DA2958D0000A8DA /* FasterBitBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FasterBitBoard.swift; sourceTree = "<group>"; };
-		8B39A22B1DA2958D0000A8DA /* SimpleBitBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleBitBoard.swift; sourceTree = "<group>"; };
-		8B39A22C1DA2958D0000A8DA /* Zones.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zones.swift; sourceTree = "<group>"; };
-		8B39A22E1DA2958D0000A8DA /* ClassicalEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicalEvaluator.swift; sourceTree = "<group>"; };
-		8B39A22F1DA2958D0000A8DA /* Evaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Evaluator.swift; sourceTree = "<group>"; };
-		8B39A2301DA2958D0000A8DA /* SimpleEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleEvaluator.swift; sourceTree = "<group>"; };
-		8B39A2321DA2958D0000A8DA /* Graphite-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Graphite-Bridging-Header.h"; sourceTree = "<group>"; };
-		8B39A2331DA2958D0000A8DA /* intrinsics.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intrinsics.c; sourceTree = "<group>"; };
-		8B39A2341DA2958D0000A8DA /* intrinsics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = intrinsics.h; sourceTree = "<group>"; };
-		8B39A2361DA2958D0000A8DA /* ProofSolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProofSolver.swift; sourceTree = "<group>"; };
-		8B39A2371DA2958D0000A8DA /* SimpleProofSolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleProofSolver.swift; sourceTree = "<group>"; };
-		8B39A2391DA2958D0000A8DA /* NegaAlphaSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NegaAlphaSearch.swift; sourceTree = "<group>"; };
-		8B39A23A1DA2958D0000A8DA /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
-		8B39A23B1DA2958D0000A8DA /* Swift_Bridging_Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Swift_Bridging_Header.h; path = Graphite/Swift_Bridging_Header.h; sourceTree = "<group>"; };
-		8B39A23D1DA2958D0000A8DA /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
-		8B39A23E1DA2958D0000A8DA /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		8B4E167D1A03BB4000BE87E2 /* GameViewScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewScene.swift; sourceTree = "<group>"; };
 		8B50B0CD1A3D3EDC0057C14A /* TreeSearchWithPerturbationPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeSearchWithPerturbationPlayer.swift; sourceTree = "<group>"; };
 		8B50B0CF1A3D41480057C14A /* LeftyPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftyPlayer.swift; sourceTree = "<group>"; };
@@ -224,98 +200,6 @@
 			name = Player;
 			sourceTree = "<group>";
 		};
-		8B39A2081DA294FB0000A8DA /* Graphite */ = {
-			isa = PBXGroup;
-			children = (
-				8B39A2251DA2958D0000A8DA /* Board */,
-				8B39A22D1DA2958D0000A8DA /* Evaluator */,
-				8B39A2311DA2958D0000A8DA /* Intrinsics */,
-				8B39A2351DA2958D0000A8DA /* ProofSolver */,
-				8B39A2381DA2958D0000A8DA /* Search */,
-				8B39A23C1DA2958D0000A8DA /* Utils */,
-				8B39A2091DA294FB0000A8DA /* Graphite.h */,
-				8B39A23B1DA2958D0000A8DA /* Swift_Bridging_Header.h */,
-				8B39A20A1DA294FB0000A8DA /* Info.plist */,
-			);
-			path = Graphite;
-			sourceTree = "<group>";
-		};
-		8B39A2151DA294FB0000A8DA /* GraphiteTests */ = {
-			isa = PBXGroup;
-			children = (
-				8B39A2161DA294FB0000A8DA /* GraphiteTests.swift */,
-				8B39A2181DA294FB0000A8DA /* Info.plist */,
-			);
-			path = GraphiteTests;
-			sourceTree = "<group>";
-		};
-		8B39A2251DA2958D0000A8DA /* Board */ = {
-			isa = PBXGroup;
-			children = (
-				8B39A2261DA2958D0000A8DA /* Board.swift */,
-				8B39A2271DA2958D0000A8DA /* BoardBuilder.swift */,
-				8B39A2281DA2958D0000A8DA /* BoardMediator.swift */,
-				8B39A2291DA2958D0000A8DA /* BoardRepresentation.swift */,
-				8B39A22A1DA2958D0000A8DA /* FasterBitBoard.swift */,
-				8B39A22B1DA2958D0000A8DA /* SimpleBitBoard.swift */,
-				8B39A22C1DA2958D0000A8DA /* Zones.swift */,
-			);
-			name = Board;
-			path = Graphite/Board;
-			sourceTree = "<group>";
-		};
-		8B39A22D1DA2958D0000A8DA /* Evaluator */ = {
-			isa = PBXGroup;
-			children = (
-				8B39A22E1DA2958D0000A8DA /* ClassicalEvaluator.swift */,
-				8B39A22F1DA2958D0000A8DA /* Evaluator.swift */,
-				8B39A2301DA2958D0000A8DA /* SimpleEvaluator.swift */,
-			);
-			name = Evaluator;
-			path = Graphite/Evaluator;
-			sourceTree = "<group>";
-		};
-		8B39A2311DA2958D0000A8DA /* Intrinsics */ = {
-			isa = PBXGroup;
-			children = (
-				8B39A2321DA2958D0000A8DA /* Graphite-Bridging-Header.h */,
-				8B39A2331DA2958D0000A8DA /* intrinsics.c */,
-				8B39A2341DA2958D0000A8DA /* intrinsics.h */,
-			);
-			name = Intrinsics;
-			path = Graphite/Intrinsics;
-			sourceTree = "<group>";
-		};
-		8B39A2351DA2958D0000A8DA /* ProofSolver */ = {
-			isa = PBXGroup;
-			children = (
-				8B39A2361DA2958D0000A8DA /* ProofSolver.swift */,
-				8B39A2371DA2958D0000A8DA /* SimpleProofSolver.swift */,
-			);
-			name = ProofSolver;
-			path = Graphite/ProofSolver;
-			sourceTree = "<group>";
-		};
-		8B39A2381DA2958D0000A8DA /* Search */ = {
-			isa = PBXGroup;
-			children = (
-				8B39A2391DA2958D0000A8DA /* NegaAlphaSearch.swift */,
-				8B39A23A1DA2958D0000A8DA /* Search.swift */,
-			);
-			name = Search;
-			path = Graphite/Search;
-			sourceTree = "<group>";
-		};
-		8B39A23C1DA2958D0000A8DA /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				8B39A23D1DA2958D0000A8DA /* Stack.swift */,
-				8B39A23E1DA2958D0000A8DA /* Utils.swift */,
-			);
-			name = Utils;
-			path = Graphite/Utils;
-			sourceTree = "<group>";
-		};
 		8B714E171A4EF115001C2D89 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -351,8 +235,6 @@
 				8B22E1F419FD35BC0006E39C /* AudioToolbox.framework */,
 				8B74E1C119F9ED9600B5E87E /* FlatReversi */,
 				8B74E1DB19F9ED9700B5E87E /* FlatReversiTests */,
-				8B39A2081DA294FB0000A8DA /* Graphite */,
-				8B39A2151DA294FB0000A8DA /* GraphiteTests */,
 				8B74E1C019F9ED9600B5E87E /* Products */,
 				41D32DD76AF84D663AA67F64 /* Pods */,
 				C140F84A0D53F7D05C8C75A5 /* Frameworks */,
