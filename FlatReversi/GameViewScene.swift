@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Graphite
+import Graphene
 
 protocol GameViewScene {
     func updateView(_ bd : BoardMediator, changes:[(Int, Int)], put: [(Int, Int)], showPuttables: Bool, showAnimation: Bool, blackEval: Double, whiteEval: Double, debugString: String)
