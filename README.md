@@ -10,3 +10,8 @@ Flat Reversi is a Reversi game (which is also known as Othello.), one of the cla
 Contact to euphonictech@gmail.com for any question/problem.
 
 ![alt text](http://f.st-hatena.com/images/fotolife/e/euphonictechnologies/20141125/20141125002814.png)
+
+## Dependency
+
+This application needs Graphene othello library (can be installed by swift package update command)
+* https://github.com/ysnrkdm/Graphene
