@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>340020369200-j4pcgsij3hgavev38m6vt9km9a65m5ak.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.340020369200-j4pcgsij3hgavev38m6vt9km9a65m5ak</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDKyRMfMTsuogLe4kckoHtV-KHcFdYQlYo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>340020369200</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.euphonictech.FlatReversi</string>
+	<key>PROJECT_ID</key>
+	<string>flatreverse-firebase</string>
+	<key>STORAGE_BUCKET</key>
+	<string>flatreverse-firebase.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:340020369200:ios:3e35f03e03d9122a</string>
+	<key>DATABASE_URL</key>
+	<string>https://flatreverse-firebase.firebaseio.com</string>
+	<key>ADMOB_APP_ID</key>
+	<string>ca-app-pub-4004659206753296~5908086560</string>
+</dict>
+</plist>

@@ -54,6 +54,7 @@
 		8B74E20519F9EE6900B5E87E /* SettingsViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74E1F619F9EE6900B5E87E /* SettingsViewContoller.swift */; };
 		8BA555371DCAE90600EC3CCA /* Graphene.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B54AB301DC62ED1006A222F /* Graphene.framework */; };
 		8BA555381DCAE90600EC3CCA /* Graphene.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B54AB301DC62ED1006A222F /* Graphene.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8BC27DCE2162560E00E84A3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BC27DCD2162560D00E84A3C /* GoogleService-Info.plist */; };
 		8BF2C4AB1A4D860000F22AB4 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF2C4AA1A4D860000F22AB4 /* AppearanceManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -133,6 +134,7 @@
 		8B74E1F419F9EE6900B5E87E /* PlayerMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerMediator.swift; sourceTree = "<group>"; };
 		8B74E1F619F9EE6900B5E87E /* SettingsViewContoller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewContoller.swift; sourceTree = "<group>"; };
 		8BBE916D1A4B03EC00212FFF /* FlatReversi-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FlatReversi-Bridging-Header.h"; sourceTree = "<group>"; };
+		8BC27DCD2162560D00E84A3C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8BF2C4AA1A4D860000F22AB4 /* AppearanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
 		8BF717FC1D901CD400D46ED8 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "Pods/Google-Mobile-Ads-SDK/Frameworks/GoogleMobileAds.framework"; sourceTree = "<group>"; };
 		994B1AF6CE28DA8AE6F88843 /* libPods-FlatReversi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FlatReversi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -250,6 +252,7 @@
 		8B74E1C119F9ED9600B5E87E /* FlatReversi */ = {
 			isa = PBXGroup;
 			children = (
+				8BC27DCD2162560D00E84A3C /* GoogleService-Info.plist */,
 				8B714E171A4EF115001C2D89 /* Utils */,
 				8B714E181A4EF122001C2D89 /* Intrinsics */,
 				8B22E27119FE7A270006E39C /* Player */,
@@ -347,8 +350,6 @@
 				8B74E1BB19F9ED9600B5E87E /* Sources */,
 				8B74E1BC19F9ED9600B5E87E /* Frameworks */,
 				8B74E1BD19F9ED9600B5E87E /* Resources */,
-				4A3B03C16287F249BC8AFBE0 /* [CP] Embed Pods Frameworks */,
-				FA78D2CFED8E158A7503E529 /* [CP] Copy Pods Resources */,
 				8BA555391DCAE90700EC3CCA /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -426,6 +427,7 @@
 			files = (
 				8B74E1D319F9ED9700B5E87E /* LaunchScreen.xib in Resources */,
 				8B74E1D019F9ED9700B5E87E /* Images.xcassets in Resources */,
+				8BC27DCE2162560E00E84A3C /* GoogleService-Info.plist in Resources */,
 				8B74E1C719F9ED9700B5E87E /* GameScene.sks in Resources */,
 				8B74E1CE19F9ED9700B5E87E /* Main.storyboard in Resources */,
 			);
@@ -447,43 +449,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FlatReversi-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		4A3B03C16287F249BC8AFBE0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FlatReversi/Pods-FlatReversi-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FA78D2CFED8E158A7503E529 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FlatReversi/Pods-FlatReversi-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -684,7 +659,10 @@
 				);
 				LLVM_LTO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.euphonictech.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -721,7 +699,10 @@
 					"$(PROJECT_DIR)/FlatReversi",
 				);
 				LLVM_LTO = YES;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.euphonictech.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

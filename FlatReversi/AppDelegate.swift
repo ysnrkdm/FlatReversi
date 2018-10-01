@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 //@_silgen_name("hs_init")
 //    func hs_init(_: UnsafeMutablePointer<Int>, _: UnsafeMutablePointer<String>)
@@ -21,6 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 //        hs_init(nil, nil);
 //        NSLog("hs_init initialized!");
+
+        /////////////// AdMob&Firebase Settings ///////////////
+        // Use Firebase library to configure APIs.
+        FirebaseApp.configure()
+        // Initialize the Google Mobile Ads SDK.
+        GADMobileAds.configure(withApplicationID: "ca-app-pub-4004659206753296~5908086560")
         return true
     }
 
