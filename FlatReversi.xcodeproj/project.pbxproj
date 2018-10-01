@@ -55,7 +55,6 @@
 		8BA555371DCAE90600EC3CCA /* Graphene.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B54AB301DC62ED1006A222F /* Graphene.framework */; };
 		8BA555381DCAE90600EC3CCA /* Graphene.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B54AB301DC62ED1006A222F /* Graphene.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8BF2C4AB1A4D860000F22AB4 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF2C4AA1A4D860000F22AB4 /* AppearanceManager.swift */; };
-		8BF717FD1D901CD400D46ED8 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF717FC1D901CD400D46ED8 /* GoogleMobileAds.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,7 +145,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BF717FD1D901CD400D46ED8 /* GoogleMobileAds.framework in Frameworks */,
 				8B22E26E19FD3A0A0006E39C /* Security.framework in Frameworks */,
 				8B22E20519FD35F30006E39C /* SystemConfiguration.framework in Frameworks */,
 				8B22E20319FD35ED0006E39C /* StoreKit.framework in Frameworks */,

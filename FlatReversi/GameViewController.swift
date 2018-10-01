@@ -8,7 +8,7 @@
 
 import UIKit
 import SpriteKit
-import GoogleMobileAds
+//import GoogleMobileAds
 
 extension SKNode {
     class func unarchiveFromFile(_ file : NSString) -> SKNode? {
@@ -37,7 +37,7 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
 
     var currentScene: SKScene? = nil
 
-    @IBOutlet weak var bannerView: GADBannerView!
+    @IBOutlet weak var bannerView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,12 +81,12 @@ class GameViewController: UIViewController, UINavigationBarDelegate {
             gs.resetAndSave()
         }
 
-        // Ad
-        if let uBannerView = bannerView {
-            uBannerView.adUnitID = "ca-app-pub-4004659206753296/7384819767"
-            uBannerView.rootViewController = self
-            uBannerView.load(GADRequest())
-        }
+//        // Ad
+//        if let uBannerView = bannerView {
+//            uBannerView.adUnitID = "ca-app-pub-4004659206753296/7384819767"
+//            uBannerView.rootViewController = self
+//            uBannerView.load(GADRequest())
+//        }
     }
 
     func position(for bar: UIBarPositioning) -> UIBarPosition {
