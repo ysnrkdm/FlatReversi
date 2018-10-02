@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B7BC0851F8ADD00AC69A096 /* libPods-FlatReversi-FlatReversiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59BCA18FDD2362A2731A4506 /* libPods-FlatReversi-FlatReversiTests.a */; };
 		5C61B2DF36492428104A769A /* libPods-FlatReversi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 994B1AF6CE28DA8AE6F88843 /* libPods-FlatReversi.a */; };
 		8B07152F1A49B0230089C25B /* SearchEvalPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B07152E1A49B0230089C25B /* SearchEvalPlayer.swift */; };
 		8B0715321A4B00440089C25B /* intrinsics.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B0715301A4B00430089C25B /* intrinsics.c */; };
@@ -56,6 +57,7 @@
 		8BA555381DCAE90600EC3CCA /* Graphene.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B54AB301DC62ED1006A222F /* Graphene.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8BC27DCE2162560E00E84A3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BC27DCD2162560D00E84A3C /* GoogleService-Info.plist */; };
 		8BF2C4AB1A4D860000F22AB4 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF2C4AA1A4D860000F22AB4 /* AppearanceManager.swift */; };
+		A3540FE25413186BECDB135D /* libPods-FlatReversi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B7EEE0121626BA200FD774D /* libPods-FlatReversi.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +85,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		59BCA18FDD2362A2731A4506 /* libPods-FlatReversi-FlatReversiTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FlatReversi-FlatReversiTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D8EF9BA19256BD0169A56E2 /* Pods-FlatReversi-FlatReversiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlatReversi-FlatReversiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlatReversi-FlatReversiTests/Pods-FlatReversi-FlatReversiTests.release.xcconfig"; sourceTree = "<group>"; };
+		79AB3D43B96D2BABDB4DE8AE /* Pods-FlatReversi-FlatReversiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlatReversi-FlatReversiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlatReversi-FlatReversiTests/Pods-FlatReversi-FlatReversiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8B07152E1A49B0230089C25B /* SearchEvalPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchEvalPlayer.swift; sourceTree = "<group>"; };
 		8B0715301A4B00430089C25B /* intrinsics.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intrinsics.c; sourceTree = "<group>"; };
 		8B0715311A4B00430089C25B /* intrinsics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = intrinsics.h; sourceTree = "<group>"; };
@@ -133,6 +138,7 @@
 		8B74E1F319F9EE6900B5E87E /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		8B74E1F419F9EE6900B5E87E /* PlayerMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerMediator.swift; sourceTree = "<group>"; };
 		8B74E1F619F9EE6900B5E87E /* SettingsViewContoller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewContoller.swift; sourceTree = "<group>"; };
+		8B7EEE0121626BA200FD774D /* libPods-FlatReversi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-FlatReversi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BBE916D1A4B03EC00212FFF /* FlatReversi-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FlatReversi-Bridging-Header.h"; sourceTree = "<group>"; };
 		8BC27DCD2162560D00E84A3C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8BF2C4AA1A4D860000F22AB4 /* AppearanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
@@ -159,6 +165,7 @@
 				8B22E1F719FD35C30006E39C /* AVFoundation.framework in Frameworks */,
 				8B22E1F519FD35BC0006E39C /* AudioToolbox.framework in Frameworks */,
 				5C61B2DF36492428104A769A /* libPods-FlatReversi.a in Frameworks */,
+				A3540FE25413186BECDB135D /* libPods-FlatReversi.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +173,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B7BC0851F8ADD00AC69A096 /* libPods-FlatReversi-FlatReversiTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +185,8 @@
 			children = (
 				E27EB2C05E3ECDF8A87721C7 /* Pods-FlatReversi.debug.xcconfig */,
 				CB96927A20ECAFD32438474A /* Pods-FlatReversi.release.xcconfig */,
+				79AB3D43B96D2BABDB4DE8AE /* Pods-FlatReversi-FlatReversiTests.debug.xcconfig */,
+				5D8EF9BA19256BD0169A56E2 /* Pods-FlatReversi-FlatReversiTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -333,8 +343,10 @@
 		C140F84A0D53F7D05C8C75A5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8B7EEE0121626BA200FD774D /* libPods-FlatReversi.a */,
 				8BF717FC1D901CD400D46ED8 /* GoogleMobileAds.framework */,
 				994B1AF6CE28DA8AE6F88843 /* libPods-FlatReversi.a */,
+				59BCA18FDD2362A2731A4506 /* libPods-FlatReversi-FlatReversiTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -365,6 +377,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8B74E1E519F9ED9700B5E87E /* Build configuration list for PBXNativeTarget "FlatReversiTests" */;
 			buildPhases = (
+				92237E900DCADF912AE3A6C6 /* [CP] Check Pods Manifest.lock */,
 				8B74E1D419F9ED9700B5E87E /* Sources */,
 				8B74E1D519F9ED9700B5E87E /* Frameworks */,
 				8B74E1D619F9ED9700B5E87E /* Resources */,
@@ -386,17 +399,17 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Yoshinori Kodama";
 				TargetAttributes = {
 					8B74E1BE19F9ED9600B5E87E = {
 						CreatedOnToolsVersion = 6.1;
 						DevelopmentTeam = X946KV89SN;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1000;
 					};
 					8B74E1D719F9ED9700B5E87E = {
 						CreatedOnToolsVersion = 6.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1000;
 						TestTargetID = 8B74E1BE19F9ED9600B5E87E;
 					};
 				};
@@ -455,6 +468,28 @@
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-FlatReversi-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		92237E900DCADF912AE3A6C6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FlatReversi-FlatReversiTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -547,14 +582,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -596,14 +639,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -667,7 +718,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PROJECT)/Swift_Bridging_Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -708,13 +760,15 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PROJECT)/Swift_Bridging_Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
 		8B74E1E619F9ED9700B5E87E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79AB3D43B96D2BABDB4DE8AE /* Pods-FlatReversi-FlatReversiTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -729,13 +783,15 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.euphonictech.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlatReversi.app/FlatReversi";
 			};
 			name = Debug;
 		};
 		8B74E1E719F9ED9700B5E87E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D8EF9BA19256BD0169A56E2 /* Pods-FlatReversi-FlatReversiTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -746,7 +802,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.euphonictech.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlatReversi.app/FlatReversi";
 			};
 			name = Release;

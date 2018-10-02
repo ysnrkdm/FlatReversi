@@ -9,6 +9,7 @@
 import UIKit
 import XCTest
 import Graphene
+import Firebase
 
 @testable import FlatReversi
 

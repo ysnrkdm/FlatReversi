@@ -19,7 +19,7 @@ func dispatch_async_global(_ block: @escaping () -> ()) {
 
 /// Protocol for NSLocking objects that also provide tryLock()
 public protocol TryLockable: NSLocking {
-    func tryLock() -> Bool
+    func `try`() -> Bool
 }
 
 // These Cocoa classes have tryLock()
@@ -30,7 +30,7 @@ extension NSConditionLock: TryLockable {}
 
 /// Protocol for NSLocking objects that also provide lockBeforeDate()
 public protocol BeforeDateLockable: NSLocking {
-    func lockBeforeDate(_ limit: Date) -> Bool
+    func lock(before limit: Date) -> Bool
 }
 
 // These Cocoa classes have lockBeforeDate()
@@ -58,7 +58,7 @@ public func synchronizedResult<L: NSLocking, T>(_ lockable: L, criticalSection: 
 ///
 /// Return true if the critical section was executed, or false if tryLock() failed
 public func trySynchronized<L: TryLockable>(_ lockable: L, criticalSection: () -> ()) -> Bool {
-    if !lockable.tryLock() {
+    if !lockable.try() {
         return false
     }
     criticalSection()
@@ -70,7 +70,7 @@ public func trySynchronized<L: TryLockable>(_ lockable: L, criticalSection: () -
 ///
 /// Return true if the critical section was executed, or false if lockBeforeDate() failed
 public func synchronizedBeforeDate<L: BeforeDateLockable>(_ limit: Date, lockable: L, criticalSection: () -> ()) -> Bool {
-    if !lockable.lockBeforeDate(limit) {
+    if !lockable.lock(before: limit) {
         return false
     }
     criticalSection()

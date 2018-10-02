@@ -167,8 +167,8 @@ class AppearanceManager {
         UINavigationBar.appearance().tintColor = colorPalette.uiColorTint
         UINavigationBar.appearance().backgroundColor = colorPalette.uiColorBackground
         UINavigationBar.appearance().barTintColor = colorPalette.uiColorBackground
-        let titleDict: [String : AnyObject] = [NSForegroundColorAttributeName: colorPalette.uiColorText]
-        UINavigationBar.appearance().titleTextAttributes = titleDict
+        let titleDict: [String : AnyObject] = [convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): colorPalette.uiColorText]
+        UINavigationBar.appearance().titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary(titleDict)
 
         UITableView.appearance().tintColor = colorPalette.uiColorTint
         UITableView.appearance().backgroundColor = colorPalette.uiColorBackground2
@@ -218,4 +218,15 @@ class AppearanceManager {
             }
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

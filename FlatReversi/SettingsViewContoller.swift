@@ -189,7 +189,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
                         cells![sectionIndex].1[cellIndex] = cell
                         let ipath = IndexPath(row: cellIndex, section: sectionIndex)
                         tableView.deselectRow(at: ipath, animated: true)
-                        tableView.reloadRows(at: [ipath], with: UITableViewRowAnimation.automatic)
+                        tableView.reloadRows(at: [ipath], with: UITableView.RowAnimation.automatic)
                     }
                 }
             }
@@ -208,14 +208,14 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
                         cells![sectionIndex].1[cellIndex] = cell
                         let ipath = IndexPath(row: cellIndex, section: sectionIndex)
                         tableView.deselectRow(at: ipath, animated: true)
-                        tableView.reloadRows(at: [ipath], with: UITableViewRowAnimation.automatic)
+                        tableView.reloadRows(at: [ipath], with: UITableView.RowAnimation.automatic)
                     }
                 }
             }
         }
     }
 
-    func changeSegmentBlackPlayer(_ sender: AnyObject) {
+    @objc func changeSegmentBlackPlayer(_ sender: AnyObject) {
         let sw: UISegmentedControl = sender as! UISegmentedControl
         NSLog("Switched changeSegmentBlackPlayer! Status: %d", sw.selectedSegmentIndex)
         let cellId = "blackPlayerDifficultySegment"
@@ -224,7 +224,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
         case 0:
             let (sectionIndex, cellIndex) = deleteTableViewCellById(cellId)
             if(sectionIndex >= 0) {
-                self.tableView.deleteRows(at: [IndexPath(row: cellIndex, section: sectionIndex)], with: UITableViewRowAnimation.automatic)
+                self.tableView.deleteRows(at: [IndexPath(row: cellIndex, section: sectionIndex)], with: UITableView.RowAnimation.automatic)
             }
             gc.blackPlayerComputer = false
             gc.saveToUserDefaults()
@@ -232,7 +232,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
         case 1:
             let (sectionIndex, cellIndex) = addBlackPlayerDifficulty()
             if(sectionIndex >= 0) {
-                self.tableView.insertRows(at: [IndexPath(row: cellIndex, section: sectionIndex)], with: UITableViewRowAnimation.automatic)
+                self.tableView.insertRows(at: [IndexPath(row: cellIndex, section: sectionIndex)], with: UITableView.RowAnimation.automatic)
             }
             adjustBlackPlayerDifficultyAppearance()
             gc.blackPlayerComputer = true
@@ -242,7 +242,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
         }
     }
 
-    func changeSegmentWhitePlayer(_ sender: AnyObject) {
+    @objc func changeSegmentWhitePlayer(_ sender: AnyObject) {
         let sw: UISegmentedControl = sender as! UISegmentedControl
         NSLog("Switched changeSegmentWhitePlayer! Status: %d", sw.selectedSegmentIndex)
         let cellId = "whitePlayerDifficultySegment"
@@ -252,7 +252,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
             // Search "whitePlayerDifficultySegment" and delete it
             let (sectionIndex, cellIndex) = deleteTableViewCellById(cellId)
             if(sectionIndex >= 0) {
-                self.tableView.deleteRows(at: [IndexPath(row: cellIndex, section: sectionIndex)], with: UITableViewRowAnimation.automatic)
+                self.tableView.deleteRows(at: [IndexPath(row: cellIndex, section: sectionIndex)], with: UITableView.RowAnimation.automatic)
             }
             gc.whitePlayerComputer = false
             gc.saveToUserDefaults()
@@ -260,7 +260,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
         case 1:
             let (sectionIndex, cellIndex) = addWhitePlayerDifficulty()
             if(sectionIndex >= 0) {
-                self.tableView.insertRows(at: [IndexPath(row: cellIndex, section: sectionIndex)], with: UITableViewRowAnimation.automatic)
+                self.tableView.insertRows(at: [IndexPath(row: cellIndex, section: sectionIndex)], with: UITableView.RowAnimation.automatic)
             }
             adjustWhitePlayerDifficultyAppearance()
             gc.whitePlayerComputer = true
@@ -295,7 +295,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
         return (-1, -1)
     }
 
-    func switchShowPossibleMoves(_ sender: AnyObject) {
+    @objc func switchShowPossibleMoves(_ sender: AnyObject) {
         let sw: UISwitch = sender as! UISwitch
         LOG(body: "Switched switchShowPossibleMoves! Status: \(sw.isOn)")
 
@@ -303,7 +303,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
         gc.saveToUserDefaults()
     }
 
-    func switchAnimation(_ sender: AnyObject) {
+    @objc func switchAnimation(_ sender: AnyObject) {
         let sw: UISwitch = sender as! UISwitch
         LOG(body: "Switched switchAnimation! Status: \(sw.isOn)")
         gc.showAnimation = sw.isOn
@@ -330,7 +330,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
     // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "MyTestCell")
+        var cell: UITableViewCell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "MyTestCell")
         cell.textLabel!.text = "Row #\((indexPath as NSIndexPath).row)"
 
         if let unwrappedCells = cells {
@@ -407,7 +407,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
             cell.textLabel!.text = labelText
             let items = segmentItems
             let segmentView: UISegmentedControl = UISegmentedControl(items: items)
-            segmentView.addTarget(targetObject, action: targetSelector, for: UIControlEvents.valueChanged)
+            segmentView.addTarget(targetObject, action: targetSelector, for: UIControl.Event.valueChanged)
             if(selectedSegmentIndex >= 0) {
                 segmentView.selectedSegmentIndex = selectedSegmentIndex
             }
@@ -434,7 +434,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
             let cell = self.tableView.dequeueReusableCell(withIdentifier: reusableCellId)!
             cell.textLabel!.text = labelText
             let switchView: UISwitch = UISwitch()
-            switchView.addTarget(targetObject, action: targetSelector, for: UIControlEvents.touchUpInside)
+            switchView.addTarget(targetObject, action: targetSelector, for: UIControl.Event.touchUpInside)
             switchView.setOn(switchOn, animated: true)
             cell.accessoryView = switchView
 
@@ -474,7 +474,7 @@ class SettingsViewController: UIViewController, UINavigationBarDelegate, UITable
             let cell = self.tableView.dequeueReusableCell(withIdentifier: reusableCellId)!
             cell.textLabel?.text = labelText
             cell.detailTextLabel?.text = detailLabeText
-            cell.selectionStyle = UITableViewCellSelectionStyle.gray
+            cell.selectionStyle = UITableViewCell.SelectionStyle.gray
             return cell
         }
     }
